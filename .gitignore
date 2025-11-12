@@ -1,0 +1,5 @@
+# Data files
+data/
+
+# Container SIF images
+containers/
