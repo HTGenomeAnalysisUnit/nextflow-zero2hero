@@ -1,0 +1,2 @@
+sample_id	fastq_R1	fastq_R2
+sample_1	/project/nextflow_zero2hero/data/partial/fastq/illumina/r1.fq	/project/nextflow_zero2hero/data/partial/fastq/illumina/r2.fq

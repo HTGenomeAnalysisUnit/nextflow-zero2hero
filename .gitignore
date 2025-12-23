@@ -1,5 +1,12 @@
 # Data files
 data/
 
+# Tests
+test/
+
 # Container SIF images
 containers/
+
+# Other 
+.DS_Store
+*.log
