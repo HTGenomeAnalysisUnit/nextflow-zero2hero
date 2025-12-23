@@ -21,7 +21,7 @@ workflow ALIGNMENT_QC {
 		alignment_qc_files = SAMTOOLS_STATS.out.stats_file
 			.mix(SAMTOOLS_FLAGSTATS.out.flagstats_file)
 			.mix(MOSDEPTH.out.mosdepth_files)
-			.map { _sample_id, qc_file -> qc_file }
+			.map { _sample_id, _outfile_prefix, qc_file -> qc_file }
 			.collect(flat: true)
 
 		MULTIQC(alignment_qc_files, sample_id_map, 'alignments')

@@ -11,7 +11,7 @@ process MOSDEPTH {
 	tuple val(sample_id), file(bam_file), file(bai_file)
 	
 	output:
-	tuple val(sample_id), path("${sample_id}.*"), emit: mosdepth_files
+	tuple val(sample_id), val(sample_id), path("${sample_id}.*"), emit: mosdepth_files
 	tuple val("${task.process}"), val('mosdepth'), eval('mosdepth --version | head -n 1 | cut -d" " -f2'), topic: versions
 	
 	script:
