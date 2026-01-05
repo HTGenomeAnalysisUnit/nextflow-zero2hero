@@ -11,11 +11,14 @@ workflow {
 	PREPARE_GENOME(params.reference_genome)
 	processed_genome = PREPARE_GENOME.out.processed_genome
 	
+	def row_counter = 0
 	input_fastq_ch = channel.fromPath(params.input_file)
 		.splitCsv(header:true, sep:'\t')
-		.map { row -> 
+		.map { row ->
+			row_counter++
 			[
-				sample_id: row.sample_id, 
+				sample_id: row.sample_id,
+				fastq_set_id: "${row_counter}",
 				fastq_R1: file(row.fastq_R1, checkIfExists: true), 
 				fastq_R2: file(row.fastq_R2, checkIfExists: true)
 			] 
@@ -29,6 +32,7 @@ workflow {
 	bam_per_sample_ch = ALIGN_AND_DEDUP.out.aligned_reads
 	ALIGNMENT_QC(bam_per_sample_ch)
 
+	// TODO: Add entry point for BAM file input to perform only variant calling
 	CALL_VARIANTS(bam_per_sample_ch, processed_genome, chromosome_list)
 	variants_ch = CALL_VARIANTS.out.per_sample_vars
 

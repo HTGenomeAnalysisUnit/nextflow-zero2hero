@@ -47,11 +47,11 @@ workflow CALL_VARIANTS {
 			// when not using gpu, variant calling is split by chromosome
 			variantcall_input_ch = bam_per_sample_ch
 				.combine(chromosomes_list)
+				.combine(processed_genome)
 			if (params.variant_caller == 'deepvariant') 
 			{
 				DEEPVARIANT_CPU(
 					variantcall_input_ch, 
-					processed_genome, 
 					params.deepvariant_model_type,
 					regions_file
 				)
@@ -65,20 +65,15 @@ workflow CALL_VARIANTS {
 			{
 				HAPLOTYPECALLER_CPU(
 					variantcall_input_ch, 
-					processed_genome, 
 					regions_file
 				)
-				if (params.variant_mode == 'gvcf') {
-					per_chromosome_ch = HAPLOTYPECALLER_CPU.out.gvcf
-				} else {
-					per_chromosome_ch = HAPLOTYPECALLER_CPU.out.vcf
-				}
+				per_chromosome_ch = HAPLOTYPECALLER_CPU.out.variants
 			}
 			
 			per_sample_chunks = per_chromosome_ch
 				.groupTuple(by: 0, size: chromosomes_list.size())
 
-			BCFTOOLS_CONCAT(per_sample_chunks)
+			BCFTOOLS_CONCAT(per_sample_chunks, params.variant_caller)
 			per_sample_vcf_idx_ch = BCFTOOLS_CONCAT.out.vcf
 		}
 

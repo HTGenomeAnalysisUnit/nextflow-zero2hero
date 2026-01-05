@@ -5,14 +5,13 @@ process DEEPVARIANT {
     container 'docker.io/google/deepvariant:1.9.0'
 
     input:
-        tuple val(sample_id), file(bam_file), file(bai_file), val(chromosome)
-        tuple file(reference_genome), file(reference_genome_dict), file(reference_genome_indexes)
+        tuple val(sample_id), path(bam_file), path(bai_file), val(chromosome), path(reference_genome), path(reference_genome_dict), path(reference_genome_indexes)
         val(model_type)
-        file(regions)
+        path(regions)
 
     output:
-        tuple val("${sample_id}"), path("${sample_id}.vcf.gz"), emit: vcf
-        tuple val("${sample_id}"), path("${sample_id}.g.vcf.gz"), optional: true, emit: gvcf
+        tuple val("${sample_id}"), path("${sample_id}.${chromosome}.vcf.gz"), emit: vcf
+        tuple val("${sample_id}"), path("${sample_id}.${chromosome}.g.vcf.gz"), optional: true, emit: gvcf
 		tuple val("${task.process}"), val('deepvariant'), eval('/opt/deepvariant/bin/run_deepvariant --version 2>&1 | tail -n1 | cut -d" " -f3'), topic: versions
 
     script:
@@ -20,16 +19,15 @@ process DEEPVARIANT {
         exit(1, "Deepvariant module does not support Conda. Please use Docker / Singularity instead.")
     }
     def regions_string = regions.exists() ? "${chromosome} ${regions}" : "${chromosome}"
-    def opt_regions = regions.exists() ? "--regions=${regions_string}" : ""
-    def gvcf_output = params.variant_mode == 'gvcf' ? "--output_gvcf=${sample_id}.g.vcf.gz" : ""
+    def gvcf_output = params.variant_mode == 'gvcf' ? "--output_gvcf=${sample_id}.${chromosome}.g.vcf.gz" : ""
     """
     /opt/deepvariant/bin/run_deepvariant \\
         --ref=${reference_genome} \\
         --reads=${bam_file} \\
         --sample_name=${sample_id} \\
-        --output_vcf=${sample_id}.vcf.gz \\
+        --output_vcf=${sample_id}.${chromosome}.vcf.gz \\
+        --regions="${regions_string}" \\
         ${gvcf_output} \\
-        ${opt_regions} \\
         --intermediate_results_dir=\$TMPDIR \\
         --model_type=${model_type} \\
         --make_examples_extra_args="normalize_reads=true" \\

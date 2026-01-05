@@ -3,7 +3,7 @@ include { RDEVAL } from '../../modules/local/rdeval'
 
 workflow READS_QC {
 	take:
-		fastq_input // channel with tuples: [ sample_id, fastq_R1, fastq_R2 ]
+		fastq_input // channel with tuples: [ sample_id, fastq_set_id, fastq_R1, fastq_R2 ]
 
 	main:
 		RDEVAL(fastq_input)

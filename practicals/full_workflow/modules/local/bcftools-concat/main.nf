@@ -2,13 +2,14 @@ process BCFTOOLS_CONCAT {
     tag "${sample_id}"
     label 'process_small'
 
-	publishDir "${params.outdir}/variants/${sample_id}", mode: params.publish_mode
+	publishDir "${params.outdir}/variants/${sample_id}/${variant_caller}", mode: params.publish_mode
 
     conda "${moduleDir}/environment.yml"
     container 'community.wave.seqera.io/library/bcftools_htslib:0a3fa2654b52006f' 
 
     input:
     tuple val(sample_id), path(vcfs)
+    val(variant_caller)
 
     output:
     tuple val(sample_id), path("${sample_id}.${extension}"), path("${sample_id}.${extension}.csi")   , emit: vcf

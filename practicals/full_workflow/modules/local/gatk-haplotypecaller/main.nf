@@ -8,12 +8,11 @@ process GATK4_HAPLOTYPECALLER {
     container 'community.wave.seqera.io/library/gatk4_gcnvkernel:edb12e4f0bf02cd3'
 
     input:
-    tuple val(sample_id), path(input), path(input_index), val(chromosome)
-    tuple path(fasta), path(fasta_fai), path(fasta_dict)
+    tuple val(sample_id), path(input), path(input_index), val(chromosome), path(fasta), path(fasta_fai), path(fasta_dict)
     path(intervals)
 
     output:
-    tuple val(sample_id), path("${sample_id}.${extension}"),		    emit: vcf
+    tuple val(sample_id), path("${sample_id}.${extension}"),		    emit: variants
     tuple val(sample_id), val(chromosome), path("${sample_id}.${chromosome}.gatk_realigned.bam"), 		emit: bam, optional: true
     tuple val("${task.process}"), val('gatk4'), eval('gatk --version 2>&1 | head -1 | sed "s/^.*gatk-package-//; s/-.*$//"'), topic: versions
 
@@ -34,7 +33,7 @@ process GATK4_HAPLOTYPECALLER {
     gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData" \\
         HaplotypeCaller \\
         --input ${input} \\
-        --output ${sample_id}.${extension} \\
+        --output ${sample_id}.${chromosome}.${extension} \\
         --reference ${fasta} \\
         --native-pair-hmm-threads ${task.cpus} \\
         --intervals ${chromosome} \\
