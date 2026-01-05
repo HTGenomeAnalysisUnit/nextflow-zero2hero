@@ -9,7 +9,7 @@ process BWA_MEM {
 	
 	input:
 	tuple val(sample_id), file(fastq_R1), file(fastq_R2)
-	tuple file(reference_genome), file(reference_genome_indexes) // A list containing genome.fa as first element and its indices
+	tuple file(reference_genome), file(reference_genome_dict), file(reference_genome_indexes)
 	
 	output:
 	tuple val(sample_id), file("${sample_id}-${task.index}.bwa.bam"), emit: bam_file

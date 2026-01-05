@@ -1,0 +1,6 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - gatk4=4.6.2.0
+  - gcnvkernel=0.9

@@ -1,2 +1,7 @@
 sample_id	fastq_R1	fastq_R2
-sample_1	/project/nextflow_zero2hero/data/partial/fastq/illumina/r1.fq	/project/nextflow_zero2hero/data/partial/fastq/illumina/r2.fq
+sample_1	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R1.part_001.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R2.part_001.fastq
+sample_1	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R1.part_002.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R2.part_002.fastq
+sample_1	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R1.part_003.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R2.part_003.fastq
+sample_2	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/chunks/reads_R1.part_003.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/chunks/reads_R2.part_003.fastq
+sample_2	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/chunks/reads_R1.part_003.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/chunks/reads_R2.part_003.fastq
+sample_2	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/chunks/reads_R1.part_003.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/chunks/reads_R2.part_003.fastq

@@ -6,11 +6,10 @@ include { SAMTOOLS_SORT } from '../../modules/local/samtools-sort'
 workflow ALIGN_AND_DEDUP {
 	take:
 		input_fastq // channel with tuples: sample_id, fastq_R1, fastq_R2
+		processed_genome // channel with tuples: fasta_file, fasta_dict, index_files
 
 	main:
-		reference_genome = tuple(file(params.reference_genome), file("${params.reference_genome}.*"))
-
-		BWA_MEM(input_fastq, reference_genome)
+		BWA_MEM(input_fastq, processed_genome)
 
 		bam_files_by_sample = BWA_MEM.out.bam_file
 			.groupTuple(by: 0) // group by sample_id
