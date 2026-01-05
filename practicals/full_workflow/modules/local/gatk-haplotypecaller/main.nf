@@ -1,6 +1,6 @@
 process GATK4_HAPLOTYPECALLER {
     tag "${sample_id}"
-    label 'process_medium'
+    label 'process_high'
 
     publishDir "${params.outdir}/variants/${sample_id}", pattern: "*.gatk_realigned.bam", mode: params.publish_mode
 
@@ -12,7 +12,7 @@ process GATK4_HAPLOTYPECALLER {
     path(intervals)
 
     output:
-    tuple val(sample_id), path("${sample_id}.${extension}"),		    emit: variants
+    tuple val(sample_id), path("${sample_id}.${chromosome}.${extension}"),		    emit: variants
     tuple val(sample_id), val(chromosome), path("${sample_id}.${chromosome}.gatk_realigned.bam"), 		emit: bam, optional: true
     tuple val("${task.process}"), val('gatk4'), eval('gatk --version 2>&1 | head -1 | sed "s/^.*gatk-package-//; s/-.*$//"'), topic: versions
 

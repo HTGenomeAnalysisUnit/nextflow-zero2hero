@@ -12,8 +12,7 @@ process PARABRICKS_HAPLOTYPECALLER {
 	path(interval_file)
 
     output:
-    tuple val(sample_id), path("*.vcf"),      emit: vcf,                 optional: true
-    tuple val(sample_id), path("*.g.vcf.gz"), emit: gvcf,                optional: true
+    tuple val(sample_id), path("${sample_id}.${extension}"),      emit: variants
     tuple val(sample_id), path("${sample_id}.gatk_realigned.bam"), 		emit: bam, optional: true
     tuple val("${task.process}"), val('parabricks'), eval('pbrun version 2>&1 | tail -1 | cut -d" " -f2'), topic: versions
 

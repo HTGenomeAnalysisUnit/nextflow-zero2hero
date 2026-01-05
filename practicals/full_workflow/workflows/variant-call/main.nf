@@ -25,22 +25,14 @@ workflow CALL_VARIANTS {
 					params.deepvariant_model_type,
 					regions_file
 				)
-				if (params.variant_mode == 'gvcf') {
-					per_sample_ch = DEEPVARIANT_GPU.out.gvcf
-				} else {
-					per_sample_ch = DEEPVARIANT_GPU.out.vcf
-				}	
+				per_sample_ch = DEEPVARIANT_GPU.out.variants
 			}
 			else if (params.variant_caller == 'gatk-haplotypecaller') {
 				HAPLOTYPECALLER_GPU(
 					variantcall_input_ch, 
 					regions_file
 				)
-				if (params.variant_mode == 'gvcf') {
-					per_sample_ch = HAPLOTYPECALLER_GPU.out.gvcf
-				} else {
-					per_sample_ch = HAPLOTYPECALLER_GPU.out.vcf
-				}	
+				per_sample_ch = HAPLOTYPECALLER_GPU.out.variants
 			}
 			per_sample_vcf_idx_ch = BCFTOOLS_INDEX(per_sample_ch)
 		} else {
@@ -77,6 +69,7 @@ workflow CALL_VARIANTS {
 			per_sample_vcf_idx_ch = BCFTOOLS_CONCAT.out.vcf
 		}
 
+		// TODO: Check results of bcftools stats on a gvcf
 		// TODO: Merge samples
 		
 	emit:

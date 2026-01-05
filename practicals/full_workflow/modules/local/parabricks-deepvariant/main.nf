@@ -11,8 +11,7 @@ process DEEPVARIANT_PARABRICKS {
         path(regions)
 
     output:
-        tuple val("${sample_id}"), path("${sample_id}.vcf.gz"), optional: true, emit: vcf
-        tuple val("${sample_id}"), path("${sample_id}.g.vcf.gz"), optional: true, emit: gvcf
+        tuple val("${sample_id}"), path("${sample_id}.${extension}"), emit: variants
 		tuple val("${task.process}"), val('parabricks'), eval('pbrun version 2>&1 | tail -1 | cut -d" " -f2'), topic: versions
 		tuple val("${task.process}"), val('deepvariant'), eval('pbrun deepvariant --version | grep DeepVariant | sed "s/^DeepVariant:\\s\\+//"'), topic: versions
 

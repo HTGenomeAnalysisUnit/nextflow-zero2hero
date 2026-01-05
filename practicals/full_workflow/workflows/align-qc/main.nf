@@ -8,6 +8,7 @@ workflow ALIGNMENT_QC {
 		input_bam_files // channel with tuples: sample_id, input_bam_file
 
 	main:
+		// TODO Add somalier for sample relatedness, sex check, ancestry estimation
 		SAMTOOLS_STATS(input_bam_files)
 		SAMTOOLS_FLAGSTATS(input_bam_files)
 		MOSDEPTH(input_bam_files)
