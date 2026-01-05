@@ -6,8 +6,7 @@ process DEEPVARIANT_PARABRICKS {
     container 'nvcr.io/nvidia/clara/clara-parabricks:4.6.0-1'
 
     input:
-        tuple val(sample_id), file(bam_file), file(bai_file)
-        tuple file(reference_genome), file(reference_genome_dict), file(reference_genome_indexes)
+        tuple val(sample_id), path(bam_file), path(bai_file), path(reference_genome), path(reference_genome_dict), path(reference_genome_indexes)
         val(model_type)
         path(regions)
 

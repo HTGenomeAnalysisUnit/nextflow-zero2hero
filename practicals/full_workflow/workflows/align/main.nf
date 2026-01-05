@@ -9,7 +9,8 @@ workflow ALIGN_AND_DEDUP {
 		processed_genome // channel with tuples: fasta_file, fasta_dict, index_files
 
 	main:
-		BWA_MEM(input_fastq, processed_genome)
+		bwa_input_ch = input_fastq.combine(processed_genome)
+		BWA_MEM(bwa_input_ch)
 
 		bam_files_by_sample = BWA_MEM.out.bam_file
 			.groupTuple(by: 0) // group by sample_id

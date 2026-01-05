@@ -18,11 +18,10 @@ workflow CALL_VARIANTS {
 
 		if (params.variant_caller_use_gpu) {
 			// when using gpu, variant calling is done on the full bam per sample
-			variantcall_input_ch = bam_per_sample_ch
+			variantcall_input_ch = bam_per_sample_ch.combine(processed_genome)
 			if (params.variant_caller == 'deepvariant') {
 				DEEPVARIANT_GPU(
 					variantcall_input_ch, 
-					processed_genome, 
 					params.deepvariant_model_type,
 					regions_file
 				)
@@ -35,7 +34,6 @@ workflow CALL_VARIANTS {
 			else if (params.variant_caller == 'gatk-haplotypecaller') {
 				HAPLOTYPECALLER_GPU(
 					variantcall_input_ch, 
-					processed_genome, 
 					regions_file
 				)
 				if (params.variant_mode == 'gvcf') {
@@ -48,10 +46,7 @@ workflow CALL_VARIANTS {
 		} else {
 			// when not using gpu, variant calling is split by chromosome
 			variantcall_input_ch = bam_per_sample_ch
-				.map { sample_id, bam_file, bai_file -> 
-					tuple(sample_id, bam_file, bai_file, chromosomes_list)
-				}
-				.transpose(by: 3)
+				.combine(chromosomes_list)
 			if (params.variant_caller == 'deepvariant') 
 			{
 				DEEPVARIANT_CPU(
