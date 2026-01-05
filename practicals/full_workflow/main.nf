@@ -30,6 +30,7 @@ workflow {
 	ALIGNMENT_QC(bam_per_sample_ch)
 
 	CALL_VARIANTS(bam_per_sample_ch, processed_genome, chromosome_list)
+	variants_ch = CALL_VARIANTS.out.per_sample_vars
 
 // 	========================================
 //  TOOLS VERSION COLLECTION
