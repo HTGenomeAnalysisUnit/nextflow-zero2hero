@@ -9,7 +9,6 @@ process PARABRICKS_HAPLOTYPECALLER {
 
     input:
     tuple val(sample_id), path(bam_file), path(bai_file), path(reference_genome), path(reference_genome_dict), path(reference_genome_indexes)
-	val(chromosomes_list)
     path(interval_file)
 
     output:

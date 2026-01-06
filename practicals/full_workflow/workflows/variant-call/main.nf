@@ -27,7 +27,6 @@ workflow CALL_VARIANTS {
 				DEEPVARIANT_GPU(
 					variantcall_input_ch, 
 					params.deepvariant_model_type,
-					chromosomes_list,
 					regions_file
 				)
 				per_sample_ch = DEEPVARIANT_GPU.out.variants
@@ -35,7 +34,6 @@ workflow CALL_VARIANTS {
 			else if (params.variant_caller == 'gatk-haplotypecaller') {
 				HAPLOTYPECALLER_GPU(
 					variantcall_input_ch,
-					chromosomes_list, 
 					regions_file
 				)
 				per_sample_ch = HAPLOTYPECALLER_GPU.out.variants
