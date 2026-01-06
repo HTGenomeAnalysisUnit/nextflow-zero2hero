@@ -12,7 +12,11 @@ workflow CALL_VARIANTS {
 		chromosomes_list // List of chromosomes to process
 
 	main:
-		log.info "Using chromosomes: ${chromosomes_list.join(', ')} for variant calling"
+		if (params.variant_caller_use_gpu) {
+			log.info "Using GPU for variant calling. Chromosomes parameter will be ignored."
+		} else {
+			log.info "Using chromosomes: ${chromosomes_list.join(', ')} for variant calling"
+		}
 		regions_file = params.variant_regions ? file(params.variant_regions, checkIfExists: true) : file('NO_REGIONS')
 		// TODO: Add BQSR to GATK workflow
 
@@ -23,18 +27,21 @@ workflow CALL_VARIANTS {
 				DEEPVARIANT_GPU(
 					variantcall_input_ch, 
 					params.deepvariant_model_type,
+					chromosomes_list,
 					regions_file
 				)
 				per_sample_ch = DEEPVARIANT_GPU.out.variants
 			}
 			else if (params.variant_caller == 'gatk-haplotypecaller') {
 				HAPLOTYPECALLER_GPU(
-					variantcall_input_ch, 
+					variantcall_input_ch,
+					chromosomes_list, 
 					regions_file
 				)
 				per_sample_ch = HAPLOTYPECALLER_GPU.out.variants
 			}
-			per_sample_vcf_idx_ch = BCFTOOLS_INDEX(per_sample_ch)
+			BCFTOOLS_INDEX(per_sample_ch)
+			per_sample_vcf_idx_ch = BCFTOOLS_INDEX.out.indexed_vcf
 		} else {
 			// when not using gpu, variant calling is split by chromosome
 			variantcall_input_ch = bam_per_sample_ch

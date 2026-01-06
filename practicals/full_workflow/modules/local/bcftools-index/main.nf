@@ -11,13 +11,14 @@ process BCFTOOLS_INDEX {
     tuple val(sample_id), path(vcf_file)
 
     output:
-    tuple val(sample_id), path(vcf_file), path("${vcf_file}.csi")   , emit: vcf
+    tuple val(sample_id), path(output_filename), path("${output_filename}.csi")   , emit: indexed_vcf
     tuple val("${task.process}"), val('bcftools'), eval('bcftools --version | head -n 1 | cut -d" " -f2'), topic: versions
 
     script:
+    output_filename = vcf_file.name.endsWith('.vcf') ? "${vcf_file}.gz" : "${vcf_file}"
     // When vcf_file ends in vcf, first use bcftools view to create a bgzipped version
-    bcftools_view_cmd = vcf_file.name.endsWith('.vcf') ? "bcftools view --threads ${task.cpus} -Oz -o ${vcf_file}.gz ${vcf_file}" : ""
-    index_input_vcf = vcf_file.name.endsWith('.vcf') ? "${vcf_file}.gz" : "${vcf_file}"
+    def bcftools_view_cmd = vcf_file.name.endsWith('.vcf') ? "bcftools view --threads ${task.cpus} -Oz -o ${vcf_file}.gz ${vcf_file}" : ""
+    def index_input_vcf = vcf_file.name.endsWith('.vcf') ? "${vcf_file}.gz" : "${vcf_file}"
     """
     ${bcftools_view_cmd}
 

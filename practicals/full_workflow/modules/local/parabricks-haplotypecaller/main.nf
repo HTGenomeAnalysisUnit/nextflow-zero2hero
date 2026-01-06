@@ -5,11 +5,12 @@ process PARABRICKS_HAPLOTYPECALLER {
 
     publishDir "${params.outdir}/variants/${sample_id}", pattern: "*.gatk_realigned.bam", mode: params.publish_mode
 
-    container "nvcr.io/nvidia/clara/clara-parabricks:4.6.0-1"
+    container "nvcr.io/nvidia/clara/clara-parabricks:4.4.0-1"
 
     input:
     tuple val(sample_id), path(bam_file), path(bai_file), path(reference_genome), path(reference_genome_dict), path(reference_genome_indexes)
-	path(interval_file)
+	val(chromosomes_list)
+    path(interval_file)
 
     output:
     tuple val(sample_id), path("${sample_id}.${extension}"),      emit: variants
@@ -33,6 +34,10 @@ process PARABRICKS_HAPLOTYPECALLER {
         --in-bam ${bam_file} \\
         --out-variants ${sample_id}.${extension} \\
         ‑‑num‑htvc‑threads ${task.cpus.intdiv(num_gpus.toInteger())} \\
+        --run-partition \\
+        --gpu-num-per-partition 1 \\
+        --num-streams-per-gpu 4 \\
+        --num-cpu-threads-per-stream ${task.cpus.intdiv(4)} \\
         --num-gpus ${num_gpus} \\
         ${bamout_command} \\
         ${gvcf_output} \\

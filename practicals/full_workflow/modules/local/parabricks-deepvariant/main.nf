@@ -3,11 +3,12 @@ process DEEPVARIANT_PARABRICKS {
     label 'gpu'
     label 'parabricks_gpu'  
      
-    container 'nvcr.io/nvidia/clara/clara-parabricks:4.6.0-1'
+    container 'nvcr.io/nvidia/clara/clara-parabricks:4.4.0-1'
 
     input:
         tuple val(sample_id), path(bam_file), path(bai_file), path(reference_genome), path(reference_genome_dict), path(reference_genome_indexes)
         val(model_type)
+        val(chromosomes_list)
         path(regions)
 
     output:
@@ -20,7 +21,7 @@ process DEEPVARIANT_PARABRICKS {
         exit(1, "Parabricks module does not support Conda. Please use Docker / Singularity instead.")
     }
     def opt_regions = regions.exists() ? "--interval-file ${regions}" : ""
-    extension = params.variant_mode == 'gvcf' ? "g.vcf.gz" : "vcf.gz"
+    extension = params.variant_mode == 'gvcf' ? "g.vcf" : "vcf"
     def gvcf_output = params.variant_mode == 'gvcf' ? "--gvcf" : ""
     """
     export TCMALLOC_MAX_TOTAL_THREAD_CACHE_BYTES=268435456§
