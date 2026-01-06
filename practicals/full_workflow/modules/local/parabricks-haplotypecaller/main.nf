@@ -21,7 +21,7 @@ process PARABRICKS_HAPLOTYPECALLER {
     if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
         exit(1, "Parabricks module does not support Conda. Please use Docker / Singularity instead.")
     }
-    extension = params.variant_mode == 'gvcf' ? "g.vcf.gz" : "vcf.gz"
+    extension = params.variant_mode == 'gvcf' ? "g.vcf" : "vcf"
     def gvcf_output = params.variant_mode == 'gvcf' ? "--gvcf" : ""
     def interval_file_command = interval_file.exists() ? "--interval-file ${interval_file}" : ""
     def bamout_command = params.save_gatk_realigned_bam ? "--htvc-bam-output ${sample_id}.gatk_realigned.bam" : ""
@@ -32,11 +32,9 @@ process PARABRICKS_HAPLOTYPECALLER {
         --ref ${reference_genome} \\
         --in-bam ${bam_file} \\
         --out-variants ${sample_id}.${extension} \\
-        ‑‑num‑htvc‑threads ${task.cpus.intdiv(num_gpus.toInteger())} \\
+        --num-htvc-threads ${task.cpus} \\
         --run-partition \\
         --gpu-num-per-partition 1 \\
-        --num-streams-per-gpu 4 \\
-        --num-cpu-threads-per-stream ${task.cpus.intdiv(4)} \\
         --num-gpus ${num_gpus} \\
         ${bamout_command} \\
         ${gvcf_output} \\
