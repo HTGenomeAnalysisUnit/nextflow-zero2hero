@@ -41,6 +41,14 @@ You are now ready to start the practical exercises! Navigate to the appropriate 
 
 You are free to modify files in your local copy of the repository as needed for the practicals.
 
+### Run the exercises
+
+It's generally good practice to create a dedicated working directory for each pipeline you execute, so that the parameters, logs, and outputs are organized and do not interfere with each other.
+
+We suggest creating a dedicated folder for each practical exercise. 
+
+For example, assuming you configured a working folder for this course in `/group/mygroup/myuser/nextflow_training/`, you can create a dedicated `practicals_outputs` folder in there and then create a folder for each specific practical session as we progress.
+
 ## How to run the practicals on HT HPC
 
 1. Before starting tests and runs, get an interactive session on a compute node with sufficient resources. An example command is below, you can adjust the parameters as needed (`-c` for number of CPU cores, `--mem` for memory, `-J` for job name):
