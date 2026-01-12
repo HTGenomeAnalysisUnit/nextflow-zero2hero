@@ -13,13 +13,19 @@ The following instructions assume you are in your working space folder.
 cd /group/mygroup/myuser/nextflow_training/
 ```
 
-2. Start an interactive session on a compute node with sufficient resources:
+2. Ensure you have the training materials repository cloned in a dedicated folder `nextflow-zero2hero` in your working space. Othrwise, if you don't have it yet, you can clone it by running:
+
+```bash
+git clone https://github.com/Nextstrain/nextflow-zero2hero.git
+```
+
+1. Start an interactive session on a compute node with sufficient resources:
 
 ```bash
 srun --wait=0 --pty -p cpu-interactive -c 1 --mem 4G -J nxf_training /bin/bash
 ```
 
-3. Load the Nextflow modules:
+4. Load the Nextflow modules:
 
 ```bash
 module load nextflow/25.04.3
@@ -33,7 +39,18 @@ module load nextflow/25.04.3
 
 ## 1. Run your first pipeline
 
+It's general good practice to create a dedicated working directory for each pipeline you execute, so that the parameters, logs and outputs are organized and do not interfere with each other.
+
+In general, we suggest to create a dedicated folder for each practical exercise. So assuming you configured a working folder for this course in `/group/mygroup/myuser/nextflow_training/` you can create a dedicate `practicals_outputs` folder in there and then create a for each specific practical exercise as we progress. 
+
+For example:
+
 ```bash
+# Create the dedicated folder for practicals outputs and navigate to it
+mkdir -p practicals_outputs/day1/1-nextflow_run_introduction
+cd practicals_outputs/day1/1-nextflow_run_introduction
+
+# Run the example workflow
 nextflow run nextflow-zero2hero/practicals/day1/1-nextflow_run_introduction/code_example_1/hello-nextflow.nf 
 ```
 
