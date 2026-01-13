@@ -15,7 +15,7 @@ workflow {
 	input_fastq_ch = channel.fromPath(params.input_file)
 		.splitCsv(header:true, sep:'\t')
 		.map { row ->
-			row_counter++
+			row_counter += 1
 			[
 				sample_id: row.sample_id,
 				fastq_set_id: "${row_counter}",
