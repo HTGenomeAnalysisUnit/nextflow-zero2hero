@@ -10,7 +10,7 @@ Training materials for the Nextflow introduction course
 ## Instructors
 
 - Bruno Ariano
-- Daniel Bautista
+- Daniel Carrillo
 - Edoardo Giacopuzzi
 - Luigi Lamparelli
 - Matteo Bonfanti
