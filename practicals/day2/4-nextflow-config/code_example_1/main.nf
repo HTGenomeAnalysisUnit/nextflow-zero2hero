@@ -32,12 +32,6 @@ workflow {
 	bam_per_sample_ch = ALIGN_AND_DEDUP.out.aligned_reads
 	ALIGNMENT_QC(bam_per_sample_ch)
 
-	// TODO: Add entry point for BAM file input to perform only variant calling
-	//CALL_VARIANTS(bam_per_sample_ch, processed_genome, chromosome_list)
-	//variants_ch = CALL_VARIANTS.out.per_sample_vars
-
-	//TODO: Add variant QC workflow
-
 // 	========================================
 //  TOOLS VERSION COLLECTION
 //  ========================================
