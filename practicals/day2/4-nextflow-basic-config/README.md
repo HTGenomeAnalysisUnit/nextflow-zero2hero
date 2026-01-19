@@ -222,6 +222,7 @@ Nextflow interacts with the scheduler through the **executor**.
 ```nextflow
 executor = "slurm"
 queue    = "cpuq"
+
 ```
 
 ---
@@ -305,7 +306,322 @@ from SLURM, and the job will run successfully.
 
 ---
 
+
+# Exercise 5 – Use `params.yaml` to centralize parameters
+
+## Why use `params.yaml`?
+
+When pipelines grow, command lines become long and error-prone:
+
+```bash
+nextflow run main.nf \
+  --input_file ... \
+  --reference_genome ... \
+  --outdir ...
+```
+
+To improve reproducibility and readability, we can store all parameters in a YAML file.
+
+---
+
+## Step 1 – Create `params.yaml`
+
+Example:
+
+```yaml
+input_file: ./assets/test_input.tsv
+
+reference_genome: /processing_data/reference_datasets/iGenomes/2025.1/Homo_sapiens/NCBI/GRCh38/Sequence/BWAIndex/genome.fa
+
+outdir: test_GRCh38
+
+publish_mode: copy
+```
+
+---
+
+## Step 2 – Run using the params file
+
+```bash
+nextflow run main.nf -params-file params.yaml
+```
+
+---
+
+## What happens internally?
+
+Nextflow loads all values from `params.yaml` and assigns them to:
+
+```nextflow
+params.input_file
+params.reference_genome
+params.outdir
+params.publish_mode
+```
+
+---
+
+## Advantages
+
+* Cleaner command line
+* Easier reproducibility
+* Easy to share configurations between users
+* Allows multiple parameter sets for different experiments
+
+---
+
+# Exercise 6 – Run the full workflow (FASTP, BWA, SAMTOOLS)
+
+Now we enable the full workflow by uncommenting the related processes in `main.nf`.
+
+We will use containers for each tool.
+
+---
+
+## Process containers
+
+### FASTP
+
+```nextflow
+container 'quay.io/biocontainers/fastp:1.0.1--heae3180_0'
+```
+
+---
+
+### ALIGNMENT: BWA_MEM
+
+```nextflow
+container 'community.wave.seqera.io/library/bwa_htslib_samtools:83b50ff84ead50d0'
+```
+
+---
+
+### ALIGNMENT: SAMTOOLS_MERGE
+
+```nextflow
+container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
+```
+
+---
+
+## Run the full workflow
+
+```bash
+nextflow run main.nf -params-file params.yaml -resume
+```
+
+---
+
+## Expected issue
+
+Some processes will fail with:
+
+```text
+Command exit status:
+  247
+```
+
+---
+
+## Why?
+
+Exit status 247 indicates that the scheduler killed the process, usually due to:
+
+* Insufficient memory
+* Insufficient CPUs
+* Time limit exceeded
+
+In our case, it is mainly **memory**.
+
+---
+
+## Fix: increase resources
+
+Example:
+
+```nextflow
+process FASTP {
+  ...
+  cpus 2
+  memory '4.GB'
+  ...
+}
+
+process BWA_MEM {
+    ...
+    cpus 4
+    memory '8.GB'
+    ...
+
+}
+
+process SAMTOOLS_MERGE {
+    ...
+    cpus 2
+    memory '4.GB'
+    ...
+}
+```
+
+---
+
+## Key lesson
+
+Containers provide software, but **resources are controlled only by Nextflow**.
+
+Containers do NOT manage memory or CPU limits.
+
+---
+
+# Exercise 7 – How resources are handled inside modules
+
+We now analyze the `BWA_MEM` module.
+
+Inside the process script you will see something like:
+
+```bash
+bwa mem -t ${task.cpus} ref.fa reads.fq > output.sam
+```
+
+---
+
+## What is `task.cpus`?
+
+`task.cpus` is automatically set by Nextflow based on:
+
+```nextflow
+cpus X
+```
+
+in the process definition.
+
+So:
+
+```nextflow
+cpus 8
+```
+
+becomes:
+
+```bash
+-t 8
+```
+
+inside the command.
+
+---
+
+## What about `task.memory`?
+
+`task.memory` contains the memory assigned to the job, for example:
+
+```nextflow
+memory '16 GB'
+```
+
+Inside the script you can use:
+
+```bash
+echo "Memory assigned: ${task.memory}"
+```
+
+Some tools allow memory specification; others only benefit indirectly through Java or buffer allocation.
+
+---
+
+## Why this is important
+
+This means:
+
+* The module adapts automatically to different resource settings.
+* The same module can run on laptop, cluster, or cloud.
+* Resource tuning is separated from pipeline logic.
+
+---
+
+## Best practice
+
+Modules should always use:
+
+* `task.cpus`
+* `task.memory`
+* `task.time`
+
+instead of hard-coding values.
+
+---
+
+# Extra Exercise – Configure Singularity runtime properly
+
+On HPC systems, Singularity requires careful configuration.
+
+Add to `nextflow.config`:
+
+```nextflow
+singularity.cacheDir = "/path/.singularity"
+
+process.scratch = "$TMPDIR"
+
+process.beforeScript = 'module load singularity/3.8.5'
+
+process.containerOptions = '-B /localscratch'
+```
+
+---
+
+## Explanation
+
+### `singularity.cacheDir`
+
+Defines where Singularity stores images.
+This avoids filling up home directories.
+
+---
+
+### `process.scratch`
+
+Tells Nextflow to run each process in a temporary directory for better I/O performance.
+
+---
+
+### `process.beforeScript`
+
+Loads the Singularity module before executing each process.
+
+---
+
+### `process.containerOptions`
+
+Binds local scratch storage into the container for fast temporary I/O.
+
+---
+
+## Why this matters
+
+Without this configuration:
+
+* Containers may fail to pull images.
+* Disk quotas may be exceeded.
+* Performance may be very poor.
+
+---
+
 # Final takeaway
+
+After these exercises you should understand:
+
+| Topic        | You learned                  |
+| ------------ | ---------------------------- |
+| Parameters   | CLI vs params.yaml           |
+| Environments | Conda vs Singularity         |
+| Containers   | Tool isolation               |
+| Resources    | cpus, memory, task variables |
+| HPC          | Scheduler interaction        |
+| Modules      | Portable design              |
+| Caching      | Resume and reuse             |
+| Scratch      | Performance optimization     |
+
+---
 
 With Nextflow configuration files you can:
 
@@ -313,10 +629,3 @@ With Nextflow configuration files you can:
 * Control resources centrally.
 * Make pipelines portable, reproducible, and scalable.
 
----
-
-If you want, I can now:
-
-* Add diagrams for Conda vs Singularity vs HPC.
-* Convert this README into Markdown with callout boxes.
-* Or rewrite it into a teaching slide format.
