@@ -1,0 +1,21 @@
+process SAMTOOLS_FAIDX {
+
+	publishDir "${params.outdir}/genome_index", mode: params.publish_mode
+	conda "${moduleDir}/environment.yml"
+	container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
+
+	cpus 2
+	memory 4.GB
+
+	input:
+	tuple val(genome_id), path(fasta)
+	
+	output:
+	tuple val(genome_id), path(fasta), path("${fasta}.fai"),	emit: genome_fai
+	tuple val("${task.process}"), val('samtools'), eval('samtools --version | head -n 1 | cut -d" " -f2'), topic: versions
+	
+	script:
+	"""
+	samtools faidx ${fasta}
+	"""
+}
