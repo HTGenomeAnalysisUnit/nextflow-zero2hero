@@ -1,5 +1,7 @@
 process SAMTOOLS_FAIDX {
 	
+	publishDir "${params.outdir}/genome_index", mode: params.publish_mode
+
 	input:
 	tuple val(genome_id), path(fasta)
 	

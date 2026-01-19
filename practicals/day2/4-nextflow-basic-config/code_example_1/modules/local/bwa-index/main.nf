@@ -1,4 +1,6 @@
 process BWA_INDEX {
+	tag "${genome_id}"
+	label 'process_low'
 
 	publishDir "${params.outdir}/genome_index", mode: params.publish_mode
 
