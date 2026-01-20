@@ -7,7 +7,7 @@ This document outlines the steps to create a Nextflow workflow with one main wor
 
 ---
 
-## Easy/Medium Workflow
+## Part 1 Workflow
 
 ### 1. Creating the Main Workflow
 
@@ -57,7 +57,7 @@ You should have as results 2 folder wiht the following structure:
 
 ---
 
-## Medium/Hard Workflow
+## Part 2 Workflow
 
 ### 1. Align and Merge FASTQ Files
 
