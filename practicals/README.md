@@ -1,7 +1,7 @@
 # Nextflow - from zero2hero practicals
 
-This folder contains all the code examples used during training. The practicals are organized by day and then in section for each day, following the course schedule.
-Each section folder will contain a `README.md` file with detailed instructions for the practical exercises.
+This folder contains all the code examples used during training. The practicals are organized by day and then in sections for each day, following the course schedule.
+Each section folder will contain a `README.md` file with detailed instructions for the practical exercises and eventually additional reference material.
 
 - Course repository: `https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero`
 - Training folder on HT HPC: `/project/nextflow_zero2hero/`
@@ -34,10 +34,15 @@ Now please move into your working directory and clone the course repository ther
 
 ```bash
 git clone https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git
-cd nextflow-zero2hero
 ```
 
-You are now ready to start the practical exercises! Navigate to the appropriate day and section folder to begin.
+You should see a new folder named `nextflow-zero2hero` created in your working directory containing all the course materials.
+
+Also create a a dedicated `practicals_outputs` folder in there where you will actually run the practical exercises, store your exercise files and outputs.
+
+You are now ready to start the practical exercises! 
+
+Navigate to the appropriate day and section folder in the practicals folder to begin.
 
 You are free to modify files in your local copy of the repository as needed for the practicals.
 
@@ -47,11 +52,11 @@ It's generally good practice to create a dedicated working directory for each pi
 
 We suggest creating a dedicated folder for each practical exercise. 
 
-For example, assuming you configured a working folder for this course in `/group/mygroup/myuser/nextflow_training/`, you can create a dedicated `practicals_outputs` folder in there and then create a folder for each specific practical session as we progress.
+For example, assuming you configured a working folder for this course in `/group/mygroup/myuser/nextflow_training/`, and you create a dedicated `practicals_outputs` folder in there, navigate to `/group/mygroup/myuser/nextflow_training/practicals_outputs` and inside create a folder for each specific practical exercise as we progress.
 
 ## How to run the practicals on HT HPC
 
-1. Before starting tests and runs, get an interactive session on a compute node with sufficient resources. An example command is below, you can adjust the parameters as needed (`-c` for number of CPU cores, `--mem` for memory, `-J` for job name):
+1. Before starting tests and runs, get an interactive session on a compute node with sufficient resources. An example command is below, you can adjust the parameters as needed (`-c` for number of CPU cores, `--mem` for memory, `-J` for job name) and suggestion will be given during the practicals:
 
 ```bash
 srun --wait=0 --pty -p cpu-interactive -c 1 --mem 4G -J nxf_training /bin/bash
