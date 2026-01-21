@@ -131,7 +131,7 @@ workflow {
 	// outer join example: tuple([family, sub_category], greeting_file, [language, greeting]) --> missing [family, sub_category] (non-germanic languages) are returned with null --> use it if you want to preserve elements in the LEFT channel that are not in the RIGHT channel
 	inner_join_channel = merge_key_channel
 		.join(greetings_by_family.germanic, remainder: true)
-	// combine as a join operator: tuple([family, sub_category], greeting_file, [language, greeting]) --> missing [family, sub_category] (non-germanic languages) are discarded, cartesian product --> use it when you want ALL possible combinations between the two channels by a given key (index 0)
+	// combine to have all possible combinations: tuple([family, sub_category], greeting_file, [language, greeting]) --> missing [family, sub_category] (non-germanic languages) are discarded, cartesian product --> use it when you want ALL possible combinations between the two channels by a given key (index 0)
 	combine_join_channel = merge_key_channel
 		.combine(greetings_by_family.germanic, by: 0)
 
