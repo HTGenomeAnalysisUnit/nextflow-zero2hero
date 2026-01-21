@@ -15,9 +15,6 @@ workflow ALIGNMENT {
         bam_files_ch = BWA_MEM.out.bam_file
 
         SAMTOOLS_SORT(bam_files_ch)
-        sorted_bam_ch = SAMTOOLS_SORT.out.sorted_bam
-
-        MOSDEPTH(sorted_bam_ch)
 
     emit:
         sorted_bam = SAMTOOLS_SORT.out.sorted_bam

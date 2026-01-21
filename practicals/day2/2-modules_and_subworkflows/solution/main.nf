@@ -1,6 +1,6 @@
 include { READS_QC } from './reads_qc'
 include { ALIGNMENT } from './alignment'
-include { VARIANT_CALLING } from './variant_calling'
+include { ALIGNMENT_QC } from './alignment-qc'
 
 
 workflow {
@@ -38,9 +38,8 @@ workflow {
         genome_indexes
     )
 
-	VARIANT_CALLING(
+	ALIGNMENT_QC(
 		ALIGNMENT.out.sorted_bam,
-		genome_indexes
 	)
 
 

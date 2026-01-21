@@ -7,26 +7,33 @@ A **module** in Nextflow is a reusable definition of a process that is stored in
 Using modules and subworkflows in Nextflow brings major benefits in terms of modularity, readability, and scalability. By decomposing a pipeline into reusable components, code duplication is reduced and individual steps can be developed and maintained independently. This makes complex workflows easier to understand, as each module or subworkflow has a clear and limited responsibility. As pipelines grow or evolve, this structure allows specific steps or entire analysis stages to be modified, replaced, or extended without rewriting the whole workflow. Overall, this approach leads to cleaner code, simpler debugging, and pipelines that can scale in complexity while remaining manageable.
 
 ## Practical
-In this practical session you will take single_file_pipeline.nf and split it into modules and subworkflows. It is a very basic pipeline of variant calling where WGS reads are first processed with fastp to remove adapters, and then aligned to a reference genome using BWA. Resulting BAM file is sorted and indexed using samtools, while the coverage is calculated with mosdepth. To conclude, variants are identified using deepvariant. 
+In this practical session you will take the pipeline in *single_file_pipeline.nf* and split it into modules and subworkflows. It is a very basic pipeline of alignment where WGS reads are first processed with fastp to remove adapters, and then aligned to a reference genome using BWA. Resulting BAM file is sorted and indexed using samtools, while the coverage is calculated with mosdepth. To conclude, reports from the different tools are aggregated in a single report using MultiQC. 
 
 Your job is to create the required modules and to use them in the following subworkflows:
 
 - read_qc: with the initial preprocessing of the FASTQ reads
-- alignment: with the alignment to the reference genome, sorting and coverage estimation
-- variant_calling: with the variant calling step
+- alignment: with the alignment to the reference genome, sorting and indexing
+- alignment-qc: with the coverage estimation and the calculation of other stats about the alignment
+- reporting: with the creation of a MultiQC report aggregating the results
 
 ### Sanity check & configuration
-To speed things up we will be using a small set of FASTQ reads and chr21 as reference genome. As a sanity check, start by executing the pipeline as it is by moving to the *practicals/day2/2-modules_and_subworkflows* directory and running:
+First of anything, request an interactive session in the HPC as follows:
+
+```
+$ srun --nodes=1 --tasks-per-node=1 --cpus-per-task=4 --mem=24G --partition=cpu-interactive --time=5:00:00 --pty /bin/bash
+```
+
+You are going to run 
+To speed things up we will be using a small set of FASTQ reads. As a sanity check, start by executing the pipeline as it is by moving to the *practicals/day2/2-modules_and_subworkflows* directory and running:
 
 ```
 nextflow run single_file_pipeline.nf -w work
 ```
 
-It should work smoothly (hopefully). Take a look at *nextflow.config* while it is running. We set the configurations needed by the pipeline in there so just have to focus on modularizing the pipeline. Most of the configurations will be covered in the coming sections, but we can quickly peek on them:
+It should work smoothly (hopefully). Take a look at *nextflow.config* while it is running. There we set the configurations needed by the pipeline to run so you can to focus just on modularizing the pipeline. Most of the configurations will be covered in the coming sections, but we can quickly peek on them:
 
-- The pipeline will spawn processes using `slurm`, and these will run in the `cpuq` queue.
 - Processes run using Singularity, as defined in the `singularity` block.
-- Notice how each process has its own configuration block. 
+- Notice how each process has its own configuration block, where the resources, the singularity image (`container`) and the directory to store the results (`publishDir`) are defined
 
 ### Hands on
 
