@@ -1,6 +1,7 @@
 include { BWA_MEM } from './bwa.nf'
 include { SAMTOOLS_MERGE } from './samtools-merge.nf'
 include { SAMTOOLS_SORT } from './samtools-sort.nf'
+include { HAPLOTYPECALLER_GPU } from './parabricks-haplotypecaller.nf'
 
 workflow {
 	// Define channels
@@ -35,4 +36,7 @@ workflow {
 
 	SAMTOOLS_MERGE(bam_files_by_sample)
 	SAMTOOLS_SORT(SAMTOOLS_MERGE.out.merged_bam, 'dedup', 'coordinate')
+
+	variantcall_input_ch = SAMTOOLS_SORT.out.sorted_bam.combine(processed_genome)
+	HAPLOTYPECALLER_GPU(variantcall_input_ch)
 }

@@ -36,6 +36,7 @@ module load nextflow/25.04.3
 - In its simplest form a nextflow pipeline is just a single script file with `.nf` extension, containing the workflow definition and operational logic.
 - At the core of Nextflow usage is the `nextflow run` command, which allows you to execute a Nextflow pipeline by specifying the path to the script file or to a directory containing a `main.nf` file.
 - Often, the pipeline script is complemented by a configuration file named `nextflow.config`, which allows you to set parameters and options for the pipeline execution. When this file is present in the same directory as the pipeline script, it is automatically loaded by Nextflow during execution.
+- You should execute each pipeline from a dedicated working directory, where Nextflow will create dedicated files, your results and various logs. You can repeat / resume the same pipeline in the same working directory, but **it's not recommended to run different pipelines from the same working directory**.
 
 ## 1. Run your first pipeline
 
