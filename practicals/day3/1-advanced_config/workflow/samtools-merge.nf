@@ -1,0 +1,23 @@
+process SAMTOOLS_MERGE {
+	tag "${sample_id}"
+	
+	cpus 1
+	memory 6.GB
+	time 1.h
+
+	publishDir "${params.outdir}/alignments/${sample_id}/merged_bam", mode: params.publish_mode
+
+	container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
+	
+	input:
+	tuple val(sample_id), file(bam_files)
+	
+	output:
+	tuple val(sample_id), file("${sample_id}.merged_raw.bam"), emit: merged_bam
+	
+	script:
+	def bam_file_list = bam_files.collect { bam_file -> bam_file.name }.join(' ')
+	"""
+	samtools merge -n -@ ${task.cpus} -o ${sample_id}.merged_raw.bam ${bam_file_list}
+	"""
+}

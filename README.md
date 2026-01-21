@@ -9,9 +9,10 @@ Training materials for the Nextflow introduction course
 
 ## Instructors
 
+- Youssef Abili
 - Bruno Ariano
 - Daniel Bautista
+- Matteo Bonfanti
 - Edoardo Giacopuzzi
 - Luigi Lamparelli
-- Matteo Bonfanti
-- Youssef Abili
+
