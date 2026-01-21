@@ -19,5 +19,5 @@ workflow {
     all_greetings = all_channels_mixed.map {language, greeting -> tuple(language, "In ${language} you say ${greeting}!")}
     
     // View the final result
-    all_greetings.view{channel_content -> "Final greeting: $channel_content"}
+    all_greetings.view{emission -> "Final greeting: $emission"}
 }

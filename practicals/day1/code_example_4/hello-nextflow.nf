@@ -88,13 +88,13 @@ workflow {
 	// ---------- FILTER, FLATTEN, COLLECT & COLLECT_FILE ----------
 
 	// get all germanic files from grouped channel and have 1 emission for each of them
-	germainc_greetings_files_flatten = all_languages_grouped
+	germanic_greetings_files_flatten = all_languages_grouped
 		.filter{meta, _file -> meta.family == "germanic"}
 		.map{_meta, files -> files}
 		.flatten()
 
 	// collect all the emissions in a single one with as a list of files
-	germainc_greetings_files_collect = all_languages_grouped_transposed
+	germanic_greetings_files_collect = all_languages_grouped_transposed
 		.filter{meta, _file -> meta.family == "germanic"}
 		.map{_meta, files -> files}
 		.collect()
@@ -129,7 +129,7 @@ workflow {
 	inner_join_channel = merge_key_channel
 		.join(greetings_by_family.germanic)
 	// outer join example: tuple([family, sub_category], greeting_file, [language, greeting]) --> missing [family, sub_category] (non-germanic languages) are returned with null --> use it if you want to preserve elements in the LEFT channel that are not in the RIGHT channel
-	inner_join_channel = merge_key_channel
+	outer_join_channel = merge_key_channel
 		.join(greetings_by_family.germanic, remainder: true)
 	// combine to have all possible combinations: tuple([family, sub_category], greeting_file, [language, greeting]) --> missing [family, sub_category] (non-germanic languages) are discarded, cartesian product --> use it when you want ALL possible combinations between the two channels by a given key (index 0)
 	combine_join_channel = merge_key_channel
@@ -137,7 +137,7 @@ workflow {
 
 	//concat, uniform and unique the join/merge product
 	standardized_unique_merged_product = inner_join_channel
-		.concat(inner_join_channel)
+		.concat(outer_join_channel)
 		.concat(combine_join_channel)
 		.map{meta_family_category, meta_language_greeting, greeting_file -> tuple(meta_family_category + meta_language_greeting, greeting_file)}
 		.unique()
@@ -157,11 +157,9 @@ workflow {
 		}
 
 	// create 2 channels with different structures starting from the same channel
-	greetings_by_family = greeting_files
+	greetings_multimap = greeting_files
 		.multiMap{meta, greeting ->
 			only_family: tuple(["family": meta.family], greeting)
 			only_sub_category: tuple(["sub_category": meta.sub_category], greeting)
 		}
-	//greetings_by_family.only_family.view()
-	//greetings_by_family.only_sub_category.view()
 }

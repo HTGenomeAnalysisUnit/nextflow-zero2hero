@@ -2,6 +2,8 @@
 
 This tutorial contains three progressive exercises designed to teach fundamental Nextflow concepts through hands-on practice.
 
+## Prerequisites
+
 In this folder you will find:
 - Input files needed for your exercises
   - metadata.csv

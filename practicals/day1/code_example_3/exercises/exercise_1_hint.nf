@@ -11,7 +11,7 @@ workflow {
     from_tsv_ch = channel.Empty()
     
     // Print channels to verify they work
-    basic_ch.view {channel_content -> "Basic: $channel_content"}
-    from_csv_ch.view {channel_content -> "CSV: $channel_content"}
-    from_tsv_ch.view {channel_content -> "TSV: $channel_content"}
+    basic_ch.view {emission -> "Basic: $emission"}
+    from_csv_ch.view {emission -> "CSV: $emission"}
+    from_tsv_ch.view {emission -> "TSV: $emission"}
 }
