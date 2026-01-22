@@ -2,13 +2,15 @@
 
 ## Where configuration comes from?
 
-- `nextflow.config` file in the project directory (where `main.nf` is located) is always loaded by Nextflow when running a pipeline.
-- `nextflow.config` file in the current working directory (where you launch the `nextflow run` command) is also loaded if present. This allows you to have project-specific configuration when running the same pipeline from different locations.
-- additional configuration files can be included specifically using the `-c` argument of `includeConfig` command.
+1. `nextflow.config` file in the project directory (where `main.nf` is located) is always loaded by Nextflow when running a pipeline.
+2. `nextflow.config` file in the current working directory (where you launch the `nextflow run` command) is also loaded if present. This allows you to have project-specific configuration when running the same pipeline from different locations.
+3. additional configuration files can be included specifically using the `-c` argument of `includeConfig` command.
 
 **IMPORTANT LOGIC**:
 
-When the same configuration setting is defined in multiple places HAVING THE SAME PRIORITY (more on this later), Nextflow load them in order, hence the last definition wins and overwrites the previous ones.
+Nextflow merge your configuration following the above order strictly, hence any conflicting setting is overwritten following the above priority.
+
+When the same configuration setting is defined in multiple places HAVING THE SAME PRIORITY (see the label example later), Nextflow load them in order, hence the last definition wins and overwrites the previous ones.
 
 ## The basic principles
 
@@ -61,7 +63,7 @@ profiles {
 
 ### Inspect the resolved configuration
 
-You can inspect the final resolved configuration used by Nextflow (after applying all the `includeConfig` statements) by using the `config` command. The `-output` option allows you to specify the output format (default is grouped by scope).
+You can inspect the final resolved configuration used by Nextflow (after applying all the `includeConfig` statements) by using the `config` command. The `-output` option allows you to specify the output format (default is grouped by scope). Unfortunately, the `-c` option is not supported with the `config` command.
 
 ```bash
 nextflow config my/pipeline/main.nf
@@ -239,14 +241,16 @@ In general, you can activate support for a specific environmen§t/container tech
 | `useMamba`      | Use Mamba instead of conda to create Conda environments (default: `false`)                                            |
 | `useMicromamba` | Use Micromamba instead of conda to create Conda environments (default: `false`)                                       |
 
-## Executor scope
+## Executor scope and executor control
 
-1️⃣ executor Scope (Root-level configuration)
-Purpose: Controls the executor behavior and sets system-level limits for resource management.
+### 1. executor Scope (Root-level configuration)
 
-Use case: Define what the executor itself can use (e.g., total available resources on the system).
+- Purpose: Controls the executor behavior and sets system-level limits for resource management.
+- Use case: Define what the executor itself can use (e.g., total available resources on the system).
 
 Key Settings:
+
+```
 executor {
     cpus = 16                   // MAX CPUs available to the executor (system limit)
     memory = '64.GB'            // MAX memory available to the executor (system limit)
@@ -255,19 +259,24 @@ executor {
     perCpuMemAllocation = true  // SLURM-specific: use --mem-per-cpu
     account = 'my-project'      // Cloud/HPC account for billing
 }
+```
 
-Important:
+**Important:**
 
-executor.cpus and executor.memory are upper bounds for the local executor only
-They tell Nextflow: "Don't use more than X CPUs/memory total across all running tasks"
-NOT applicable to cluster/cloud executors (SLURM, AWS Batch, etc.) - those use process directives
+`executor.cpus` and `executor.memory` are upper bounds for the `local` executor only.
+They tell Nextflow: "Don't use more than X CPUs/memory total across all running tasks".
 
-2️⃣ process Directives (Task-level configuration)
+They are **NOT** applicable to cluster/cloud executors (SLURM, AWS Batch, etc.) - those use process directives
+
+### 2. process Directives (Task-level configuration)
+
 Purpose: Define the executor to use and the resource requests for individual tasks/processes - what each job submission asks for.
 
 Use case: Specify how much each process needs when it runs.
 
 Key Settings:
+
+```
 process {
     executor = 'slurm'          // Which executor each process uses
     cpus = 4                    // Request 4 CPUs for each task
@@ -276,15 +285,20 @@ process {
     clusterOptions = '--account=myproject'  // Extra scheduler options
     time = '2h'                 // Max walltime for the job
 }
+```
 
-Important:
+**Important:**
 
 These are per-task resource requests
-For cluster executors: translated to scheduler commands (e.g., SLURM --cpus-per-task=4)
-For local executor: determines parallelization (but bounded by executor.cpus)
 
-⚡ What Happens When Both Are Set?
+- For cluster executors: translated to scheduler commands (e.g., `SLURM --cpus-per-task=4`)
+- For local executor: determines parallelization (but bounded by `executor.cpus`)
+
+### What Happens When Both Are Set?
+
 Scenario: Local Executor
+
+```
 executor {
     cpus = 16        // System has 16 CPUs total
     memory = '64.GB' // System has 64GB total
@@ -294,6 +308,7 @@ process {
     cpus = 4         // Each task wants 4 CPUs
     memory = '8.GB'  // Each task wants 8GB
 }
+```
 
 Result:
 
@@ -302,17 +317,26 @@ Total memory usage won't exceed 64GB (8 tasks max: 64GB / 8GB = 8)
 The more restrictive constraint (CPUs) wins → 4 parallel tasks
 
 Scenario: Cluster Executor (SLURM, SGE, etc.)
+
+```
 executor {
     queueSize = 50      // Submit up to 50 jobs at once
     account = 'myproject'
 }
 
 process {
+    executor = 'slurm'
     cpus = 8           // Each job requests 8 CPUs
     memory = '32.GB'   // Each job requests 32GB
     queue = 'batch'    // Submit to 'batch' partition
     clusterOptions = '--gres=gpu:1'  // Extra options
 }
+```
+Result:
+
+Nextflow will use the SLURM executor to submit jobs to the 'batch' queue, requesting 8 CPUs and 32GB memory per job. It will limit the number of simultaneously submitted jobs to 50. 
+
+### Configure multiple executors
 
 It is also possible to set different executor settings for different executors in the executor scope:
 

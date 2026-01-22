@@ -383,7 +383,7 @@ nextflow run $PIPELINE_PATH
 nextflow run $PIPELINE_PATH -c my_custom_file.config 
 ```
 
-## Exercise 6 - Fine grainded process settings
+## Exercise 6 - Fine grained process settings
 
 Code to solve the exercise in: `practicals/day3/1-advanced_config/6-fine_grained_process_config`
 
