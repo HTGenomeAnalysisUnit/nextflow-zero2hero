@@ -2,7 +2,7 @@
 
 Welcome to Nextflow - From zero to hero!
 
-![Course Logo](images/course_logo.png)
+![Course Logo](images/course_logo.png){ width="300" style="display: block; margin: 0 auto" }
 
 This website containts the training materials for the course. You can use the navigation bar to move around practicals for each day.
 

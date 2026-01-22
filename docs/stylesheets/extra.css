@@ -1,0 +1,5 @@
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 40px; /* Default is usually around 24px */
+  width: auto; /* Maintains aspect ratio */
+}
