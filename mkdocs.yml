@@ -24,21 +24,21 @@ nav:
   - Practicals:
       - Introduction: practicals/index.md
       - Day 1:
-          - Overview: practicals/day1/index.md
+          - Day1 Overview: practicals/day1/index.md
           - 1. Running a Nextflow pipeline: practicals/day1/1-nextflow-run-intro.md
       - Day 2:
-          - Overview: practicals/day2/index.md
+          - Day2 Overview: practicals/day2/index.md
           - 1. Workflows: practicals/day2/1-workflows.md
       - Day 3:
-          - Overview: practicals/day3/index.md
+          - Day3 Overview: practicals/day3/index.md
           - 1. Advanced configuration:
-              - Overview: practicals/day3/index.md
-              - Reference documentation: practicals/day3/1-advanced-configurations.md
-              - Practical exercises: practicals/day3/1-advanced-configurations-exercises.md
+              - Overview: practicals/day3/1-advanced-config/index.md
+              - Reference documentation: practicals/day3/1-advanced-config/reference_documentation.md
+              - Practical exercises: practicals/day3/1-advanced-config/exercises.md
           - 2. Advanced publish: practicals/day3/2-advanced-publish.md
       - Day 4:
-          - Overview: practicals/day4/index.md
-          - nf-core introduction: practicals/day4/1-nf-core-intro.md
+          - Day4 Overview: practicals/day4/index.md
+          - 1. nf-core introduction: practicals/day4/1-nf-core-intro.md
 
   - Slides: slides.md
 

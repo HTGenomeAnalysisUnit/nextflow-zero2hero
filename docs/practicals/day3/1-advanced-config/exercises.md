@@ -90,7 +90,7 @@ Prepare a config file to enable Singularity support for containerised execution.
 
 ### Execution
 
-For this you will need to set relevant properties in the [`singularity` scope](advanced_config_reference.md#container--environment-management-scopes).
+For this you will need to set relevant properties in the [`singularity` scope](reference_documentation.md#container--environment-management-scopes).
 
 Basically, you have to create a new config file (e.g. `nextflow.config`) with the singularity block and configure it properly
 
@@ -147,7 +147,7 @@ Modify your config file to set your processes to run using the SLURM executor an
 
 ### Execution
 
-For this you will need to set relevant properties in the [`executor` scope](advanced_config_reference.md#executor_scope) and [`process` scope](advanced_config_reference.md#process_configuration_scope).
+For this you will need to set relevant properties in the [`executor` scope](reference_documentation.md#executor_scope) and [`process` scope](reference_documentation.md#process_configuration_scope).
 
 Basically, you have to add new configuration blocks to your configuration file from the previous exercise (e.g. `nextflow.config`) and add the relevant settings:
 
@@ -202,7 +202,7 @@ We also want to ensure the singularityce/3.10.3 module is loaded before running 
 
 ### Execution
 
-For this you will need to set relevant properties in the [`process` scope](advanced_config_reference.md#process_configuration_scope). Specifically, you will need to set [process resources parameters](advanced_config_reference.md#main-directives-to-control-resource-usage) and [configure the execution space]( advanced_config_reference.md#configure-the-execution-space)
+For this you will need to set relevant properties in the [`process` scope](reference_documentation.md#process_configuration_scope). Specifically, you will need to set [process resources parameters](reference_documentation.md#main-directives-to-control-resource-usage) and [configure the execution space]( reference_documentation.md#configure-the-execution-space)
 
 Basically, you have to add new configuration settings in the `process` scope you already defined in your configuration file from the previous exercise (e.g. `nextflow.config`):
 
@@ -274,7 +274,7 @@ Modify the configuration in the `parabrick-haplotypecaller.nf` module to be able
 
 ### Execution
 
-For this you will need to set relevant properties directly in the process definition. Specifically, you will need to set relevant [process resources parameters](advanced_config_reference.md#main-directives-to-control-resource-usage) and [container parameters](advanced_config_reference.md##container--environment-directives)
+For this you will need to set relevant properties directly in the process definition. Specifically, you will need to set relevant [process resources parameters](reference_documentation.md#main-directives-to-control-resource-usage) and [container parameters](reference_documentation.md##container--environment-directives)
 
 To be able to use GPUs in our HPC, we need to modify the file `parabrick-haplotypecaller.nf` in `workflow_gpu` to 
 - set the queue to `gpuq`
@@ -348,7 +348,7 @@ We want that when a process fails due to errors related to insufficient memory o
 
 ### Execution
 
-For this you will need to modify the `process` scope in your config file and replace the static definition of `cpus`, `memory` and `time` with a closure that return a dynamic value based on the number of retry attempts. Specifically, you will need to configure a [dynamic resource allocation](advanced_config_reference.md#dynamic_resource_allocation) based on the task attemp and ensure that your [error strategy](advanced_config_reference.md##error_strategy_directive) allows a process to be retried.
+For this you will need to modify the `process` scope in your config file and replace the static definition of `cpus`, `memory` and `time` with a closure that return a dynamic value based on the number of retry attempts. Specifically, you will need to configure a [dynamic resource allocation](reference_documentation.md#dynamic_resource_allocation) based on the task attemp and ensure that your [error strategy](reference_documentation.md##error_strategy_directive) allows a process to be retried.
 
 Suggestions:
 
@@ -420,7 +420,7 @@ We want to keep this new configuration logic separate from the main configuratio
 
 ### Execution
 
-For this you will need to create a new config file with a custom name (e.g. `process_labels.config`) and create a `process` scope in it where you will define the [label-based and name-based configuration settings](advanced_config_reference.md#fine-grained-process-configuration-using-labels-and-names). 
+For this you will need to create a new config file with a custom name (e.g. `process_labels.config`) and create a `process` scope in it where you will define the [label-based and name-based configuration settings](reference_documentation.md#fine-grained-process-configuration-using-labels-and-names). 
 
 #### Part1
 
@@ -538,7 +538,7 @@ We also want to create a `singularity` profile to quickly enable singularity sup
 
 ### Execution
 
-For this you will need to restructure your main configuration file to create a [profile scope](advanced_config_reference.md#profiles-and-institutional-profiles) where we define multiple profiles to separate the configuration settings we added so far in multiple named profiles that will allows to quickly switch between computational environments (local or HPC) and activate Singularity support. 
+For this you will need to restructure your main configuration file to create a [profile scope](reference_documentation.md#profiles-and-institutional-profiles) where we define multiple profiles to separate the configuration settings we added so far in multiple named profiles that will allows to quickly switch between computational environments (local or HPC) and activate Singularity support. 
 
 Modify your main configuration file (e.g. `nextflow.config`) to create a `profiles` scope where you will define the following profile blocks:
 - `local` profile for local execution that contains all the relevant settings for `executor` and `process` scope needed for local execution
@@ -630,7 +630,7 @@ Incorporate the code necessary to access institutional profiles from nf-core and
 
 ### Execution
 
-For this you will need to add some specific blocks to your configuration file to enable access to the [nf-core institutional profiles](advanced_config_reference.md#use-nf-core-institutional-profiles) which provide pre-defined configuration for various HPC systems around the world, including the Human Technopole HPC.
+For this you will need to add some specific blocks to your configuration file to enable access to the [nf-core institutional profiles](reference_documentation.md#use-nf-core-institutional-profiles) which provide pre-defined configuration for various HPC systems around the world, including the Human Technopole HPC.
 
 Modify your main configuration file (e.g. `nextflow.config`) to include the necessary settings to access nf-core institutional profiles.
 
