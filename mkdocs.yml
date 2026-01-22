@@ -1,11 +1,12 @@
 site_name: nextflow-zero2hero
 site_author: Edoardo Giacopuzzi
-repo_name: "GitHub"
+repo_name: "HTGenomeAnalysisUnit/nextflow-zero2hero"
 repo_url: "https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git"
 edit_uri: ""
 copyright: "The materials here are licensed under the MIT license"
 theme:
   name: material
+  logo: images/course_logo.png
   features:
     - navigation.tabs
     - navigation.tabs.sticky
@@ -16,8 +17,20 @@ theme:
     code: Roboto Mono
     text: Roboto
   palette:
-    primary: blue
-    accent: blue
+    - scheme: default
+      primary: green
+      accent: orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: green
+      accent: orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
 nav:
   - Home: index.md
@@ -41,6 +54,9 @@ nav:
           - 1. nf-core introduction: practicals/day4/1-nf-core-intro.md
 
   - Slides: slides.md
+
+plugins:
+  - search
 
 markdown_extensions:
   - toc:
