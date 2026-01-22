@@ -1,0 +1,47 @@
+site_name: nextflow-zero2hero
+site_author: Edoardo Giacopuzzi
+repo_name: "GitHub"
+repo_url: "https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git"
+edit_uri: ""
+copyright: "The materials here are licensed under the MIT license"
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.sections
+    - navigation.footer
+  font:
+    code: Roboto Mono
+    text: Roboto
+  palette:
+    primary: blue
+    accent: blue
+
+nav:
+  - Home: index.md
+  - Practicals:
+      - Introduction: practicals/index.md
+      - Day 1:
+          - Overview: practicals/day1/index.md
+          - 1. Running a Nextflow pipeline: practicals/day1/1-nextflow-run-intro.md
+      - Day 2:
+          - Overview: practicals/day2/index.md
+          - 1. Workflows: practicals/day2/1-workflows.md
+      - Day 3:
+          - Overview: practicals/day3/index.md
+          - 1. Advanced configuration:
+              - Overview: practicals/day3/index.md
+              - Reference documentation: practicals/day3/1-advanced-configurations.md
+              - Practical exercises: practicals/day3/1-advanced-configurations-exercises.md
+          - 2. Advanced publish: practicals/day3/2-advanced-publish.md
+      - Day 4:
+          - Overview: practicals/day4/index.md
+          - nf-core introduction: practicals/day4/1-nf-core-intro.md
+
+  - Slides: slides.md
+
+markdown_extensions:
+  - toc:
+      toc_depth: 3
