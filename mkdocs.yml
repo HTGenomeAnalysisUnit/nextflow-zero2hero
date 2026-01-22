@@ -45,7 +45,7 @@ nav:
       - Day 3:
           - Day3 Overview: practicals/day3/index.md
           - 1. Advanced configuration:
-              - Overview: practicals/day3/1-advanced-config/index.md
+              - Advanced config intro: practicals/day3/1-advanced-config/index.md
               - Reference documentation: practicals/day3/1-advanced-config/reference_documentation.md
               - Practical exercises: practicals/day3/1-advanced-config/exercises.md
           - 2. Advanced publish: practicals/day3/2-advanced-publish.md
