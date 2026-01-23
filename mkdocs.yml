@@ -40,6 +40,8 @@ nav:
       - Day 1:
           - Day1 Overview: practicals/day1/index.md
           - 1. Running a Nextflow pipeline: practicals/day1/1-nextflow-run-intro.md
+          - 2. Workflow and channels basics: practicals/day1/2-basic-workflow.md
+          - 3. Channels operators: practicals/day1/3-operators-playground.md
       - Day 2:
           - Day2 Overview: practicals/day2/index.md
           - 1. Workflows: practicals/day2/1-workflows.md
