@@ -1,0 +1,3 @@
+input_csv: '/path/to/input.csv'
+input_tsv: '/path/to/input.tsv'
+outdir: 'output/'
