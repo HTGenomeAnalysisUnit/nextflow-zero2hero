@@ -23,9 +23,10 @@ The main folder contains:
 
 ## Instructors
 
-- Youssef Abili
-- Bruno Ariano
-- Daniel Bautista
-- Matteo Bonfanti
-- Edoardo Giacopuzzi
-- Luigi Lamparelli
+[![Youssef Abili](images/youssef.jpg){: .contributor-avatar }](https://humantechnopole.it/en/people/youssef-abili/)
+[![Bruno Ariano](images/bruno.jpg){: .contributor-avatar }](https://humantechnopole.it/en/people/bruno-ariano/)
+[![Daniel Carrillo Bautista](images/daniel.jpg){: .contributor-avatar }](https://humantechnopole.it/en/people/daniel-carrillo-bautista/)
+[![Daniel Carrillo Bautista](images/daniel.jpg){: .contributor-avatar }](https://humantechnopole.it/en/people/daniel-carrillo-bautista/)
+[![Matteo Bonfanti](images/matteo.jpg){: .contributor-avatar }](https://humantechnopole.it/en/people/matteo-bonfanti/)
+[![Edoardo Giacopuzzi](images/edoardo.jpg){: .contributor-avatar }](https://humantechnopole.it/en/people/edoardo-giacopuzzi/)
+[![Luigi Lamparelli](images/luigi.jpg){: .contributor-avatar }](https://humantechnopole.it/en/people/luigi-lamparelli/)

@@ -3,3 +3,21 @@
   height: 40px; /* Default is usually around 24px */
   width: auto; /* Maintains aspect ratio */
 }
+.contributor-avatar {
+  /* Shape and Size */
+  width: 100px;            /* Set your desired size */
+  height: 100px;           /* Must match width */
+  border-radius: 50%;      /* Makes it round */
+  object-fit: cover;       /* CRITICAL: Crops rectangles to squares without distortion */
+  
+  /* Initial State Styling */
+  border: 3px solid #e0e0e0; 
+  transition: all 0.3s ease; /* Smooth animation */
+  cursor: pointer;
+}
+
+.contributor-avatar:hover {
+  transform: scale(1.1);        /* Zooms in slightly */
+  border-color: #7e57c2;        /* Changes border color (adjust to your theme) */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Adds a drop shadow */
+}
