@@ -34,6 +34,6 @@ workflow {
             )
         }
         .set { input_fastq_ch }
-    // FASTQC emits both qced_reads (used) and fastp_reports (optional)
+    // FASTQC emits a tuple: sample_id, fastqc zip, and html report
     FASTQC(input_fastq_ch)
 }
