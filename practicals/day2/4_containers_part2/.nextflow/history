@@ -1,1 +1,0 @@
-2026-01-21 11:57:59	1m 2s	stupefied_woese	OK	a16526d1920176fbd906b8fbc09ead87	2dc37dbb-6ba2-4f62-8f12-008e4ebdf717	nextflow run main.nf -with-singularity
