@@ -24,7 +24,7 @@ process FASTP {
 
 workflow {
 
-    // Input TSV must have headers: sample_id, fastq_R1, fastq_R2
+    // Input TSV must have headers: sample_id, part, fastq_R1, fastq_R2
     Channel
         .fromPath(params.input_file)
         .splitCsv(header: true, sep: '\t')
