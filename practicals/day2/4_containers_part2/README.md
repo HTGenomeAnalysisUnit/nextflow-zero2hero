@@ -5,23 +5,13 @@ This short hands-on tutorial shows two simple ways to run Nextflow processes ins
 - Define the container inside the process (process-local container)
 - Define a global container for all processes in `nextflow.config`
 
-It also explains common traps (for example what happens when automatic bind-mounts / automounts are disabled) and how to work around them.
-
-Prerequisites
-- Nextflow installed and on your PATH (https://www.nextflow.io)
-- Singularity / Apptainer installed and on your PATH
-- Network access to pull images (or use a local Singularity image)
-
 Quick notes
 - The Nextflow `container` directive accepts a container image string (Docker, Singularity Hub, or other supported URI). When Singularity is enabled Nextflow will use Singularity to run that image.
-- This tutorial does NOT use process selectors like `withName`, `withLabel`, or `tags`. Containers are defined either in the process or globally in the config.
-- By default Nextflow will bind the working directory and staged files into the container for you (this is called automounting or automatic binding). If automounts are disabled, the container may not see your files — see the "Traps" section.
 
 Contents
 1. Example: process-local container (simple "hello" pipeline)
 2. Example: global container defined in `nextflow.config`
 3. Trap: what happens when you disable automounts
-4. Tips and troubleshooting
 
 ---
 
@@ -39,7 +29,7 @@ process hello {
     container 'shub://vsoch/hello-world'
 
     input:
-    val name from Channel.of('Nextflow')
+    val name
 
     /*
      * The script runs inside the container. Nextflow stages inputs
@@ -53,7 +43,7 @@ process hello {
 }
 
 workflow {
-    hello()
+    Channel.of('Nextflow') | hello
 }
 ```
 
@@ -74,8 +64,6 @@ nextflow run main.nf
 Expected behavior:
 - Nextflow will request the container `shub://vsoch/hello-world`.
 - Singularity will pull the image (cached for future runs) and execute the process inside it.
-- The `echo` output appears in the Nextflow log for that task.
-
 
 Let's have a look again at the cache list 
 
@@ -102,7 +90,7 @@ process {
     container = 'shub://vsoch/hello-world'
 }
 ```
-Run it:
+Run again:
 ```bash
 nextflow run main.nf
 ```
