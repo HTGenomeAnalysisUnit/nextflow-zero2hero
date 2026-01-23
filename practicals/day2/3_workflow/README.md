@@ -12,7 +12,7 @@ This document outlines the steps to create a Nextflow workflow with one main wor
 ### 1. Creating the Main Workflow
 
 1. Create a main workflow that includes one module called **FASTP**.
-2. Define a channel to store FASTQ information from the file specified in `params.input_file`. This channel should include an additional variable `row_counter` to track the row number. The final channel, when using `.view()`, should look like this:
+2. Define a channel to store FASTQ information from the file specified in `params.input_file`. This channel should include the `part` column from the TSV, which acts as a row counter / FASTQ set ID. The final channel, when using `.view()`, should look like this:
 
     ```
     [sample_1, 1, /project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R1.part_001.fastq, /project/nextflow_zero2hero/data/NA12878/fastq/sample1/chunks/reads_R2.part_001.fastq]
