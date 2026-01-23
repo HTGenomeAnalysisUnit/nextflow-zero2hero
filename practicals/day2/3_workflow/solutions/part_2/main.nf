@@ -53,10 +53,10 @@ process SAMTOOLS_MERGE {
     container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
     
     input:
-    tuple val(sample_id), file(bam_files)
+    tuple val(sample_id), path(bam_files)
     
     output:
-    tuple val(sample_id), file("${sample_id}.merged_raw.bam")
+    tuple val(sample_id), path("${sample_id}.merged_raw.bam")
     
     script:
     """
