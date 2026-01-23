@@ -84,8 +84,8 @@ You should have as results 2 folders with the following structure:
      val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2), path(reference_genome), path(reference_genome_indexes)
      ```
    - Outputs two tuples:
-     - [`val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.bam")`](command:_github.copilot.openSymbolFromReferences?%5B%22val(sample_id)%2C%20path(%5C%22%24%7Bsample_id%7D-%24%7Bfastq_set_id%7D.bwa.bam%5C%22)%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fbruno.ariano%2Fwork%2FHT%2Fnextflow_course%2Fnextflow-zero2hero%2Fpracticals%2Fday3%2F3_workflow%2FREADME.md%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fbruno.ariano%2Fwork%2FHT%2Fnextflow_course%2Fnextflow-zero2hero%2Fpracticals%2Fday3%2F3_workflow%2FREADME.md%22%2C%22path%22%3A%22%2FUsers%2Fbruno.ariano%2Fwork%2FHT%2Fnextflow_course%2Fnextflow-zero2hero%2Fpracticals%2Fday3%2F3_workflow%2FREADME.md%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A57%2C%22character%22%3A2%7D%7D%5D%5D "Go to definition")
-     - [`val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.log")`](command:_github.copilot.openSymbolFromReferences?%5B%22val(sample_id)%2C%20path(%5C%22%24%7Bsample_id%7D-%24%7Bfastq_set_id%7D.bwa.log%5C%22)%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fbruno.ariano%2Fwork%2FHT%2Fnextflow_course%2Fnextflow-zero2hero%2Fpracticals%2Fday3%2F3_workflow%2FREADME.md%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fbruno.ariano%2Fwork%2FHT%2Fnextflow_course%2Fnextflow-zero2hero%2Fpracticals%2Fday3%2F3_workflow%2FREADME.md%22%2C%22path%22%3A%22%2FUsers%2Fbruno.ariano%2Fwork%2FHT%2Fnextflow_course%2Fnextflow-zero2hero%2Fpracticals%2Fday3%2F3_workflow%2FREADME.md%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A57%2C%22character%22%3A2%7D%7D%5D%5D "Go to definition")
+     - `val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.bam")`
+     - `val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.log")`
 
 2. Use the following script to process the input:
 
