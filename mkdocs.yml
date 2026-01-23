@@ -56,7 +56,10 @@ nav:
           - 2. Advanced publish: practicals/day3/2-advanced-publish.md
       - Day 4:
           - Day4 Overview: practicals/day4/index.md
-          - 1. nf-core introduction: practicals/day4/1-nf-core-intro.md
+          - Preliminary steps: practicals/day4/0-preliminary-steps.md
+          - 1. configure and launch nf-core pipeline: practicals/day4/1-configuring-launching-pipelines.md
+          - 2. develop nf-core pipeline: practicals/day4/2-developing-pipeline.md
+          - 3. contribute to nf-core: practicals/day4/3-contributing-to-nf-core.md
 
   - Slides: slides.md
 
