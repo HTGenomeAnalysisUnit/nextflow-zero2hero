@@ -26,8 +26,8 @@ mkdir -p ~/nextflow_zero2hero_practicals
 cd ~/nextflow_zero2hero_practicals
 
 # Or create a directory in your group folder
-mkdir -p /project/your_group/your_username/nextflow_zero2hero_practicals
-cd /project/your_group/your_username/nextflow_zero2hero_practicals
+mkdir -p /group/your_group/your_username/nextflow_zero2hero_practicals
+cd /group/your_group/your_username/nextflow_zero2hero_practicals
 ```
 
 Now please move into your working directory and clone the course repository there:
