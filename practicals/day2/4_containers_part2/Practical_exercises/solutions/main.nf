@@ -34,6 +34,6 @@ workflow {
             )
         }
         .set { input_fastq_ch }
-    // READS_QC emits both qced_reads (used) and fastp_reports (optional)
+    // FASTQC emits both qced_reads (used) and fastp_reports (optional)
     FASTQC(input_fastq_ch)
 }
