@@ -50,7 +50,7 @@ This document outlines the steps to create a Nextflow workflow with one main wor
 
 The results should be organized into two folders with the following structure:
 
-You should have as results 2 folder wiht the following structure:
+You should have as results 2 folders with the following structure:
 	- results/reads_qc/sample_1/fastp/sample_1_1_fastp.html  sample_1_1_R1_qced.fastq.gz ...
 	- results/reads_qc/sample_2/fastp/sample_2_1_fastp.html  sample_2_1_fastp.json ...
 
