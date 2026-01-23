@@ -5,19 +5,19 @@
 }
 .contributor-avatar {
   /* Shape and Size */
-  width: 100px;            /* Set your desired size */
-  height: 100px;           /* Must match width */
+  width: 100px;            
+  height: 100px;           
   border-radius: 50%;      /* Makes it round */
-  object-fit: cover;       /* CRITICAL: Crops rectangles to squares without distortion */
+  object-fit: cover;
   
   /* Initial State Styling */
   border: 3px solid #e0e0e0; 
-  transition: all 0.3s ease; /* Smooth animation */
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .contributor-avatar:hover {
-  transform: scale(1.1);        /* Zooms in slightly */
-  border-color: #7e57c2;        /* Changes border color (adjust to your theme) */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Adds a drop shadow */
+  transform: scale(1.1);
+  border-color: #7e57c2;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
