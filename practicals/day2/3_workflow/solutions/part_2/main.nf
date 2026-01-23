@@ -66,7 +66,7 @@ process SAMTOOLS_MERGE {
 
 workflow {
     
-    // READS_QC emits both qced_reads (used) and fastp_reports (optional)
+    // FASTP emits both qced_reads (used) and fastp_reports (optional)
     Channel
         .fromPath(params.input_file)
         .splitCsv(header: true, sep: '\t')
