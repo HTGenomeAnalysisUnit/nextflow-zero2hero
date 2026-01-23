@@ -19,7 +19,7 @@ cd /group/mygroup/myuser/nextflow_training/
 git clone https://github.com/Nextstrain/nextflow-zero2hero.git
 ```
 
-1. Start an interactive session on a compute node with sufficient resources:
+3. Start an interactive session on a compute node with sufficient resources:
 
 ```bash
 srun --wait=0 --pty -p cpu-interactive -c 1 --mem 4G -J nxf_training /bin/bash
@@ -71,7 +71,7 @@ Then you can run:
 nextflow run nextflow-zero2hero/practicals/day1/1-nextflow_run_introduction/code_example_1_main_nf
 ```
 
-## 2. Understanding the outputs 
+## 2. Understanding the outputs
 
 ### The main log
 
@@ -213,9 +213,21 @@ nextflow log
 This will display a list of previous runs, including their unique run names, start and end times, status, and the command used to execute them.
 
 ```bash
-TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND  
-2026-01-07 15:38:00     1.5s            nasty_varahamihira      ERR     3840852dfa      d0c7b173-b891-4a74-9a24-01d87a81384a    nextflow run nextflow-zero2hero/practicals/day1/1-nextflow_run_introduction/code_example_2/hello-nextflow.nf
-2026-01-07 15:38:45     1.3s            silly_feynman           ERR     99f81bf19f      685794a1-ccf6-4d98-99c6-e58d6a94792c    nextflow run nextflow-zero2hero/practicals/day1/1-nextflow_run_introduction/code_example_2/hello-nextflow.nf
+TIMESTAMP          	DURATION	RUN NAME        	STATUS	REVISION ID	SESSION ID                          	COMMAND                       
+2026-01-23 09:01:43	2.1s    	gigantic_hilbert	OK    	a6973a2a05 	caf25bf7-d8f2-4dbb-8b45-3e2d07e7a7d7	nextflow run hello-nextflow.nf
+2026-01-23 09:01:50	1.5s    	jovial_miescher 	OK    	a6973a2a05 	b9e5e458-27a0-47e6-9f5c-964dcdc27b7e	nextflow run hello-nextflow.nf
+```
+
+Useful trick: Given a specific run name, you can use `nextflow log` also to get the exact execution folder of all the executed tasks in that run.
+
+```bash
+nextflow log silly_feynman -f name,workdir
+```
+
+This will return a list of all task names and their corresponding work directories like this:
+
+```bash
+sayHello	/project/nextflow_zero2hero/practicals/day1/1-nextflow_run_introduction/code_example_1/work/ad/03f92ac8338ebf141c413ed3bdff8e
 ```
 
 ### Clean a previous run working data
@@ -252,7 +264,7 @@ Now open the file `nextflow-zero2hero/practicals/day1/1-nextflow_run_introductio
 Now try to resume the execution using the `-resume` option:
 
 ```bash
-nextflow run nextflow-zero2hero/practicals/day1/1-nextflow_run_introduction/code_example_2/hello-nextflow.nf -resume	
+nextflow run nextflow-zero2hero/practicals/day1/1-nextflow_run_introduction/code_example_2/hello-nextflow.nf -resume
 ```
 
 You will see a log like this:

@@ -13,6 +13,7 @@ theme:
     - navigation.indexes
     - navigation.sections
     - navigation.footer
+    - content.code.copy
   font:
     code: Roboto Mono
     text: Roboto
