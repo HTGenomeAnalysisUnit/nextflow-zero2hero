@@ -284,9 +284,9 @@ Complete these steps to submit your contribution:
 
 1. Fork https://github.com/nfdata-omics/salmoquant to your personal namespace
 2. Create a feature branch on your fork (starting from `dev`)
-3. Clone the repository to your working environment and checkout your feature branch
-4. Work on your changes locally, ensuring your code passes linting and testing steps
-5. Push the changes to the feature branch on your fork
+3. Open a new GitHub codespace from your fork on your feature branch.
+4. Work on your changes, ensuring your code passes linting and testing steps
+5. Commit and push the changes to the feature branch on your fork
 6. Open a pull request to nfdata-omics/salmoquant
 
 ---

@@ -58,12 +58,11 @@ Ensure you have:
 srun --wait=0 --pty -p cpu-interactive -c 1 --mem 8G -J nxf_training /bin/bash
 ```
 
-2. Activated your virtual environment (from preliminary steps) and loaded the OpenJDK and Singularity modules
+2. Loaded the nextflow and Singularity modules
 
 ```bash
-source  /scratch/$USER/nf-core/bin/activate
-module load openjdk/17.0.8.1_1
-module load singularity/3.8.5
+module load singularity
+module load nextflow/25.04.3
 ```
 
 3. A work folder for the course in your home directory where you will create, clone, and modify pipelines
@@ -224,15 +223,6 @@ SRR6357071_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/test
 ### 4.2: Generate Parameters Template
 
 We recommend saving pipeline parameters in a YAML file to ensure reproducibility and easy recovery of settings.
-
-Using nf-core tools, generate a full parameter template:
-
-```bash
-nf-core pipelines create-params-file nf-core/rnaseq
-```
-
-This command generates a `nf-params.yml` file containing all pipeline parameters with descriptions and default values (all commented by default).
-
 For this exercise, create a custom `rnaseq_test_01/params.yaml` with minimal settings:
 
 ```yaml
