@@ -2,7 +2,7 @@
 {
     "name": "nextflow-zero2hero",
     "image": "ghcr.io/htgenomeanalysisunit/nextflow-zero2hero:latest",
-    "workspaceFolder": "/workspaces/training",
+    "workspaceFolder": "/workspaces/nextflow-zero2hero",
     "remoteUser": "root",
     "remoteEnv": {
         // Nextflow installation version
@@ -10,7 +10,7 @@
         "NXF_EDGE": "0",
         "NXF_VER": "25.04.3",
         // Other env vars
-        "HOST_PROJECT_PATH": "/workspaces/training",
+        "HOST_PROJECT_PATH": "/workspaces/nextflow-zero2hero",
         "SHELL": "/bin/bash" // Use bash
     },
     "containerEnv": {
