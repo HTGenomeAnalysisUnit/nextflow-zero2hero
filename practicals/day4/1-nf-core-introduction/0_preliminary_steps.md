@@ -27,11 +27,7 @@ All installation steps must be performed on a compute node, not on the login nod
 3. Start an interactive shell:
 
    ```bash
-   srun --nodes=1 \
-        --tasks-per-node=1 \
-        --mem=8GB \
-        --partition="cpu-interactive" \
-        --pty /bin/bash
+   srun --wait=0 --pty -p cpu-interactive -c 1 --mem 8G -J nxf_training /bin/bash
    ```
 
 You should now be on a compute node with an interactive shell.

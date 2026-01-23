@@ -19,9 +19,7 @@ This section covers the practical steps to discover, configure, and execute nf-c
 ### Objective
 Familiarize yourself with the nf-core website, understand pipeline formats, and identify available pipelines.
 
-### Steps
-
-#### 1.1: Visit the nf-core Website
+### 1.1: Visit the nf-core Website
 
 Open your browser and navigate to:
 ```
@@ -32,7 +30,7 @@ https://nf-co.re/
 - The **Pipelines** section (https://nf-co.re/pipelines)
 - Browse available pipelines and their categories (RNA-seq, scRNA-seq, ChIP-seq, etc.)
 
-#### 1.2: Understanding Pipeline Documentation
+### 1.2: Understanding Pipeline Documentation
 
 For this course, we will work with **nf-core/rnaseq** (RNA-seq analysis pipeline).
 Find and click on `nf-core/rnaseq` to access the detailed documentation, which includes:
@@ -57,11 +55,7 @@ Ensure you have:
 1. Access to a compute node on the cluster
 
 ```bash
-srun --nodes=1 \
-  --tasks-per-node=1 \
-  --mem=8GB \
-  --partition="cpu-interactive" \
-  --pty /bin/bash
+srun --wait=0 --pty -p cpu-interactive -c 1 --mem 8G -J nxf_training /bin/bash
 ```
 
 2. Activated your virtual environment (from preliminary steps) and loaded the OpenJDK and Singularity modules
@@ -75,11 +69,11 @@ module load singularity/3.8.5
 3. A work folder for the course in your home directory where you will create, clone, and modify pipelines
 
 ```bash
-cd $HOME/<COURSE FOLDER>/day4
+cd $HOME/nextflow_training/practicals_outputs/day4
 ```
 
 
-#### 2.1: Method 1 - Manual Cloning
+### 2.1: Method 1 - Manual Cloning
 
 To maintain a local copy of the pipeline, clone it using git:
 
@@ -90,7 +84,7 @@ git checkout 3.22.0
 cd ..
 ```
 
-#### 2.2: Method 2 - Direct Execution with Nextflow
+### 2.2: Method 2 - Direct Execution with Nextflow
 
 To run a pipeline directly without manual cloning:
 
@@ -171,13 +165,13 @@ Learn how to use nf-core public profiles for HPC cluster configuration and under
 nf-core maintains profiles for common systems in the `https://github.com/nf-core/configs/` repository.
 These profiles are automatically sourced by nf-core pipelines and can be used with the `-profile` flag.
 
-#### 3.1: Explore Available Profiles
+### 3.1: Explore Available Profiles
 
 - Go to https://nf-co.re/configs/ and search for "Human Technopole"
 - Select the `humantechnopole` profile
 - Review the profile page (https://nf-co.re/configs/humantechnopole/) for general information, job file templates, and configuration details
 
-#### 3.2: Use the `humantechnopole` Profile
+### 3.2: Use the `humantechnopole` Profile
 
 Apply the Human Technopole profile to configure Nextflow for the cluster:
 
@@ -206,7 +200,7 @@ This confirms that Nextflow has successfully loaded the configuration from the n
 ### Objective
 Learn how to prepare input data, generate parameter templates, and configure a pipeline run.
 
-#### 4.1: Prepare a Samplesheet
+### 4.1: Prepare a Samplesheet
 
 nf-core pipelines typically accept input sequences via a samplesheet with a common format:
 
@@ -227,7 +221,7 @@ SRR6357070_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/test
 SRR6357071_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357071_1.fastq.gz,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357071_2.fastq.gz,reverse
 ```
 
-#### 4.2: Generate Parameters Template
+### 4.2: Generate Parameters Template
 
 We recommend saving pipeline parameters in a YAML file to ensure reproducibility and easy recovery of settings.
 
@@ -256,7 +250,7 @@ salmon_index: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/re
 pseudo_aligner: 'salmon'
 ```
 
-#### 4.3: Add Configuration
+### 4.3: Add Configuration
 
 As for any Nextflow run, other configuration options can be defined
 in several places. For this test, we include a configuration file
@@ -272,7 +266,7 @@ singularity.cacheDir = "/scratch/matteo.bonfanti/nextflow/.singularity"
 
 This option specifies the cache directory where Nextflow stores downloaded Singularity images.
 
-#### 4.4: Launch the Test
+### 4.4: Launch the Test
 
 Run the pipeline with the command:
 
@@ -362,7 +356,7 @@ Learn how to interpret and navigate nf-core pipeline output directories.
 
 ### Steps
 
-#### 5.1: Explore Output Directory Structure
+### 5.1: Explore Output Directory Structure
 
 After a successful pipeline run, examine the output:
 
@@ -414,7 +408,7 @@ tree -L 2
     └── SRR6357071_2_trimmed_2.fastq.gz_trimming_report.txt
 ```
 
-#### 5.2: Review the MultiQC Report
+### 5.2: Review the MultiQC Report
 
 Open the MultiQC report in a web browser for a comprehensive pipeline summary:
 
@@ -426,7 +420,7 @@ Open the MultiQC report in a web browser for a comprehensive pipeline summary:
 - Methods description
 - Workflow summary
 
-#### 5.3: Check Execution Metadata
+### 5.3: Check Execution Metadata
 
 The `pipeline_info` folder contains detailed execution information:
 
@@ -452,9 +446,7 @@ Configuration files enable fine-grained control over pipeline execution:
 - Configure error handling and retry policies
 - ...
 
-### Steps
-
-#### 6.1: Create a Custom Configuration File
+### 6.1: Create a Custom Configuration File
 
 Enhance the `custom.config` file with additional custom options:
 
@@ -500,7 +492,7 @@ process {
 }
 ```
 
-#### 6.2: Apply Custom Configuration
+### 6.2: Apply Custom Configuration
 
 Re-run the pipeline with your custom configuration:
 
