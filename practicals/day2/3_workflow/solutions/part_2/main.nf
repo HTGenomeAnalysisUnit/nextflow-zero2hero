@@ -24,44 +24,44 @@ process FASTP {
 
 process BWA_MEM {
 
-        publishDir "${params.outdir}/alignments/${sample_id}/bwa"
+    publishDir "${params.outdir}/alignments/${sample_id}/bwa"
 
-        container 'community.wave.seqera.io/library/bwa_htslib_samtools:83b50ff84ead50d0'
+    container 'community.wave.seqera.io/library/bwa_htslib_samtools:83b50ff84ead50d0'
 
-        input:
-        tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2), path(reference_genome),  path(reference_genome_indexes) 
+    input:
+    tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2), path(reference_genome),  path(reference_genome_indexes) 
 
-        output:
-        tuple val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.bam"), emit: bam_file
-        tuple val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.log")
+    output:
+    tuple val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.bam"), emit: bam_file
+    tuple val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.log")
 
-        script:
-        """
-        bwa mem -t 4 \
-                -R \"@RG\\tID:${sample_id}\\tSM:${sample_id}\\tPL:Illumina\" \
-                ${reference_genome} \
-                ${fastq_R1} ${fastq_R2} \
-                2> ${sample_id}-${fastq_set_id}.bwa.log \
-                | samtools view --threads 4 -Sb - > ${sample_id}-${fastq_set_id}.bwa.bam
-        """
+    script:
+    """
+    bwa mem -t 4 \
+            -R \"@RG\\tID:${sample_id}\\tSM:${sample_id}\\tPL:Illumina\" \
+            ${reference_genome} \
+            ${fastq_R1} ${fastq_R2} \
+            2> ${sample_id}-${fastq_set_id}.bwa.log \
+            | samtools view --threads 4 -Sb - > ${sample_id}-${fastq_set_id}.bwa.bam
+    """
 }
 
 process SAMTOOLS_MERGE {
 
-	publishDir "${params.outdir}/alignments/${sample_id}/merged_bam"
+    publishDir "${params.outdir}/alignments/${sample_id}/merged_bam"
 
-	container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
-	
-	input:
-	tuple val(sample_id), file(bam_files)
-	
-	output:
-	tuple val(sample_id), file("${sample_id}.merged_raw.bam")
-	
-	script:
-	"""
-	samtools merge -n -@ ${task.cpus} -o ${sample_id}.merged_raw.bam ${bam_files}
-	"""
+    container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
+    
+    input:
+    tuple val(sample_id), file(bam_files)
+    
+    output:
+    tuple val(sample_id), file("${sample_id}.merged_raw.bam")
+    
+    script:
+    """
+    samtools merge -n -@ ${task.cpus} -o ${sample_id}.merged_raw.bam ${bam_files}
+    """
 }
 
 workflow {
