@@ -32,7 +32,7 @@ workflow {
             // Emit a TUPLE (most modules expect tuples, not maps)
             tuple(
                 row.sample_id,
-		row.part,
+                row.part,
                 file(row.fastq_R1, checkIfExists: true),
                 file(row.fastq_R2, checkIfExists: true)
             )
