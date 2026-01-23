@@ -11,7 +11,7 @@ Each section folder will contain a `README.md` file with detailed instructions f
 Before you start the practicals, please connect to the HT HPC system and make sure you have the following prerequisites in place:
 
 1. You can read from the course training folder: `/project/nextflow_zero2hero/`. Please try `ls /project/nextflow_zero2hero/` to verify you have access.
-2. You can load the Nextflow module by running: `module load Nextflow/25.04.3`.
+2. You can load the Nextflow module by running: `module load nextflow/25.04.3`.
 3. You can load the Singularity module by running: `module load singularity`.
 
 ## Setup your working space
