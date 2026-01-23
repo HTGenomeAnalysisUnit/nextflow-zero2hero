@@ -19,7 +19,7 @@ cd /group/mygroup/myuser/nextflow_training/
 git clone https://github.com/Nextstrain/nextflow-zero2hero.git
 ```
 
-1. Start an interactive session on a compute node with sufficient resources:
+3. Start an interactive session on a compute node with sufficient resources:
 
 ```bash
 srun --wait=0 --pty -p cpu-interactive -c 1 --mem 4G -J nxf_training /bin/bash
