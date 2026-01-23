@@ -1,4 +1,4 @@
-# Hands-on: Singularity (improved guide)
+# Hands-on: Singularity
 
 This short guide walks through loading Singularity, pulling an image, running and inspecting it, looking inside the container, and working with the Singularity cache.
 
