@@ -45,6 +45,8 @@ nav:
       - Day 2:
           - Day2 Overview: practicals/day2/index.md
           - 1. Workflows: practicals/day2/1-workflows.md
+          - 3. Container basics: practicals/day2/3-containers-basics.md
+          - 4. Using containers in Nextflow: practicals/day2/4-containers-nextflow.md
       - Day 3:
           - Day3 Overview: practicals/day3/index.md
           - 1. Advanced configuration:
