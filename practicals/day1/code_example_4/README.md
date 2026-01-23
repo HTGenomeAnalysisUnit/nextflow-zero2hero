@@ -28,6 +28,27 @@ Other alternative: you can use a params file to pass parameters to your workflow
 
 These methods are equivalent, choose the one you are more comfortable with!
 
+## Recap table of operators
+
+| **Category** | **Operator** | **Description** | **Examples from Code** |
+|--------------|--------------|-----------------|------------------------|
+| **Channel Creation** | `fromPath` | Creates a channel from file paths | `channel.fromPath(file(params.input_csv, checkIfExists: true))` |
+| | `splitCsv` | Splits CSV files into records | `.splitCsv(header)` |
+| **Transformation** | `map` | Transforms channel elements | `.map{row -> tuple(...)}`, `.map{meta, greeting -> tuple(...)}` |
+| | `transpose` | Transposes grouped elements | `all_languages_grouped.transpose()` |
+| | `multiMap` | Creates multiple output channels from one input | `.multiMap{meta, greeting -> only_family: ..., only_sub_category: ...}` |
+| **Filtering & Selection** | `branch` | Splits channel into multiple branches based on conditions | `.branch{meta, greeting -> neo_latin: ..., germanic: ..., other: ...}` |
+| | `filter` | Filters elements based on conditions | `.filter{meta, _file -> meta.family == "germanic"}` |
+| | `unique` | Removes duplicate elements | `.unique()` |
+| **Grouping & Aggregation** | `groupTuple` | Groups elements by key | `.groupTuple()` |
+| | `flatten` | Flattens nested structures | `.flatten()` |
+| | `collect` | Collects all elements into a single emission | `.collect()` |
+| | `collectFile` | Collects elements into a file | `.collectFile{meta, file_names -> ...}` |
+| **Channel Combination** | `mix` | Mixes multiple channels (unordered) | `neo_latin_greetings_grouped.mix(greetings_by_family.germanic)` |
+| | `concat` | Concatenates channels (ordered) | `neo_latin_greetings_grouped.concat(greetings_by_family.germanic)` |
+| | `join` | Joins channels by key | `.join(greetings_by_family.germanic)`, `.join(..., remainder: true)` |
+| | `combine` | Combines channels (cartesian product) | `.combine(greetings_by_family.germanic, by: 0)` |
+
 ---
 
 ## Exercise 1: Channel Branching
