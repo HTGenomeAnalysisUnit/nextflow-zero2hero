@@ -77,7 +77,7 @@ Expected behavior:
 - The `echo` output appears in the Nextflow log for that task.
 
 
-Lets have a look again at the cache list 
+Let's have a look again at the cache list 
 
 ```bash
 singularity cache list
