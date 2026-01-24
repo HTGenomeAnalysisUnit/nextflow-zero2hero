@@ -122,12 +122,11 @@ A structured summary:
 
 ### Key sections
 
-| Section   | Meaning                |
-| --------- | ---------------------- |
-| Workflow  | Global pipeline status |
-| Processes | Execution statistics   |
-| Resources | CPU, memory, time      |
-| Errors    | Failed processes       |
+| Section        | Meaning                |
+| -------------- | ---------------------- |
+| Workflow       | Global pipeline status |
+| Resource Usage | Execution statistics   |
+| Tasks          | CPU, memory, time      |
 
 ### What you learn
 
@@ -149,246 +148,107 @@ This is the **most important file for optimization**.
 
 It contains one row per task with columns such as:
 
-| Column      | Meaning            |
-| ----------- | ------------------ |
-| task_id     | Internal task id   |
-| process     | Process name       |
-| status      | COMPLETED / FAILED |
-| cpus        | CPUs requested     |
-| memory      | Memory requested   |
-| realtime    | Wall clock time    |
-| rss         | Real memory used   |
-| vmem        | Virtual memory     |
-| read_bytes  | Disk read          |
-| write_bytes | Disk write         |
+| Column    | Meaning                    |
+| --------- | -------------------------- |
+| task_id   | Internal task ID           |
+| hash      | Unique task hash           |
+| native_id | Scheduler / system task ID |
+| name      | Task name                  |
+| status    | Task final status          |
+| exit      | Exit code                  |
+| submit    | Submission time            |
+| duration  | Execution duration         |
+| realtime  | Wall clock time            |
+| %cpu      | Average CPU utilization    |
+| peak_rss  | Peak resident memory usage |
+| peak_vmem | Peak virtual memory usage  |
+| rchar     | Bytes read (I/O)           |
+| wchar     | Bytes written (I/O)        |
+
 
 ---
 
-## How to use it
+# Exercise 2 – Resource Optimization
 
-Example:
+In this exercise, you will use a **Nextflow execution report** (`execution_report_*.html`) to analyze resource usage, identify inefficient processes, adjust their resource requests, and validate the improvements.
 
-```text
-BWA_MEM   cpus=8   memory=16 GB   rss=4.2 GB
-```
-
-### Interpretation
-
-You requested 16 GB but only used 4.2 GB → memory is over-allocated.
+The objective is to **optimize CPU and memory allocation per process** based on real execution metrics.
 
 ---
 
-## Optimization strategy
+## 1. Inspect resource usage
 
-| Observation             | Action               |
-| ----------------------- | -------------------- |
-| rss << memory           | Reduce memory        |
-| rss ≈ memory            | Good allocation      |
-| rss > memory            | Increase memory      |
-| realtime high, cpu low  | Increase CPUs        |
-| realtime high, cpu high | Algorithm bottleneck |
+For each process, focus on:
 
----
+* **CPU efficiency**
 
-# File 4 – Pipeline DAG
+  * Compare `% CPU` to the number of CPUs requested
 
-### File:
+* **Memory efficiency**
 
-```text
-pipeline_dag_*.html
-```
+  * Compare *peak memory usage* to the requested memory
+  
+* **Runtime**
 
-### What it shows
-
-The Directed Acyclic Graph:
-
-* Process dependencies
-* Data flow
-* Parallel branches
-* Join points
-
-### Why it matters
-
-It explains:
-
-* Why some steps cannot run in parallel
-* Where bottlenecks are structurally unavoidable
-* Where workflow redesign could help
+  * Short-running tasks with large resource requests are often inefficient
 
 ---
 
-# Exercise 2 – Enable Seqera Tower monitoring
+## 2. Correct resource definitions
 
-## Step 1 – Register on Tower
+Once inefficient processes are identified, update the pipeline configuration to **match observed usage**.
 
-Go to:
+### Step 2.1 – Edit `nextflow.config`
 
-```
-https://tower.seqera.io
-```
+```groovy
+process {
 
-Create an account and generate an **access token**.
+  withName: 'PREPARE_GENOME:SAMTOOLS_FAIDX' {
+    cpus   = 1
+    memory = '128 MB'
+  }
 
----
+  withName: 'FASTP' {
+    cpus   = 4
+    memory = '1 GB'
+  }
 
-## Step 2 – Enable Tower in config
+  withName: 'PREPARE_GENOME:GATK4_CREATESEQUENCEDICTIONARY' {
+    cpus   = 1
+    memory = '4 GB'
+  }
 
-Add to `nextflow.config`:
+  withName: 'ALIGNMENT:BWA_MEM' {
+    cpus   = 4
+    memory = '6 GB'
+  }
 
-```nextflow
-tower {
-  enabled = true
-  accessToken = "YOUR_TOKEN_HERE"
+  withName: 'ALIGNMENT:SAMTOOLS_MERGE' {
+    cpus   = 3
+    memory = '512 MB'
+  }
 }
 ```
 
 ---
 
-## Step 3 – Run the pipeline
+## 3. Relaunch the pipeline and validate
+
+Re-run the workflow using the updated configuration:
 
 ```bash
-nextflow run main.nf -params-file params.yaml
+nextflow run main.nf -resume
 ```
 
-Your pipeline will appear live in Tower.
+After completion, generate a **new execution report**.
 
 ---
 
-# What Tower provides
+## 4. Compare before and after
 
-Tower gives you:
+Open the new HTML report and compare:
 
-* Live task monitoring
-* Retry control
-* Resource graphs
-* Failure inspection
-* History of runs
-* Collaboration
-
----
-
-# Tower resource optimization
-
-Tower shows:
-
-* CPU usage per task
-* Memory usage per task
-* Disk I/O
-* Runtime
-
-This allows **data-driven tuning**.
-
----
-
-## Example tuning workflow
-
-### Original:
-
-```nextflow
-process BWA_MEM {
-  cpus 16
-  memory '32 GB'
-}
-```
-
-Tower shows:
-
-| Metric      | Value |
-| ----------- | ----- |
-| CPU used    | 6     |
-| Memory used | 8 GB  |
-
-### Optimized:
-
-```nextflow
-cpus 8
-memory '10 GB'
-```
-
-Now:
-
-* Same performance
-* Less wasted cluster resources
-* Faster scheduling
-
----
-
-# How to improve each module
-
-For every process:
-
-1. Open trace or Tower
-2. Check:
-
-   * CPU utilization
-   * Memory RSS
-   * Runtime
-3. Adjust:
-
-   * `cpus`
-   * `memory`
-4. Re-run
-5. Compare
-
-Repeat until stable.
-
----
-
-# Performance tuning principles
-
-| Problem          | Fix                     |
-| ---------------- | ----------------------- |
-| Waiting in queue | Lower resource requests |
-| OOM kill         | Increase memory         |
-| Low CPU usage    | Reduce cpus             |
-| High runtime     | Increase cpus           |
-| High I/O         | Use scratch             |
-
----
-
-# Best practice example
-
-```nextflow
-process BWA_MEM {
-    cpus 8
-    memory '12 GB'
-}
-```
-
-Only because trace proved it.
-
----
-
-# Conceptual summary
-
-| Tool     | Purpose                |
-| -------- | ---------------------- |
-| Timeline | Visual execution       |
-| Report   | Summary statistics     |
-| Trace    | Precise optimization   |
-| DAG      | Workflow structure     |
-| Tower    | Live remote monitoring |
-
----
-
-# Final takeaway
-
-> Monitoring is not for debugging only.
-> Monitoring is the foundation of performance engineering.
-
-A pipeline without monitoring is a black box.
-
----
-
-# Teaching conclusion
-
-With these tools you can now:
-
-* Understand pipeline behavior
-* Justify resource requests
-* Optimize HPC usage
-* Improve reproducibility
-* Improve scheduling fairness
-* Improve runtime
-
-
+* CPU utilization closer to optimal values
+* Reduced memory over-allocation
+* No task failures due to insufficient resources
+* Similar or improved wall-clock time
