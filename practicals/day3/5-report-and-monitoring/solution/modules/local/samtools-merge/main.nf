@@ -5,9 +5,6 @@ process SAMTOOLS_MERGE {
 	container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
 	conda "${moduleDir}/environment.yml"
 
-	cpus 4
-	memory '8 GB'
-
 	input:
 	tuple val(sample_id), file(bam_files)
 	

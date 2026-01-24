@@ -4,9 +4,6 @@ process FASTP {
 
 	container 'quay.io/biocontainers/fastp:1.0.1--heae3180_0'
 	conda "${moduleDir}/environment.yml"
-
-	cpus 4
-	memory '8 GB'
 	
 	input:
 	tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)

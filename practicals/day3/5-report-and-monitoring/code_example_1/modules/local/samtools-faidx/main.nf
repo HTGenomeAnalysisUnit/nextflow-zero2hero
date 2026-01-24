@@ -4,9 +4,6 @@ process SAMTOOLS_FAIDX {
 	conda "${moduleDir}/environment.yml"
 	container 'quay.io/biocontainers/samtools:1.22--h96c455f_0'
 
-	cpus 2
-	memory 4.GB
-
 	input:
 	tuple val(genome_id), path(fasta)
 	

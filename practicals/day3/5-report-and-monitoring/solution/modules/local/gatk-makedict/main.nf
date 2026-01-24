@@ -4,10 +4,6 @@ process GATK4_CREATESEQUENCEDICTIONARY {
     publishDir "${params.outdir}/genome_index", mode: params.publish_mode
     container 'community.wave.seqera.io/library/gatk4_gcnvkernel:edb12e4f0bf02cd3'
 
-    cpus 4
-    memory '8 GB'
-
-
     input:
     tuple val(genome_id), path(fasta)
 

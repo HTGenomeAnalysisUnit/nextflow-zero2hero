@@ -6,9 +6,6 @@ process BWA_MEM {
 	container 'community.wave.seqera.io/library/bwa_htslib_samtools:83b50ff84ead50d0'
 	conda "${moduleDir}/environment.yml"
 
-	cpus 4
-	memory '8 GB'
-
 	input:
 	tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2), path(reference_genome), path(reference_genome_dict), path(reference_genome_indexes) 
 
