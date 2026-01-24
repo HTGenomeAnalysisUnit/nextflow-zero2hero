@@ -89,7 +89,7 @@ conda "${moduleDir}/environment.yml"
 Edit `nextflow.config` and add:
 
 ```nextflow
-conda.enable = true
+conda.enabled = true
 ```
 
 ---
@@ -182,8 +182,8 @@ container 'community.wave.seqera.io/library/gatk4_gcnvkernel:edb12e4f0bf02cd3'
 ## Step 2 – Update `nextflow.config`
 
 ```nextflow
-singularity.enable = true
-conda.enable = false
+singularity.enabled = true
+conda.enabled = false
 ```
 
 ---
