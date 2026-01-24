@@ -220,8 +220,8 @@ Nextflow interacts with the scheduler through the **executor**.
 ## Step 1 – Configure SLURM in `nextflow.config`
 
 ```nextflow
-executor = "slurm"
-queue    = "cpuq"
+process.executor = "slurm"
+process.queue    = "cpuq"
 
 ```
 
