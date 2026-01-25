@@ -1,6 +1,7 @@
-include { READS_QC } from './reads_qc'
-include { ALIGNMENT } from './alignment'
-include { ALIGNMENT_QC } from './alignment-qc'
+include { READS_QC } from './workflows/reads-qc'
+include { ALIGNMENT } from './workflows/alignment'
+include { ALIGNMENT_QC } from './workflows/alignment-qc'
+include { REPORT } from './workflows/reporting'
 
 
 workflow {
@@ -42,5 +43,11 @@ workflow {
 		ALIGNMENT.out.sorted_bam,
 	)
 
+	ch_multiqc_files = READS_QC.out.json_report
+		.mix(ALIGNMENT_QC.out.stats_file)
+		.mix(ALIGNMENT_QC.out.mosdepth_files)
+		.map { sample_id, report_file -> report_file }
+		.collect()
 
+	REPORT(ch_multiqc_files)
 }

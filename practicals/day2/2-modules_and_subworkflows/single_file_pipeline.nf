@@ -164,26 +164,6 @@ workflow {
 		.mix(MOSDEPTH.out.mosdepth_files)
 		.map { sample_id, report_file -> report_file }
 		.collect()
-		.view()
-
-
-
-	// ch_fastp_multiqc = FASTP.out.fastp_reports
-	// 	.map { sample_id, set_id, json, html -> json}
-	// 	.collect()
-
-	// ch_stats_multiqc = SAMTOOLS_STATS.out.stats_file
-	// 	.map { sample_id, bam, stats -> stats}
-	// 	.collect()
-
-	// ch_mosdepth_multiqc = MOSDEPTH.out.mosdepth_files
-	// 	.map { sample_id, sample_id2, mosdepth_files -> mosdepth_files}
-	// 	.collect()
-
-	// ch_multiqc_files = ch_fastp_multiqc
-	// 	.mix(ch_stats_multiqc)
-	// 	.mix(ch_mosdepth_multiqc)
-	// 	.view()
 
 	MULTIQC(ch_multiqc_files)	
 
