@@ -91,6 +91,7 @@ Use the parameter `outdir` (`params.outdir`) as the root directory for publishin
 ??? example "View solution"
 
     ```
+    
     process FASTP {
         publishDir "${params.outdir}/processed_reads", pattern: '*-qced.fastq.gz'
         publishDir "${params.outdir}/qc_reports/json", pattern: '*.json'
@@ -115,6 +116,7 @@ Use the parameter `outdir` (`params.outdir`) as the root directory for publishin
             --thread ${task.cpus}
         """
     }
+
     ```
 
 ### Exercise 2: Organization by Sample_ID
@@ -143,7 +145,8 @@ results/
 
 ??? example "View solution"
 
-    ```groovy
+    ```
+
         process FASTP {
             publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
             publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
@@ -169,6 +172,7 @@ results/
                 --thread ${task.cpus}
             """
         }
+
     ```
 
 ### Exercise 3: Advanced Renaming with `saveAs`
@@ -185,7 +189,8 @@ results/
 
 ??? example "View solution"
 
-    ```groovy
+    ```
+
         process FASTP {
             publishDir "${params.outdir}/processed_reads/${sample_id}", 
                 pattern: '*-qced.fastq.gz',
@@ -222,6 +227,7 @@ results/
                 --thread ${task.cpus}
             """
         }
+
     ```
 
 ### Exercise 4: Conditional Publishing with `enabled`
@@ -238,7 +244,8 @@ results/
 
 ??? example "View solution"
 
-    ```groovy
+    ```
+
         process FASTP {
             publishDir "${params.outdir}/processed_reads/${sample_id}", 
                 pattern: '*-qced.fastq.gz',
@@ -271,6 +278,7 @@ results/
                 --thread ${task.cpus}
             """
         }
+
     ```
 
 ### Exercise 5: Combining Modes and Storage Strategies
@@ -287,7 +295,8 @@ results/
 
 ??? example "View solution"
 
-    ```groovy
+    ```
+
         process FASTP {
             publishDir "${params.outdir}/processed_reads/${sample_id}", 
                 mode: 'symlink',  
@@ -322,6 +331,7 @@ results/
                 --thread ${task.cpus}
             """
         }
+
     ```
 
 ### Exercise 6: Adding Date Suffix 
@@ -337,6 +347,7 @@ results/
 ??? example "View solution"
 
     ```
+
         process FASTP {
             publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
             publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
@@ -367,4 +378,5 @@ results/
                 --thread ${task.cpus}
             """
         }
+
     ```
