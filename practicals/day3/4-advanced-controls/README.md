@@ -71,7 +71,7 @@ Keep this boundary in mind while working through the exercises below.
 
 ---
 
-# Exercise 1 — Safe sample names and variable scope
+# Exercise 1 — Sample names and variable scope
 
 Modify the process so that:
 
@@ -182,7 +182,7 @@ process PROCESS_READ {
 }
 ```
 
-## Questions?
+## Questions?
 
 * Why must sample be declared with def?
 
@@ -192,17 +192,48 @@ process PROCESS_READ {
 
 * At which phase is ${sample} expanded?
 
+---
 
 
+## Exercise 2 — Variable declaration inside the `script:` block
 
+### Practice
 
+Modify the `script:` section and add:
 
+```bash
+def sample = read.simpleName
+suffix = "_processed"
+```
 
+Then change the command to:
 
+```bash
+echo "Processing file: ${read.name}" > ${sample}${suffix}.txt
+```
 
+Questions
 
+* What is the difference between def prefix and suffix?
 
+def prefix declares a local Groovy variable that exists only inside the script: block.
 
+suffix, declared without def, becomes a Groovy binding variable.
+Binding variables are placed in the global script binding instead of a local scope.
+
+* Why does the pipeline still work?
+
+The pipeline still works because Groovy automatically creates binding variables
+when an undeclared variable is assigned.
+
+suffix is therefore resolved during Groovy evaluation, and its value is
+successfully injected into the command before execution.
+
+However, this behavior is implicit and unsafe.
+
+---
+
+# Exercise 3 — ...
 
 
 
