@@ -6,15 +6,15 @@ Here is a summary of available slide decks:
 
 | Day | Topic | Slide Deck |
 |-----|-------|------------|
-| 1 | Welcome and course intro | |
-| 1 | Nextflow – why is important for you? | |
-| 1 | Nextflow run introduction | |
-| 1 | Hello Nextflow – introduction to the code | |
-| 1 | Nextflow channels | |
-| 1 | More on channels | |
-| 1 | Channels operators | |
+| 1 | Welcome and course intro | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-1-Course_welcome.pdf){: target="_blank" } |
+| 1 | Nextflow – why is important for you? | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-2-Introduction_to_Nextflow.pdf){: target="_blank" } |
+| 1 | Nextflow run introduction | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-3-Nextflow_run_introduction.pdf){: target="_blank" } |
+| 1 | Hello Nextflow – introduction to the code | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-4-Hello_nextflow_workflow_and_process.pdf){: target="_blank" } |
+| 1 | Nextflow channels | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-4-Hello_nextflow_workflow_and_process.pdf){: target="_blank" } |
+| 1 | More on channels | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-5-Channel_and_operators.pdf){: target="_blank" } |
+| 1 | Channels operators | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-5-Channel_and_operators.pdf){: target="_blank" } |
 | 2 | Make your data flow in a workflow | |
-| 2 | Modules and subworkflows | |
+| 2 | Modules and subworkflows | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day2/Day2-2-Modules_and_subworkflows.pdf){: target="_blank" } |
 | 2 | Introduction to containers | |
 | 2 | Use containers in Nextflow | |
 | 2 | Basic configuration and process directives | |
