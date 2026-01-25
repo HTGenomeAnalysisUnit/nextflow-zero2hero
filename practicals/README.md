@@ -3,7 +3,8 @@
 This folder contains all the code examples used during training. The practicals are organized by day and then in sections for each day, following the course schedule.
 Each section folder will contain a `README.md` file with detailed instructions for the practical exercises and eventually additional reference material.
 
-- Course repository: `https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero`
+- Course repository: [`https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero`](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero)
+- Documentation website: [`https://htgenomeanalysisunit.github.io/nextflow-zero2hero/`](https://htgenomeanalysisunit.github.io/nextflow-zero2hero/)
 - Training folder on HT HPC: `/project/nextflow_zero2hero/`
 
 ## Before you begin
