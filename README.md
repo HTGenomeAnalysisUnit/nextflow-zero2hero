@@ -23,8 +23,7 @@ The main folder contains:
 
 - Youssef Abili
 - Bruno Ariano
-- Daniel Bautista
 - Matteo Bonfanti
+- Daniel Carrillo
 - Edoardo Giacopuzzi
 - Luigi Lamparelli
-
