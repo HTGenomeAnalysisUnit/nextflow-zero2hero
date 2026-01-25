@@ -13,10 +13,10 @@ Here is a summary of available slide decks:
 | 1 | Nextflow channels | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-4-Hello_nextflow_workflow_and_process.pdf){: target="_blank" } |
 | 1 | More on channels | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-5-Channel_and_operators.pdf){: target="_blank" } |
 | 1 | Channels operators | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day1/Day1-5-Channel_and_operators.pdf){: target="_blank" } |
-| 2 | Make your data flow in a workflow | |
+| 2 | Make your data flow in a workflow | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day2/Day2-1-workflows.pdf){: target="_blank" } |
 | 2 | Modules and subworkflows | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day2/Day2-2-Modules_and_subworkflows.pdf){: target="_blank" } |
-| 2 | Introduction to containers | |
-| 2 | Use containers in Nextflow | |
+| 2 | Introduction to containers | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day2/Day2-3-container_basic.pdf){: target="_blank" } |
+| 2 | Use containers in Nextflow | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day2/Day2-4-containers_in_nextflow.pdf){: target="_blank" } |
 | 2 | Basic configuration and process directives | |
 | 3 | Advanced configuration | |
 | 3 | Advanced publish of files | |
