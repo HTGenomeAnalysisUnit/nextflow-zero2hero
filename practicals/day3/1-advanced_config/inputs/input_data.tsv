@@ -1,0 +1,5 @@
+sample_id	fastq_R1	fastq_R2
+sample_1	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/micro/reads_R1.part_001.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/micro/reads_R2.part_001.fastq
+sample_1	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/micro/reads_R1.part_002.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample1/micro/reads_R2.part_002.fastq
+sample_2	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/micro/reads_R1.part_001.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/micro/reads_R2.part_001.fastq
+sample_2	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/micro/reads_R1.part_002.fastq	/project/nextflow_zero2hero/data/NA12878/fastq/sample2/micro/reads_R2.part_002.fastq

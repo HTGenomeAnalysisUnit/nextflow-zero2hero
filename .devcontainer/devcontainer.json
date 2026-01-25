@@ -1,0 +1,35 @@
+// Training devcontainer configuration
+{
+    "name": "nextflow-zero2hero",
+    "image": "ghcr.io/htgenomeanalysisunit/nextflow-zero2hero:latest",
+    "workspaceFolder": "/workspaces/nextflow-zero2hero",
+    "remoteUser": "root",
+    "remoteEnv": {
+        // Nextflow installation version
+        "NXF_HOME": "/workspaces/.nextflow",
+        "NXF_EDGE": "0",
+        "NXF_VER": "25.04.3",
+        // Other env vars
+        "HOST_PROJECT_PATH": "/workspaces/nextflow-zero2hero",
+        "SHELL": "/bin/bash" // Use bash
+    },
+    "containerEnv": {
+        // Docker API compatibility
+        "DOCKER_API_VERSION": "1.43"
+    },
+    "onCreateCommand": "bash .devcontainer/setup.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "nf-core.nf-core-extensionpack",
+                "ms-vscode.live-server"
+            ],
+            // Use Python from conda
+            "settings": {
+                "python.defaultInterpreterPath": "/opt/conda/bin/python"
+            },
+            // Use bash
+            "terminal.integrated.defaultProfile.linux": "bash"
+        }
+    }
+}

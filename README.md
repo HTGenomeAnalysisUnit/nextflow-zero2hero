@@ -1,8 +1,20 @@
-# Nextflow - from zero to hero
+# NEXTLFOW - From zero to hero
 
-Training materials for the Nextflow introduction course
+Welcome to Nextflow - From zero to hero!
 
-- slides: PDF version of presentation used during the course
+<img src="docs/images/course_logo.png" alt="Course Logo" width="300"/>
+
+Please refer to the [github pages website](https://htgenomeanalysisunit.github.io/nextflow-zero2hero/) to navigate the training materials.
+
+The data, slides and code examples used during the course are provided for you on out HPC in
+
+```
+/project/nextflow_zero2hero
+```
+
+The main folder contains:
+
+- slides: PDF version of presentations used during the course
 - practicals: code examples used during practical sessions
 - data: input data used to run the course example code
 - containers: pre-built containers for the tool used during the practicals

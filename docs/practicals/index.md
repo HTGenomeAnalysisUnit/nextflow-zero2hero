@@ -1,5 +1,7 @@
 # Nextflow - from zero2hero practicals
 
+Welcome to the practical exercises for the Nextflow - from zero2hero course!
+
 This folder contains all the code examples used during training. The practicals are organized by day and then in sections for each day, following the course schedule.
 Each section folder will contain a `README.md` file with detailed instructions for the practical exercises and eventually additional reference material.
 

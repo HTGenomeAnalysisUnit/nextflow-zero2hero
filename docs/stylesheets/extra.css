@@ -1,0 +1,23 @@
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 40px; /* Default is usually around 24px */
+  width: auto; /* Maintains aspect ratio */
+}
+.contributor-avatar {
+  /* Shape and Size */
+  width: 100px;            
+  height: 100px;           
+  border-radius: 50%;      /* Makes it round */
+  object-fit: cover;
+  
+  /* Initial State Styling */
+  border: 3px solid #e0e0e0; 
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.contributor-avatar:hover {
+  transform: scale(1.1);
+  border-color: #7e57c2;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
