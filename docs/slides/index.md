@@ -20,7 +20,7 @@ Here is a summary of available slide decks:
 | 2 | Basic configuration and process directives | |
 | 3 | Advanced configuration | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day3/Day3-1-advanced_configuration.pdf){: target="_blank" } |
 | 3 | Advanced publish of files | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day3/Day3-2-Advanced_publish.pdf){: target="_blank" } |
-| 3 | Best practices for pipeline structure | [Only practicals](){: target="_blank" } |
+| 3 | Best practices for pipeline structure | [Only practicals](https://htgenomeanalysisunit.github.io/nextflow-zero2hero/practicals/day3/3-best-practises-pipeline-structure/){: target="_blank" } |
 | 3 | Advanced controls | |
 | 3 | Reporting and monitoring | |
 | 4 | nf-core introduction | [Only practicals](https://htgenomeanalysisunit.github.io/nextflow-zero2hero/practicals/day4/){: target="_blank" } |

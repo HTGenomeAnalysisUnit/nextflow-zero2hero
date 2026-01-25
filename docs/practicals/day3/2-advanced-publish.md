@@ -91,7 +91,6 @@ Use the parameter `outdir` (`params.outdir`) as the root directory for publishin
 ??? example "View solution"
 
     ```groovy
-
     process FASTP {
         publishDir "${params.outdir}/processed_reads", pattern: '*-qced.fastq.gz'
         publishDir "${params.outdir}/qc_reports/json", pattern: '*.json'
@@ -101,9 +100,8 @@ Use the parameter `outdir` (`params.outdir`) as the root directory for publishin
         tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
         
         output:
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
+        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz")
         tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
-        
         
         script:
         fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
@@ -117,7 +115,6 @@ Use the parameter `outdir` (`params.outdir`) as the root directory for publishin
             --thread ${task.cpus}
         """
     }
-    
     ```
 
 ### Exercise 2: Organization by Sample_ID

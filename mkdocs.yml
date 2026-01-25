@@ -62,7 +62,7 @@ nav:
           - 2. develop nf-core pipeline: practicals/day4/2-developing-pipeline.md
           - 3. contribute to nf-core: practicals/day4/3-contributing-to-nf-core.md
 
-  - Slides: slides.md
+  - Slides: slides/index.md
 
 plugins:
   - search
