@@ -21,7 +21,7 @@ Your task is to create the required modules and use them in the following subwor
 
 Before you start, create an interactive session with the required resources and dependencies:
 
-```
+```bash
 # get an interactive session
 $ srun --wait=0 --pty -p cpu-interactive -c 4 --mem 24G -J nxf_training /bin/bash
 
@@ -31,7 +31,7 @@ $ module load singularity nextflow/25.04.3
 
 If you followed our suggestion, you should already have a `practicals_output` folder for running the exercises. Create a dedicated subdirectory for this practical and move into it:
 
-```
+```bash
 # set <practicals_outputs> as the path where you created your workspace
 $ mkdir -p practicals_outputs/day2/2-modules_and_subworkflows
 $ cd practicals_outputs/day2/2-modules_and_subworkflows
@@ -39,7 +39,7 @@ $ cd practicals_outputs/day2/2-modules_and_subworkflows
 
 As a sanity check, we will first run *single_file_pipeline.nf* as it is, using a very small set of FASTQ reads and a dedicated output folder. Execute the command below and, while the pipeline is running, **take a look at the notes that follow**:
 
-```
+```bash
 # create a dedicated folder for this execution and move to it
 $ mkdir single_file
 $ cd single_file
@@ -48,7 +48,7 @@ $ cd single_file
 $ nextflow run nextflow_zero2hero_practicals/nextflow-zero2hero/practicals/day2/2-modules_and_subworkflows/single_file_pipeline.nf
 ```
 
-Nextflow automatically recognizes and loads the *nextflow.config* file located in the same directory as *single_file_pipeline.nf*. This file contains the configuration required for execution, allowing you to focus exclusively on modularizing the pipeline.
+Nextflow automatically recognizes and loads the *nextflow.config* file located in the same directory as *single_file_pipeline.nf*. This file contains the configuration required for the execution, allowing you to focus exclusively on modularizing the pipeline.
 
 While the pipeline is running, open *nextflow.config* in your code editor and note the following:
 
@@ -62,14 +62,14 @@ If everything ran correctly, you should see a `results` directory containing a M
 
 To complete the exercise, you will need to create one module per process, four subworkflows linking those modules, and a *main.nf* file connecting the subworkflows. Create a dedicated directory called `modular` and move into it:
 
-```
+```bash
 $ mkdir -p practicals_outputs/day2/2-modules_and_subworkflows/modular
 $ cd practicals_outputs/day2/2-modules_and_subworkflows/modular
 ```
 
 It is recommended to start from the smallest building blocks (modules) and build progressively on top of them. In addition to the modules, subworkflows, and *main.nf* files, you will need the configuration file (*nextflow.config*) and the TSV file containing the FASTQ paths. Copy them into the `modular` directory:
 
-```
+```bash
 $ cp nextflow_zero2hero_practicals/nextflow-zero2hero/practicals/day2/2-modules_and_subworkflows/nextflow.config .
 $ cp nextflow_zero2hero_practicals/nextflow-zero2hero/practicals/day2/2-modules_and_subworkflows/test_input.tsv .
 ```
@@ -83,6 +83,6 @@ Keep the following points in mind:
 
 Once your code is ready in the `modular` directory, test it by running:
 
-```
+```bash
 $ nextflow run main.nf
 ```

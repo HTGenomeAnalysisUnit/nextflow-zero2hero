@@ -42,7 +42,7 @@ To complete this exercise you will need to:
 1. Create a new module *rdeval* and use it in the `READS_QC` workflow. Don't forget to set the configuration for this new module.
 2. Create a *bin/* folder and put the executable files there.
 3. Create an *assets/* folder and put little accessory files and schemas there.
-4. Create a *conf/* folder and and organize the nextflow configurations in different files.
+4. Create a *conf/* folder and split the Nextflow configuration from *all.config* into multiple configuration files.
 
 #### A note on `rdeval`
 

@@ -6,9 +6,8 @@ show_analysis_time: False
 
 report_header_info:
   - Course: "NEXTLFOW - From zero to hero"
-  - Title: "Best practices for pipeline structure"
+  - Session: "3-Best practices for pipeline structure"
   - Day: "3"
-  - Session: 3
 
-custom_logo: "assets/ht_logo.png"
+custom_logo: "ht_logo.png"
 

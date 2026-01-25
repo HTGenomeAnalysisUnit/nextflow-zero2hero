@@ -1,4 +1,4 @@
-# Day 3 - Advanced publish
+# Day 3 – Section 2 – Advanced publish
 ---
 ## Introduction
 
@@ -43,7 +43,7 @@ process FASTP {
 
 Before you start, create an interactive session with the required resources and dependencies:
 
-```
+```bash
 # get an interactive session
 $ srun --wait=0 --pty -p cpu-interactive -c 1 --mem 4G -J nxf_training /bin/bash
 
@@ -53,7 +53,7 @@ $ module load singularity nextflow/25.04.3
 
 If you followed our suggestion, you should already have a `practicals_output` folder for running the exercises. Create a dedicated subdirectory for this practical and move into it:
 
-```
+```bash
 # set <practicals_outputs> as the path where you created your workspace
 $ mkdir -p practicals_outputs/day3/2-advanced_publish
 $ cd practicals_outputs/day3/2-advanced_publish
@@ -61,22 +61,21 @@ $ cd practicals_outputs/day3/2-advanced_publish
 
 You will do 6 different exercises during this practical. For each of them, create a dedicated directory and copy the *nextflow.config* for this session from the reference materials.
 
-```
+```bash
 # example for exercise 1, repeat this for the rest of exercises!
 $ mkdir exercise_1
 $ cd exercise_1
-$ cp nextflow_zero2hero_practicals/nextflow-zero2hero/practicals/day3/2-advanced_publish/nextflow.config .
-$ cp nextflow_zero2hero_practicals/nextflow-zero2hero/practicals/day3/2-advanced_publish/test_input.tsv .
-$ cp nextflow_zero2hero_practicals/nextflow-zero2hero/practicals/day3/2-advanced_publish/main.nf .
+$ cp nextflow_zero2hero_practicals/nextflow-zero2hero/practicals/day3/2-advanced_publish/* .
 ```
 
 For each exercise, modify the FASTP process in *main.nf* with `publishDir` to accomplish the objective, then execute the pipeline by doing:
 
-```
+```bash
 # in the exercise folder, ie. exercise_1
 $ nextflow run .
 ```
 
+Use the parameter `outdir` (`params.outdir`) as the root directory for publishing your files. Unless otherwise specified, use the `copy` mode in the exercise. 
 
 ### Exercise 1: Basic Publication with Multiple Directories
 
@@ -124,7 +123,7 @@ process FASTP {
 
 
 
-### Exercise 2: Organization by Sample_ID using Closures
+### Exercise 2: Organization by Sample_ID
 
 **Objective**: Create dynamic subdirectories based on `sample_id`.
 
@@ -145,16 +144,16 @@ results/
           └── [html files]
 ```
 
-**Hint**: Use closures in the `path` parameter that include the `sample_id` variable.
+**Hint**: Use the `sample_id` variable in `path`
 
 <details>
 <summary>View solution</summary>
 
 ```groovy
 process FASTP {
-    publishDir { "${params.outdir}/processed_reads/${sample_id}" }, pattern: '*-qced.fastq.gz'
-    publishDir { "${params.outdir}/qc_reports/${sample_id}" }, pattern: '*.json'
-    publishDir { "${params.outdir}/qc_reports/${sample_id}" }, pattern: '*.html'
+    publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
+    publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
+    publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.html'
     
     input:
     tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
@@ -343,11 +342,6 @@ process FASTP {
 }
 ```
 
-**Space usage comparison**:
-- `symlink`: ~0 MB additional (links only)
-- `copy`: ~100% of original size
-- `move`: ~0 MB additional (moves without copying)
-
 </details>
 
 
@@ -356,7 +350,7 @@ process FASTP {
 
 **Objective**: Learn to use Groovy's date formatting to add timestamps to published files.
 
-**Task**: Implement a publishDir configuration that renames HTML files to include a date suffix like `{sample_id}_report_{date}.html` (example, *sample1_report_20260128.html*)
+**Task**: Implement a `publishDir` configuration that renames HTML files to include a date suffix like `{sample_id}_report_{date}.html` (example, *sample1_report_20260128.html*)
 
 **Hints**:
 - In `saveAs`, use `new Date().format('yyyyMMdd')` to generate the date string.
