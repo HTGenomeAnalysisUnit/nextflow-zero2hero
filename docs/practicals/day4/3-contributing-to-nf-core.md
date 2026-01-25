@@ -1,4 +1,4 @@
-# Day4 - Section 3 - Contributing to nf-core
+# 3. Contributing to nf-core
 
 This section covers the practical steps to engage with the nf-core community and contribute to the project through code development, collaborative discussion, and pull requests.
 
@@ -11,7 +11,8 @@ This section covers the practical steps to engage with the nf-core community and
 The nf-core community is most active on Slack. This is where discussions, announcements, and collaborative problem-solving happen.
 
 **How to join:**
-1. Visit: https://nf-co.re/join/slack
+
+1. Visit: [https://nf-co.re/join/slack](https://nf-co.re/join/slack)
 2. You'll receive an invitation to join the nf-core Slack workspace
 3. Create your account and set your profile
 
@@ -28,7 +29,7 @@ The nf-core community is most active on Slack. This is where discussions, announ
 
 Watch important repositories to receive notifications:
 
-1. Go to https://github.com/nf-core/
+1. Go to [https://github.com/nf-core/](https://github.com/nf-core/)
 2. Select repositories of interest (`nf-core/modules`, `nf-core/configs`, `nf-core/tools`)
 3. Click **Watch** > **Custom** > Select notification preferences
 
@@ -37,7 +38,7 @@ Watch important repositories to receive notifications:
 **Regular Events:**
 
 - **Bytesize Talks**: Short (10-15 minute) technical presentations held regularly
-   - Schedule: Check Slack `#events` or https://nf-co.re/events
+   - Schedule: Check Slack `#events` or [https://nf-co.re/events](https://nf-co.re/events)
    - Topics: Recent developments, community tools, data management, best practices
    - Format: Live presentation + Q&A + recording available
 
@@ -50,7 +51,7 @@ Watch important repositories to receive notifications:
    - Held twice a year
    - Dedicated nf-core track with talks on pipeline development and best practices
    - Networking opportunities with core developers and the broader community
-   - Check https://summit.nextflow.io for dates and registration
+   - Check [https://summit.nextflow.io](https://summit.nextflow.io) for dates and registration
 
 ---
 
@@ -60,7 +61,7 @@ Watch important repositories to receive notifications:
 
 Contributing to nf-core follows a structured GitHub workflow:
 
-```
+```text
 Identify issue
     ↓
 Discuss solution
@@ -87,13 +88,14 @@ Approve & merge
 ### 2.1: Understanding Issues
 
 **Issues** are the starting point for any contribution. They describe:
+
 - Bug reports: Something is broken and needs fixing
 - Feature requests: New functionality that would benefit the pipeline
 - Documentation: Missing or unclear documentation
 
 **Finding issues:**
 
-1. Navigate to the pipeline repository (e.g., https://github.com/nf-core/rnaseq)
+1. Navigate to the pipeline repository (e.g., [https://github.com/nf-core/rnaseq](https://github.com/nf-core/rnaseq))
 2. Click **Issues** tab
 3. Filter by labels:
     - `good first issue`: Recommended for newcomers
@@ -136,7 +138,7 @@ We will exemplify this with the `salmoquant` workflow that was developed in the 
 
 The first step is forking the repository. A **fork** is your personal copy of the repository where you can make changes without affecting the original. This prevents contributors from creating many branches and keeps the original project clean.
 
-1. Visit the https://github.com/nfdata-omics/salmoquant repository
+1. Visit the [https://github.com/nfdata-omics/salmoquant](https://github.com/nfdata-omics/salmoquant) repository
 2. Click the **Fork** button (top right)
 3. Choose where to fork (select your personal GitHub account)
 4. GitHub creates a copy at `https://github.com/YOUR_USERNAME/salmoquant`
@@ -144,9 +146,11 @@ The first step is forking the repository. A **fork** is your personal copy of th
 #### Feature Branches
 
 **Branches** allow you to work on features independently:
+
 - Create a feature branch from the `dev` branch for your specific changes
 
 To create a branch `fix-salmon-memory` on your fork of nfdata-omics/salmoquant directly on GitHub:
+
 - Visit your forked repository at `https://github.com/YOUR_USERNAME/salmoquant`
 - Click the **Branch** dropdown and select `dev`
 - Again in the **Branch** dropdown, type `fix-salmon-memory` in the text field
@@ -175,6 +179,7 @@ We can edit the `conf/modules.config` configuration file to increase memory allo
 ```
 
 When working in a proper development environment, you should perform these validation steps:
+
 - Use pre-commit hooks to catch issues early
 - Run the nf-core linting: `nf-core pipelines lint`
 - Run the test profile: `nextflow run -profile test,...`
@@ -184,11 +189,12 @@ When working in a proper development environment, you should perform these valid
 
 Once you've committed your changes to your feature branch and pushed them to your fork:
 
-1. Go to https://github.com/YOUR_USERNAME/salmoquant
+1. Go to `https://github.com/YOUR_USERNAME/salmoquant`
 2. You'll see a banner: "fix-salmon-memory had recent pushes"
 3. Click the **Compare & pull request** button
 
 Fill in the PR description using the provided PR template. Be clear about:
+
 - What changes you made
 - Why you made them
 
@@ -197,10 +203,12 @@ Click **Create pull request** to submit your PR.
 **What happens next:**
 
 Automated checks run automatically:
+
 - Code linting
 - GitHub Actions tests
 
 Status indicators show:
+
 - ✅ All checks passed
 - ⚠️ Some checks failing (address before merge)
 - 🔄 Checks in progress
@@ -210,6 +218,7 @@ Status indicators show:
 When the feature is implemented and tests are successful, the PR needs to be reviewed by the project maintainers.
 
 Reviewers may request:
+
 - **Changes**: Modifications required before merge
 - **Comments**: Questions or suggestions
 - **Approvals**: Confirmation that code is acceptable
@@ -217,11 +226,13 @@ Reviewers may request:
 Be patient: reviews may take a few days. Watch for notifications from GitHub about comments or reviews. If needed, you can notify the maintainers on Slack.
 
 When reviewers request changes:
+
 - Respond to their comments
 - Commit new changes to your feature branch to address their requests
 - The PR automatically updates with your new commits—no need to create a new PR
 
 Once the PR is approved:
+
 - You or a maintainer can merge the PR
 - If there are conflicts, they need to be resolved first
 - Your changes are then integrated into the `dev` branch
@@ -275,11 +286,11 @@ Identify a feature you want to implement in the salmoquant pipeline. Here are so
 
 Complete these steps to submit your contribution:
 
-1. Fork https://github.com/nfdata-omics/salmoquant to your personal namespace
+1. Fork [https://github.com/nfdata-omics/salmoquant](https://github.com/nfdata-omics/salmoquant) to your personal namespace
 2. Create a feature branch on your fork (starting from `dev`)
-3. Clone the repository to your working environment and checkout your feature branch
-4. Work on your changes locally, ensuring your code passes linting and testing steps
-5. Push the changes to the feature branch on your fork
+3. Open a new GitHub codespace from your fork on your feature branch.
+4. Work on your changes, ensuring your code passes linting and testing steps
+5. Commit and push the changes to the feature branch on your fork
 6. Open a pull request to nfdata-omics/salmoquant
 
 ---
@@ -300,7 +311,7 @@ By completing these exercises, you should be able to:
 
 ## Resources
 
-- **nf-core website**: https://nf-co.re/
-- **nf-core Slack**: https://nf-co.re/join/slack
-- **GitHub Guides**: https://guides.github.com/
-- **Nextflow Documentation**: https://www.nextflow.io/docs/latest/
+- **nf-core website**: [https://nf-co.re/](https://nf-co.re/)
+- **nf-core Slack**: [https://nf-co.re/join/slack](https://nf-co.re/join/slack)
+- **GitHub Guides**: [https://guides.github.com/](https://guides.github.com/)
+- **Nextflow Documentation**: [https://www.nextflow.io/docs/latest/](https://www.nextflow.io/docs/latest/)

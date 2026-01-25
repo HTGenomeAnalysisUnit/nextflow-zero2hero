@@ -1,4 +1,4 @@
-# Day 4 - Section 1 - Configuring and Launching nf-core Pipelines
+# 1. Configuring and Launching nf-core Pipelines
 
 This section covers the practical steps to discover, configure, and execute nf-core pipelines on the cluster.
 
@@ -7,17 +7,16 @@ This section covers the practical steps to discover, configure, and execute nf-c
 ## Exercise 1: Exploring nf-core Pipelines
 
 ### Objective
+
 Familiarize yourself with the nf-core website, understand pipeline formats, and identify available pipelines.
 
 ### 1.1: Visit the nf-core Website
 
-Open your browser and navigate to:
-```
-https://nf-co.re/
-```
+Open your browser and navigate to: `https://nf-co.re/`
 
 **What to explore:**
-- The **Pipelines** section (https://nf-co.re/pipelines)
+
+- The [**Pipelines** section](https://nf-co.re/pipelines)
 - Browse available pipelines and their categories (RNA-seq, scRNA-seq, ChIP-seq, etc.)
 
 ### 1.2: Understanding Pipeline Documentation
@@ -36,6 +35,7 @@ Find and click on `nf-core/rnaseq` to access the detailed documentation, which i
 ## Exercise 2: Pulling and Launching nf-core Pipelines
 
 ### Objective
+
 Learn how to obtain nf-core pipelines using Nextflow's caching mechanism.
 
 ### Prerequisites
@@ -48,12 +48,11 @@ Ensure you have:
 srun --wait=0 --pty -p cpu-interactive -c 1 --mem 8G -J nxf_training /bin/bash
 ```
 
-2. Activated your virtual environment (from preliminary steps) and loaded the OpenJDK and Singularity modules
+2. Loaded the nextflow and Singularity modules
 
 ```bash
-source  /scratch/$USER/nf-core/bin/activate
-module load openjdk/17.0.8.1_1
-module load singularity/3.8.5
+module load singularity
+module load nextflow/25.04.3
 ```
 
 3. A work folder for the course in your home directory where you will create, clone, and modify pipelines
@@ -61,7 +60,6 @@ module load singularity/3.8.5
 ```bash
 cd $HOME/nextflow_training/practicals_outputs/day4
 ```
-
 
 ### 2.1: Method 1 - Manual Cloning
 
@@ -83,6 +81,7 @@ nextflow run nf-core/rnaseq --help
 ```
 
 **What happens:**
+
 - Nextflow downloads the pipeline from GitHub
 - The pipeline is cached in `~/.nextflow/assets/nf-core/rnaseq/`
 - `--help` displays all available parameters with descriptions, defaults, and types
@@ -94,7 +93,8 @@ ls ~/.nextflow/assets/nf-core/rnaseq/
 ```
 
 **Expected output:**
-```
+
+```text
 CHANGELOG.md        LICENSE    bin   main.nf       nextflow.config       ro-crate-metadata.json  tower.yml
 CITATIONS.md        README.md  conf  modules       nextflow_schema.json  subworkflows            workflows
 CODE_OF_CONDUCT.md  assets     docs  modules.json  nf-test.config        tests
@@ -124,7 +124,7 @@ cd -
 
 Expected output:
 
-```
+```text
 Refresh index: 100% (677/677), done.
 HEAD detached at 3.22.0
 nothing to commit, working tree clean
@@ -143,11 +143,13 @@ Use `-r` to specify any release, branch, or commit hash.
 ## Exercise 3: Pipeline Configuration with nf-core configs
 
 ### Objective
+
 Learn how to use nf-core public profiles for HPC cluster configuration and understand profile structure.
 
 ### Background
 
 **nf-core/configs** are pre-configured parameter sets that:
+
 - Set maximum resource allocations (CPU, memory, time)
 - Configure execution environments (Docker, Singularity, Conda)
 - Optimize for specific compute systems (HPC clusters, cloud platforms)
@@ -157,9 +159,9 @@ These profiles are automatically sourced by nf-core pipelines and can be used wi
 
 ### 3.1: Explore Available Profiles
 
-- Go to https://nf-co.re/configs/ and search for "Human Technopole"
+- Go to [nf-core institutional config page](https://nf-co.re/configs/) and search for "Human Technopole"
 - Select the `humantechnopole` profile
-- Review the profile page (https://nf-co.re/configs/humantechnopole/) for general information, job file templates, and configuration details
+- Review the [Human Technopole profile page](https://nf-co.re/configs/humantechnopole/) for general information, job file templates, and configuration details
 
 ### 3.2: Use the `humantechnopole` Profile
 
@@ -171,7 +173,8 @@ grep config_profile final_config
 ```
 
 **Expected output:**
-```
+
+```groovy
   config_profile_name = null
   config_profile_description = 'Human Technopole cluster profile provided by nf-core/configs.'
   config_profile_contact = 'Edoardo Giacopuzzi (@edg1983)'
@@ -179,6 +182,7 @@ grep config_profile final_config
 ```
 
 This confirms that Nextflow has successfully loaded the configuration from the nf-core/configs repository. The profile automatically configures:
+
 - **Containerization**: Singularity containerization
 - **Job scheduler**: SLURM integration for cluster job submission
 - **Resource limits**: Maximum CPU, memory, and time allocations
@@ -188,6 +192,7 @@ This confirms that Nextflow has successfully loaded the configuration from the n
 ## Exercise 4: Preparing Input and Configuring Parameters
 
 ### Objective
+
 Learn how to prepare input data, generate parameter templates, and configure a pipeline run.
 
 ### 4.1: Prepare a Samplesheet
@@ -195,12 +200,14 @@ Learn how to prepare input data, generate parameter templates, and configure a p
 nf-core pipelines typically accept input sequences via a samplesheet with a common format:
 
 **Samplesheet format:**
+
 - CSV file with header row
 - Columns: `sample`, `fastq_1`, `fastq_2`
 - Paths can be absolute or relative to the working directory
 - Multiple lanes per sample are automatically merged
 
 For nf-core/rnaseq, an additional column specifies strandedness:
+
 - `strandedness`: RNA sequence strandness in the corresponding FASTQ file
 
 Create a folder named `rnaseq_test_01` and create `samplesheet.csv` with this content:
@@ -214,15 +221,6 @@ SRR6357071_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/test
 ### 4.2: Generate Parameters Template
 
 We recommend saving pipeline parameters in a YAML file to ensure reproducibility and easy recovery of settings.
-
-Using nf-core tools, generate a full parameter template:
-
-```bash
-nf-core pipelines create-params-file nf-core/rnaseq
-```
-
-This command generates a `nf-params.yml` file containing all pipeline parameters with descriptions and default values (all commented by default).
-
 For this exercise, create a custom `rnaseq_test_01/params.yaml` with minimal settings:
 
 ```yaml
@@ -271,7 +269,7 @@ nextflow run nf-core/rnaseq \
 
 If the pipeline version is stuck on a previous tag, you will encounter this error:
 
-```
+```text
 Project `nf-core/rnaseq` is currently stuck on revision: 3.22.0 -- you need to explicitly specify a revision with the option `-r` in order to use it
 ```
 
@@ -296,6 +294,7 @@ nextflow run nf-core/rnaseq \
 ```
 
 **Command-line flags explained:**
+
 - `-profile humantechnopole,singularity`: apply HT profile with Singularity containers
 - `-params-file params.yaml`: load parameters from the YAML file
 - `-w`: specify the work directory
@@ -342,6 +341,7 @@ exit
 ## Exercise 5: Understanding Pipeline Output Structure
 
 ### Objective
+
 Learn how to interpret and navigate nf-core pipeline output directories.
 
 ### Steps
@@ -357,7 +357,7 @@ tree -L 2
 
 **Expected directory structure:**
 
-```
+```bash
 ├── custom
 │   └── out
 ├── fastqc
@@ -403,6 +403,7 @@ tree -L 2
 Open the MultiQC report in a web browser for a comprehensive pipeline summary:
 
 **What to examine:**
+
 - General statistics across all samples
 - Trimming metrics
 - Salmon pseudo-alignment results
@@ -421,15 +422,16 @@ The `pipeline_info` folder contains detailed execution information:
 - `params_*.json`: Complete parameter set used for the run (useful for reproducibility and debugging)
 - `pipeline_dag_*.html`: Directed acyclic graph visualization of the workflow
 
-
 ## Exercise 6: Advanced Customization with Configuration Files
 
 ### Objective
+
 Learn how to customize pipeline behavior using configuration files beyond public profiles.
 
 ### Background
 
 Configuration files enable fine-grained control over pipeline execution:
+
 - Override default parameters
 - Customize resource allocation per process
 - Add custom command-line arguments to individual tools
@@ -513,6 +515,5 @@ By completing these exercises, you should be able to:
 
 ## Resources
 
-- **nf-core website**: https://nf-co.re/
-- **Nextflow documentation**: https://www.nextflow.io/docs/latest/
-
+- **nf-core website**: [https://nf-co.re/](https://nf-co.re/)
+- **Nextflow documentation**: [https://www.nextflow.io/docs/latest/](https://www.nextflow.io/docs/latest/)

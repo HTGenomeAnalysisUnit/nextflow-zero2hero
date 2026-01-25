@@ -1,4 +1,4 @@
-# Day4 - Section 2 - Developing an nf-core Pipeline from Scratch
+# 2. Developing an nf-core Pipeline from Scratch
 
 This section covers the practical steps to develop a new nf-core pipeline using the standardized nf-core template and tools.
 
@@ -12,35 +12,56 @@ Learn how to initialize a new nf-core pipeline using the template generator and 
 
 ---
 
-### 1.1: Prerequisites
+### 1.1: Launch GitHub Codespaces
 
-Ensure you have:
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/htgenomeanalysisunit/nextflow-zero2hero)
 
-1. Access to a compute node on the cluster:
+GitHub Codespaces provides a cloud-based development environment that eliminates the need for local setup. This is particularly convenient for Nextflow and nf-core development.
+
+**Starting your codespace:**
+
+Navigate to https://codespaces.new/htgenomeanalysisunit/nextflow-zero2hero to launch a new codespace. GitHub will automatically create a cloud-based virtual machine with a pre-configured development environment.
+
+**Accessing your codespace:**
+
+You have two options for accessing the codespace:
+
+1. **Browser-based VSCode** — Codespaces opens directly in your browser with a full VSCode interface. This requires no additional setup and works from any device with a web browser.
+
+2. **Local VSCode with Codespaces extension** — Install the "GitHub Codespaces" extension in your local VSCode. This allows you to connect to the remote codespace while working in your familiar local environment, with better performance on slower connections.
+
+**Setting up your working directory:**
+
+Once the codespace is running, open the terminal and navigate to the course practicals folder where we will complete the exercises:
 
 ```bash
-srun --wait=0 --pty -p cpu-interactive -c 1 --mem 8G -J nxf_training /bin/bash
+cd /workspaces/nextflow-zero2hero/practicals/day4/1-nf-core-introduction/
 ```
 
-2. Activated your nf-core Conda environment:
-
-```bash
-source  /scratch/$USER/nf-core/bin/activate
-module load openjdk/17.0.8.1_1
-module load singularity/3.8.5
-```
-
-3. A working directory for development:
-
-```bash
-cd $HOME/nextflow_training/practicals_outputs/day4
-```
-
-4. Make sure you have a GitHub account!
+The repository includes all necessary tools and dependencies pre-installed, including Nextflow, Docker, and *nf-core tools*.
+*nf-core tools* is a Python package developed by the nf-core community that provides utilities for Nextflow pipeline development and execution.
 
 ---
 
-### 1.2: Create a New Pipeline
+### 1.2: Install VSCode Extensions
+
+Install recommended extensions for VSCode. Go to the extensions marketplace and look for `nf-core-extensionpack`. This includes:
+
+- **Apptainer/Singularity** — Provides syntax highlighting for Apptainer/Singularity definition files
+- **Docker** — Makes it easy to create, manage, and debug containerized applications
+- **EditorConfig** — Support for EditorConfig project files for code standardization
+- **gitignore** — Language support for .gitignore files
+- **Markdown Extended** — Provides nice markdown previews, including admonitions
+- **Nextflow** — Nextflow language support
+- **Prettier** — Code formatter using Prettier
+- **Rainbow CSV** — Highlight columns in CSV files in different colors
+- **Ruff** — An extremely fast Python linter and code formatter, written in Rust
+- **Todo Tree** — Show TODO, FIXME, etc. comment tags in a tree view
+- **YAML** — YAML Language Support by Red Hat, with built-in Kubernetes syntax support
+
+---
+
+### 1.3: Create a New Pipeline
 
 Use the nf-core template generator:
 
@@ -51,9 +72,10 @@ nf-core pipelines create
 This will open an interactive prompt that you can use to customize the new pipeline:
 
 **Interactive prompts:**
+
 - **Pipeline type**: "Custom"
 - **GitHub organization**: your GitHub ID
-- **Workflow name**: "salmoquant"
+- **Workflow name**: "pseudoalign"
 - **Short Description**: a sentence on the pipeline purpose
 - **Author**: Your name
 - **Template features**: Toggle all features
@@ -64,12 +86,12 @@ This will open an interactive prompt that you can use to customize the new pipel
 Navigate to the created pipeline:
 
 ```bash
-cd *-salmoquant
+cd *-pseudoalign
 ```
 
 ---
 
-### 1.3: Explore the Template Structure
+### 1.4: Explore the Template Structure
 
 List the main directories:
 
@@ -79,7 +101,7 @@ tree -L 1 .
 
 **Key directories and files:**
 
-```
+```bash
 ├── CHANGELOG.md
 ├── CITATIONS.md
 ├── LICENSE
@@ -110,33 +132,13 @@ The template includes many tools, files, and directories, which can feel overwhe
 
 Configure VSCode with recommended extensions and set up pre-commit hooks for code quality.
 
----
-
-### 2.1: Install VSCode Extensions
-
-Open VSCode and install recommended extensions. Go to the extensions marketplace and look for `nf-core-extensionpack`. This includes:
-
-- **Apptainer/Singularity** — Provides syntax highlighting for Apptainer/Singularity definition files
-- **Docker** — Makes it easy to create, manage, and debug containerized applications
-- **EditorConfig** — Support for EditorConfig project files for code standardization
-- **gitignore** — Language support for .gitignore files
-- **Markdown Extended** — Provides nice markdown previews, including admonitions
-- **Nextflow** — Nextflow language support
-- **Prettier** — Code formatter using Prettier
-- **Rainbow CSV** — Highlight columns in CSV files in different colors
-- **Ruff** — An extremely fast Python linter and code formatter, written in Rust
-- **Todo Tree** — Show TODO, FIXME, etc. comment tags in a tree view
-- **YAML** — YAML Language Support by Red Hat, with built-in Kubernetes syntax support
-
----
-
-### 2.2: Examine Key Files Using the Nextflow Extension
+### 2.1: Examine Key Files Using the Nextflow Extension
 
 The Nextflow extension provides capabilities that help navigate a structured project like the nf-core template. One of the main features is the ability to follow links and import statements within the code and view popups that show the definitions of interfaces for processes and subworkflows.
 
 **Main workflow entry point:**
 
-Open file `main.nf` and follow the code from `main.nf` to `workflows/salmoquant.nf` and from `workflows/salmoquant.nf` to modules and subworkflows.
+Open file `main.nf` and follow the code from `main.nf` to `workflows/pseudoalign.nf` and from `workflows/pseudoalign.nf` to modules and subworkflows.
 
 **Configuration entry point:**
 
@@ -144,7 +146,7 @@ Open file `nextflow.config` and follow the main configuration through the variou
 
 ---
 
-### 2.3: Git Configuration
+### 2.2: Git Configuration
 
 The nf-core template comes initialized with git revision tracking:
 
@@ -168,7 +170,7 @@ We will get into their meaning and usage later.
 
 ---
 
-### 2.4: Set Up Pre-commit Hooks
+### 2.3: Set Up Pre-commit Hooks
 
 Pre-commit hooks automatically validate code before commits. The nf-core template includes a pre-commit configuration.
 
@@ -179,6 +181,7 @@ cat .pre-commit-config.yaml
 ```
 
 **Expected hooks:**
+
 - `prettier`: "opinionated code formatter"
 - Trailing whitespace removal
 - End-of-file fixer
@@ -216,12 +219,14 @@ Learn about nf-core modules and subworkflows, and how to integrate them into you
 ### Background
 
 **Modules:**
+
 - Self-contained code that define a single Nextflow process
 - Reusable across pipelines
 - Maintained in the nf-core/modules repository
 - Include: process definition, software container, documentation, and testing
 
 **Subworkflows:**
+
 - Multi-step workflows combining multiple modules
 - Reusable logical components
 - Maintained in the nf-core/modules repository
@@ -239,7 +244,7 @@ Open the folder for FastQC.
 
 **Typical module structure:**
 
-```
+```bash
 modules/nf-core/fastqc/
 ├── main.nf          # Process definition
 ├── meta.yml         # Module metadata and documentation
@@ -255,6 +260,7 @@ Open the `.nf` file. You will see that even for a simple task like FastQC, the p
 ### 3.2: Installing Required Modules
 
 For our Salmon-based RNA-seq pipeline, we need:
+
 - **FASTQC**: Quality control
 - **SALMON**: Pseudo-alignment and quantification
 - **MULTIQC**: Results aggregation
@@ -272,7 +278,8 @@ nf-core modules list remote | grep -i salmon
 ```
 
 You will see:
-```
+
+```text
 │ salmon/index                                          │
 │ salmon/quant                                          │
 ```
@@ -287,20 +294,20 @@ nf-core modules install salmon/quant
 
 ### 3.3: Including the Module in the Nextflow Code
 
-Now we will modify the `salmoquant.nf` file that contains the main workflow:
+Now we will modify the `pseudoalign.nf` file that contains the main workflow:
 
 ```diff
---- a/workflows/salmoquant.nf
-+++ b/workflows/salmoquant.nf
+--- a/workflows/pseudoalign.nf
++++ b/workflows/pseudoalign.nf
 @@ -9,6 +9,7 @@ include { paramsSummaryMap       } from 'plugin/nf-schema'
  include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
  include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
- include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_salmoquant_pipeline'
+ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pseudoalign_pipeline'
 +include { SALMON_QUANT           } from '../modules/nf-core/salmon/quant/main'
 
  /*
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -20,6 +21,10 @@ workflow SALMOQUANT {
+@@ -20,6 +21,10 @@ workflow pseudoalign {
 
      take:
      ch_samplesheet // channel: samplesheet read in from --input
@@ -310,7 +317,7 @@ Now we will modify the `salmoquant.nf` file that contains the main workflow:
      main:
 
      ch_versions = channel.empty()
-@@ -33,6 +38,20 @@ workflow SALMOQUANT {
+@@ -33,6 +38,20 @@ workflow pseudoalign {
      ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
      ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
@@ -387,14 +394,14 @@ index be8624f..a1f38dd 100644
      multiqc_config             = null
 ```
 
-Now the parameters can be used through the `params` object. For readability, we want to explicitly show the use of these files in the interface of the main "SALMOQUANT" workflow. We will create value channels in the main and then pass them explicitly to SALMOQUANT (in accordance with the interface we have already defined):
+Now the parameters can be used through the `params` object. For readability, we want to explicitly show the use of these files in the interface of the main "pseudoalign" workflow. We will create value channels in the main and then pass them explicitly to pseudoalign (in accordance with the interface we have already defined):
 
 ```diff
 diff --git a/main.nf b/main.nf
 index 4c29fc8..6787b78 100644
 --- a/main.nf
 +++ b/main.nf
-@@ -45,11 +45,18 @@ workflow MATBONFANTI_SALMOQUANT {
+@@ -45,11 +45,18 @@ workflow NFDATAOMICS_PSEUDOALIGN {
 
      main:
 
@@ -405,7 +412,7 @@ index 4c29fc8..6787b78 100644
      //
      // WORKFLOW: Run pipeline
      //
-     SALMOQUANT (
+     pseudoalign (
 -        samplesheet
 +        samplesheet,
 +        ch_salmon_index,
@@ -413,7 +420,7 @@ index 4c29fc8..6787b78 100644
 +        ch_gtf
      )
      emit:
-     multiqc_report = SALMOQUANT.out.multiqc_report // channel: /path/to/multiqc_report.html
+     multiqc_report = pseudoalign.out.multiqc_report // channel: /path/to/multiqc_report.html
 
 ```
 
@@ -454,8 +461,8 @@ In addition to input parameters, the format of the samplesheet is also validated
 ```json
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/matbonfanti/salmoquant/master/assets/schema_input.json",
-    "title": "matbonfanti/salmoquant pipeline - params.input schema",
+    "$id": "https://raw.githubusercontent.com/matbonfanti/pseudoalign/master/assets/schema_input.json",
+    "title": "matbonfanti/pseudoalign pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {
@@ -492,8 +499,8 @@ For our pipeline, we want to modify the schema to add a `strandedness` column th
 ```json
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/matbonfanti/salmoquant/master/assets/schema_input.json",
-    "title": "matbonfanti/salmoquant pipeline - params.input schema",
+    "$id": "https://raw.githubusercontent.com/matbonfanti/pseudoalign/master/assets/schema_input.json",
+    "title": "matbonfanti/pseudoalign pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {
@@ -537,7 +544,7 @@ Note the `"meta"` attribute, which allows storing a variable directly in the met
 
 ### 5.2: Check the Nextflow Code for Samplesheet Validation and Channel Initialization
 
-The samplesheet validation code is in the file `subworkflows/local/utils_nfcore_salmoquant_pipeline/main.nf`. This file, which is part of the template, contains subworkflows and Groovy functions used for pipeline initialization and completion, as well as functions for printing pipeline documentation. It is meant to be customized (as opposed to utility functions in the `subworkflows/nf-core` folder that should remain unchanged).
+The samplesheet validation code is in the file `subworkflows/local/utils_nfcore_pseudoalign_pipeline/main.nf`. This file, which is part of the template, contains subworkflows and Groovy functions used for pipeline initialization and completion, as well as functions for printing pipeline documentation. It is meant to be customized (as opposed to utility functions in the `subworkflows/nf-core` folder that should remain unchanged).
 
 The channel initialization for the samplesheet is at lines 87–105:
 
@@ -672,7 +679,7 @@ Now integrate the new process into the pipeline workflow with the following modi
  include { paramsSummaryMap       } from 'plugin/nf-schema'
  include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
  include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
- include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_salmoquant_pipeline'
+ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pseudoalign_pipeline'
  include { SALMON_QUANT           } from '../modules/nf-core/salmon/quant/main'
 +include { UNTAR_SALMON_INDEX     } from '../modules/local/untar_salmon_index/main'
 
@@ -724,11 +731,11 @@ Set up and execute a test run of the pipeline to verify functionality.
 
 For running a test, we can reuse the input from the previous section of the training ("Configuring and Launching nf-core Pipelines").
 
-Create a folder named `practicals_outputs/day4/rnaseq_test_02`:
+Create a folder named `/workspaces/nextflow-zero2hero/practicals/day4/1-nf-core-introduction/rnaseq_test_02`:
 
 ```bash
-mkdir -p rnaseq_test_02
-cd rnaseq_test_02
+mkdir -p ../rnaseq_test_02
+cd ../rnaseq_test_02
 ```
 
 Then create `samplesheet.csv`, `params.yaml`, and `custom.config`:
@@ -753,8 +760,6 @@ salmon_index: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/re
 ```groovy
 // Custom nf-core/rnaseq configuration
 
-singularity.cacheDir = "/scratch/matteo.bonfanti/nextflow/.singularity"
-
 process {
     resourceLimits = [
         cpus: 1,
@@ -767,7 +772,7 @@ process {
 Run the pipeline with the command:
 
 ```bash
-nextflow run ../*-salmoquant -profile singularity -params-file params.yaml -c custom.config -w ./work_test
+nextflow run ../*-pseudoalign -profile docker -params-file params.yaml -c custom.config -w ./work_test
 ```
 
 ---
@@ -785,7 +790,7 @@ Learn how to validate pipeline code quality and write automated tests.
 Go back to the pipeline folder:
 
 ```bash
-cd ../*-salmoquant
+cd ../*-pseudoalign
 ```
 
 Check pipeline compliance with nf-core standards:
@@ -795,6 +800,7 @@ nf-core pipelines lint
 ```
 
 The tool runs a number of named tests that span most of the nf-core guidelines, including:
+
 - Inconsistencies with the pipeline template
 - Incorrect module code and format
 - Schema validation issues
@@ -825,7 +831,7 @@ Next, customize the `conf/test.config` file, which contains the profile definiti
     Defines input files and everything required to run a fast and simple pipeline test.
 
     Use as follows:..
-        nextflow run .../salmoquant -profile test,<docker/singularity> --outdir <OUTDIR>
+        nextflow run .../pseudoalign -profile test,<docker/singularity> --outdir <OUTDIR>
 
 ----------------------------------------------------------------------------------------
 */
@@ -853,10 +859,8 @@ params {
 You can now run the test using the additional profile:
 
 ```bash
-cd ..
-mkdir -p rnaseq_test_03
-cd rnaseq_test_03
-nextflow run ../*-salmoquant -profile singularity,test --outdir output -w ./work_test
+cd ../rnaseq_test_02
+nextflow run ../*-pseudoalign -profile docker,test --outdir output -w ./work_test -resume
 ```
 
 ---
@@ -869,7 +873,7 @@ However, there is a challenge: Salmon does not produce deterministic results, so
 
 To address this, configure nf-test to ignore the checksums of files dependent on Salmon quantification. Add these lines to `tests/.nftignore`:
 
-```
+```text
 multiqc/multiqc_data/multiqc_salmon.txt
 multiqc/multiqc_data/salmon_plot.txt
 salmon/*/aux_info/fld.gz
@@ -885,11 +889,13 @@ salmon/*meta_info.json
 Run the test with this command to create a snapshot of the output:
 
 ```bash
-nf-test test tests/default.nf.test --profile +singularity --verbose --update-snapshot
+cd ../*-pseudoalign
+nf-test test tests/default.nf.test --profile +docker --verbose --update-snapshot
 ```
 
 The arguments are:
-- `--profile +singularity` — Use the Singularity profile in addition to the default profile
+
+- `--profile +docker` — Use the Docker profile in addition to the default profile
 - `--verbose` — Print detailed output
 - `--update-snapshot` — Create or update snapshot files for comparison in future test runs
 
@@ -927,8 +933,8 @@ If the pre-commit hooks detect any formatting issues, the files will be automati
 
 Create a new repository on GitHub:
 
-1. Go to https://github.com/new
-2. Name it: `salmoquant`
+1. Go to [https://github.com/new](https://github.com/new)
+2. Name it: `pseudoalign`
 3. Add a description
 4. Choose public or private visibility
 5. Create the repository
@@ -936,12 +942,35 @@ Create a new repository on GitHub:
 Connect the local repository to GitHub:
 
 ```bash
-git remote add origin https://github.com/<YOUR-GITHUB-ID>/salmoquant.git
+git remote add origin https://github.com/<YOUR-GITHUB-ID>/pseudoalign.git
 git branch -M master
 git push -u origin master
 git push -u origin dev
 git push -u origin TEMPLATE
 ```
+
+### 9.3: Close GitHub codespace
+
+When you've completed your work, close the codespace to conserve your free account budget. GitHub provides a limited number of free codespace hours monthly.
+
+**Stop the codespace:**
+
+1. Go to [https://github.com/codespaces](https://github.com/codespaces)
+2. Find your codespace in the list
+3. Click the three dots (**...**) menu next to it
+4. Select **Stop codespace**
+
+**Delete the codespace (optional):**
+
+If you won't need it again, delete it to free up storage:
+
+1. On [https://github.com/codespaces](https://github.com/codespaces), click the three dots menu
+2. Select **Delete**
+
+**Restart later:**
+
+You can resume a stopped codespace at any time from the same page. Your work will be preserved.
+
 
 ---
 
@@ -967,4 +996,3 @@ By completing these exercises, you should be able to:
 - **nf-core tools documentation**: https://nf-co.re/tools
 - **Nextflow documentation**: https://www.nextflow.io/docs/latest/
 - **nf-test documentation**: https://www.nf-test.com/
-

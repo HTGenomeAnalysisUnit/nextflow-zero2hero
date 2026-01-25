@@ -1,6 +1,3 @@
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/htgenomeanalysisunit/nextflow-zero2hero)
-
 # 2. Developing an nf-core Pipeline from Scratch
 
 This section covers the practical steps to develop a new nf-core pipeline using the standardized nf-core template and tools.
@@ -32,8 +29,7 @@ Learn how to initialize a new nf-core pipeline using the template generator and 
 
 ### 1.1: Launch GitHub codespace
 
-
-### 1.1: Launch GitHub Codespaces
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/htgenomeanalysisunit/nextflow-zero2hero)
 
 GitHub Codespaces provides a cloud-based development environment that eliminates the need for local setup. This is particularly convenient for Nextflow and nf-core development.
 
