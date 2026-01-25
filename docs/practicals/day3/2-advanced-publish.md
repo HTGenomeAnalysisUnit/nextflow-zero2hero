@@ -90,9 +90,7 @@ Use the parameter `outdir` (`params.outdir`) as the root directory for publishin
 
 ??? example "View solution"
 
-    Here is a possible solution:
-
-    ```groovy
+    ```
     process FASTP {
         publishDir "${params.outdir}/processed_reads", pattern: '*-qced.fastq.gz'
         publishDir "${params.outdir}/qc_reports/json", pattern: '*.json'
@@ -145,34 +143,32 @@ results/
 
 ??? example "View solution"
 
-    Here is a possible solution:
-
     ```groovy
-    process FASTP {
-        publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
-        publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
-        publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.html'
-        
-        input:
-        tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
-        
-        output:
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
-        
-        
-        script:
-        fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
-        fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
-        """
-        fastp \
-            -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
-            -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
-            --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
-            --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
-            --thread ${task.cpus}
-        """
-    }
+        process FASTP {
+            publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
+            publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
+            publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.html'
+            
+            input:
+            tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
+            
+            output:
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
+            
+            
+            script:
+            fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
+            fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
+            """
+            fastp \
+                -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
+                -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
+                --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
+                --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
+                --thread ${task.cpus}
+            """
+        }
     ```
 
 ### Exercise 3: Advanced Renaming with `saveAs`
@@ -189,45 +185,43 @@ results/
 
 ??? example "View solution"
 
-    Here is a possible solution:
-
     ```groovy
-    process FASTP {
-        publishDir "${params.outdir}/processed_reads/${sample_id}", 
-            pattern: '*-qced.fastq.gz',
-            saveAs: { filename ->
-                if (filename.contains('R1')) return "${sample_id}_R1.fastq.gz"
-                else if (filename.contains('R2')) return "${sample_id}_R2.fastq.gz"
-                else return filename
-            }
-        
-        publishDir "${params.outdir}/qc_reports/${sample_id}", 
-            pattern: '*.json',
-            saveAs: { filename -> "${sample_id}_qc_report.json" }
-        
-        publishDir "${params.outdir}/qc_reports/${sample_id}", 
-            pattern: '*.html',
-            saveAs: { filename -> "${sample_id}_qc_report.html" }
-        
-        input:
-        tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
-        
-        output:
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
-        
-        script:
-        fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
-        fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
-        """
-        fastp \
-            -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
-            -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
-            --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
-            --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
-            --thread ${task.cpus}
-        """
-    }
+        process FASTP {
+            publishDir "${params.outdir}/processed_reads/${sample_id}", 
+                pattern: '*-qced.fastq.gz',
+                saveAs: { filename ->
+                    if (filename.contains('R1')) return "${sample_id}_R1.fastq.gz"
+                    else if (filename.contains('R2')) return "${sample_id}_R2.fastq.gz"
+                    else return filename
+                }
+            
+            publishDir "${params.outdir}/qc_reports/${sample_id}", 
+                pattern: '*.json',
+                saveAs: { filename -> "${sample_id}_qc_report.json" }
+            
+            publishDir "${params.outdir}/qc_reports/${sample_id}", 
+                pattern: '*.html',
+                saveAs: { filename -> "${sample_id}_qc_report.html" }
+            
+            input:
+            tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
+            
+            output:
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
+            
+            script:
+            fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
+            fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
+            """
+            fastp \
+                -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
+                -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
+                --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
+                --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
+                --thread ${task.cpus}
+            """
+        }
     ```
 
 ### Exercise 4: Conditional Publishing with `enabled`
@@ -244,41 +238,39 @@ results/
 
 ??? example "View solution"
 
-    Here is a possible solution:
-
     ```groovy
-    process FASTP {
-        publishDir "${params.outdir}/processed_reads/${sample_id}", 
-            pattern: '*-qced.fastq.gz',
-            enabled: params.save_reads
-        
-        publishDir "${params.outdir}/qc_reports/${sample_id}", 
-            pattern: '*.json',
-            enabled: params.save_json 
-        
-        publishDir "${params.outdir}/qc_reports/${sample_id}", 
-            pattern: '*.html',
-            enabled: params.save_html
-        
-        input:
-        tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
-        
-        output:
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
-        
-        script:
-        fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
-        fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
-        """
-        fastp \
-            -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
-            -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
-            --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
-            --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
-            --thread ${task.cpus}
-        """
-    }
+        process FASTP {
+            publishDir "${params.outdir}/processed_reads/${sample_id}", 
+                pattern: '*-qced.fastq.gz',
+                enabled: params.save_reads
+            
+            publishDir "${params.outdir}/qc_reports/${sample_id}", 
+                pattern: '*.json',
+                enabled: params.save_json 
+            
+            publishDir "${params.outdir}/qc_reports/${sample_id}", 
+                pattern: '*.html',
+                enabled: params.save_html
+            
+            input:
+            tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
+            
+            output:
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
+            
+            script:
+            fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
+            fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
+            """
+            fastp \
+                -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
+                -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
+                --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
+                --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
+                --thread ${task.cpus}
+            """
+        }
     ```
 
 ### Exercise 5: Combining Modes and Storage Strategies
@@ -295,43 +287,41 @@ results/
 
 ??? example "View solution"
 
-    Here is a possible solution:
-
     ```groovy
-    process FASTP {
-        publishDir "${params.outdir}/processed_reads/${sample_id}", 
-            mode: 'symlink',  
-            pattern: '*-qced.fastq.gz'
-        
-        publishDir "${params.outdir}/qc_reports/${sample_id}", 
-            mode: 'copy',  
-            pattern: '*.json'
-        
-        publishDir "${params.outdir}/qc_reports/${sample_id}", 
-            mode: 'move',  
-            pattern: '*.html',
-            failOnError: false  
-        
-        input:
-        tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
-        
-        output:
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
-        
-        
-        script:
-        fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
-        fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
-        """
-        fastp \
-            -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
-            -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
-            --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
-            --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
-            --thread ${task.cpus}
-        """
-    }
+        process FASTP {
+            publishDir "${params.outdir}/processed_reads/${sample_id}", 
+                mode: 'symlink',  
+                pattern: '*-qced.fastq.gz'
+            
+            publishDir "${params.outdir}/qc_reports/${sample_id}", 
+                mode: 'copy',  
+                pattern: '*.json'
+            
+            publishDir "${params.outdir}/qc_reports/${sample_id}", 
+                mode: 'move',  
+                pattern: '*.html',
+                failOnError: false  
+            
+            input:
+            tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
+            
+            output:
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
+            
+            
+            script:
+            fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
+            fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
+            """
+            fastp \
+                -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
+                -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
+                --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
+                --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
+                --thread ${task.cpus}
+            """
+        }
     ```
 
 ### Exercise 6: Adding Date Suffix 
@@ -346,37 +336,35 @@ results/
 
 ??? example "View solution"
 
-    Here is a possible solution:
-
     ```groovy
-    process FASTP {
-        publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
-        publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
-        publishDir "${params.outdir}/qc_reports/${sample_id}", 
-            pattern: '*.html',
-            saveAs: { filename ->
-                def date = new Date().format('yyyyMMdd')
-                return "${sample_id}_report_${date}.html"
-            }
-        
-        input:
-        tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
-        
-        output:
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
-        tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
-        
-        
-        script:
-        fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
-        fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
-        """
-        fastp \
-            -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
-            -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
-            --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
-            --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
-            --thread ${task.cpus}
-        """
-    }
+        process FASTP {
+            publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
+            publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
+            publishDir "${params.outdir}/qc_reports/${sample_id}", 
+                pattern: '*.html',
+                saveAs: { filename ->
+                    def date = new Date().format('yyyyMMdd')
+                    return "${sample_id}_report_${date}.html"
+                }
+            
+            input:
+            tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
+            
+            output:
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz"), path("${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz")
+            tuple val(sample_id), val(fastq_set_id), path("${fastq_R1_basename}-${fastq_set_id}_fastp.json"), path("${fastq_R1_basename}-${fastq_set_id}_fastp.html")
+            
+            
+            script:
+            fastq_R1_basename = fastq_R1.baseName.replace('.fastq', '')
+            fastq_R2_basename = fastq_R2.baseName.replace('.fastq', '')
+            """
+            fastp \
+                -i ${fastq_R1} -o ${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz \
+                -I ${fastq_R2} -O ${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz \
+                --json ${fastq_R1_basename}-${fastq_set_id}_fastp.json \
+                --html ${fastq_R1_basename}-${fastq_set_id}_fastp.html \
+                --thread ${task.cpus}
+            """
+        }
     ```
