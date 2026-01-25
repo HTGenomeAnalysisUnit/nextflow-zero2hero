@@ -45,6 +45,7 @@ nav:
       - Day 2:
           - Day2 Overview: practicals/day2/index.md
           - 1. Workflows: practicals/day2/1-workflows.md
+          - 2. Modules and subworkflows: practicals/day2/2-module-and-subworkflows.md
           - 3. Container basics: practicals/day2/3-containers-basics.md
           - 4. Using containers in Nextflow: practicals/day2/4-containers-nextflow.md
       - Day 3:
@@ -54,6 +55,7 @@ nav:
               - Reference documentation: practicals/day3/1-advanced-config/reference_documentation.md
               - Practical exercises: practicals/day3/1-advanced-config/exercises.md
           - 2. Advanced publish: practicals/day3/2-advanced-publish.md
+          - 3. Best practices for pipeline structure: practicals/day3/3-best-practises-pipeline-structure.md
       - Day 4:
           - Day4 Overview: practicals/day4/index.md
           - 1. configure and launch nf-core pipeline: practicals/day4/1-configuring-launching-pipelines.md
@@ -69,6 +71,7 @@ extra_css:
   - stylesheets/extra.css
 
 markdown_extensions:
+  - pymdownx.details
   - attr_list
   - toc:
       toc_depth: 3

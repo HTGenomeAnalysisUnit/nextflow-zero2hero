@@ -18,10 +18,10 @@ Here is a summary of available slide decks:
 | 2 | Introduction to containers | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day2/Day2-3-container_basic.pdf){: target="_blank" } |
 | 2 | Use containers in Nextflow | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day2/Day2-4-containers_in_nextflow.pdf){: target="_blank" } |
 | 2 | Basic configuration and process directives | |
-| 3 | Advanced configuration | |
-| 3 | Advanced publish of files | |
-| 3 | Best practices for pipeline structure | |
+| 3 | Advanced configuration | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day3/Day3-1-advanced_configuration.pdf){: target="_blank" } |
+| 3 | Advanced publish of files | [Slides PDF](https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero/blob/main/slides/day3/Day3-2-Advanced_publish.pdf){: target="_blank" } |
+| 3 | Best practices for pipeline structure | [Only practicals](){: target="_blank" } |
 | 3 | Advanced controls | |
 | 3 | Reporting and monitoring | |
-| 4 | nf-core introduction | |
-| 4 | nf-core basic tools | |
+| 4 | nf-core introduction | [Only practicals](https://htgenomeanalysisunit.github.io/nextflow-zero2hero/practicals/day4/){: target="_blank" } |
+| 4 | nf-core basic tools | [Only practicals](https://htgenomeanalysisunit.github.io/nextflow-zero2hero/practicals/day4/){: target="_blank" } |
