@@ -1,18 +1,12 @@
 # Advanced scripting inside a Nextflow process
 
-**Groovy vs Bash — theory with practice**
-
 This practical focuses on **Groovy scripting inside a single Nextflow process**.
 
 You will start from a **minimal working pipeline** and progressively extend the *same process*, learning **how Groovy is evaluated inside `script:` blocks** and how it differs from **Bash execution at runtime**.
 
-The key idea to keep in mind throughout the exercises is:
-
-> Inside a Nextflow process you are always writing **two languages**.
-
 ---
 
-## Mental model — two phases, two languages
+## Two phases, two languages
 
 A Nextflow process is evaluated in **two distinct phases**.
 
@@ -67,13 +61,49 @@ To prevent Groovy from expanding a Bash variable, it must be escaped:
 \$HOME
 ```
 
-Keep this boundary in mind while working through the exercises below.
+---
+
+## Introduction to Ternary Operators
+
+The **ternary operator** is a concise way to write simple conditional expressions in Groovy, the language used by Nextflow. It allows you to select between two values depending on a condition, all in a single line.
+
+### Syntax
+
+```bash
+condition ? valueIfTrue : valueIfFalse
+
+condition — a Boolean expression that is evaluated.
+
+valueIfTrue — the result returned if the condition is true.
+
+valueIfFalse — the result returned if the condition is false.
+```
+
+This is equivalent to a simple if/else statement but written in a compact and readable form.
+
+Example (generic)
+
+```bash
+def result = condition ? "Yes" : "No"
+```
+
+If condition is true, result will be "Yes".
+
+If condition is false, result will be "No".
+
+Why ternary operators are used in Nextflow
+
+* Dynamic value assignment — compute values based on conditions during pipeline construction (Groovy evaluation).
+
+* Simplify commands and options — generate flags, parameters, or metadata without verbose if/else blocks.
+
+* Concise and readable — keeps pipelines maintainable, especially when multiple conditional values are needed.
 
 ---
 
 # Exercise 1 — Sample names and variable scope
 
-Modify the process so that:
+Modify the `main.nf` so that:
 
 * Each input file produces a distinct output file
 
@@ -91,16 +121,6 @@ result.txt
 Because the process runs once per input file, outputs overwrite each other.
 
 ## Step 1 — Introduce a sample-specific variable (Groovy)
-
-Inside the script: block, define a variable derived from the input file:
-
-```bash
-
-script:
-def sample = read.simpleName
-
-
-```
 
 ### Choosing the right file property
 
@@ -136,7 +156,17 @@ Nextflow exposes several file properties that behave differently.
 Because output filenames should usually be **extension-free and stable**,
 `read.simpleName` is the safest default when deriving sample names for outputs.
 
+---
 
+Inside the script: block, define a variable derived from the input file:
+
+```bash
+
+script:
+def sample = read.simpleName
+
+
+```
 
 ## Step 2 — Use the variable in the command
 
@@ -184,13 +214,24 @@ process PROCESS_READ {
 
 ## Questions?
 
-* Why must sample be declared with def?
+* **Why must `sample` be declared with `def`?**  
+  Declaring `sample` with `def` makes it a **local Groovy variable**, scoped only to the `script:` block.  
+  This prevents accidental overwriting of other variables and ensures predictable behavior.
 
-* Why is simpleName preferable to name and baseName here?
+* **Why is `simpleName` preferable to `name` and `baseName` here?**  
+  `simpleName` removes **all file extensions**, producing a clean, stable sample name.  
+  `name` keeps all extensions, which may lead to long filenames.  
+  `baseName` removes only the last extension, which can leave residual extensions like `.fastq`.  
+  For output files, `simpleName` is usually safest.
 
-* Why would > $sample.txt not work?
+* **Why would `> $sample.txt` not work?**  
+  `$sample` is a **Bash variable**, but `sample` is a **Groovy variable**.  
+  Bash has no knowledge of Groovy variables unless they are expanded first.  
+  Using `${sample}` ensures the value is **injected by Groovy before Bash executes**.
 
-* At which phase is ${sample} expanded?
+* **At which phase is `${sample}` expanded?**  
+  `${sample}` is expanded during the **Groovy phase** (pipeline construction), **before the task runs**.  
+  By the time Bash executes, the value is already inserted into the command.
 
 ---
 
@@ -270,47 +311,12 @@ If you remove the `()`, `readType` becomes the **closure object itself**, not th
 
 ### Questions
 
-1. Why is the closure executed with `()`?
-2. What happens if you remove the parentheses?
-
----
-
-### Answers
-
 * **Why is the closure executed with `()`?**
   The parentheses call the closure immediately, returning the value (e.g., `"forward"`).
   Without calling it, `readType` is just a closure object, not a usable string.
 
 * **What happens if you remove the parentheses?**
   `readType` becomes a closure object. When Bash tries to use it, it will **not produce the expected string**, leading to errors or incorrect output.
-
----
-
-### Key point
-
-Closures in Nextflow are **evaluated during the Groovy phase**.
-
-Use them to compute values dynamically at pipeline construction time, and always call them with `()` if you want their result.
-
-```
-
----
-
-
-
-
-
-
-
-
-Perfect — let’s adapt this as **Exercise 4**, fully consistent with your previous exercises:
-
-* No separate “Theory” section, just integrated explanation.
-* Explicit explanation of what is happening inside the `def`.
-* Clear instructions, questions, and answers.
-* Fully `README.md`-ready formatting.
-
-Here’s the full Exercise 4:
 
 ---
 
@@ -357,22 +363,17 @@ Without calling the closure (`()`), `flag` would be a closure object, not a stri
 
 ### Questions
 
-1. Why is the closure executed with `()`?
-2. What happens if you remove the parentheses?
-3. Why is it preferable to compute this flag in Groovy rather than inside Bash?
-
----
-
-### Answers
-
 * **Why is the closure executed with `()`?**
+
   Calling the closure immediately returns the computed string (e.g., `"--tumor"`).
   Without `()`, `flag` is just a closure object.
 
 * **What happens if you remove the parentheses?**
+
   The Bash command receives a closure object, not a string, causing errors or unexpected behavior.
 
 * **Why is it preferable to compute this flag in Groovy rather than inside Bash?**
+
   Computing it in Groovy ensures the **pipeline is explicit and predictable**:
   the command already contains the correct value before execution.
   It avoids Bash string manipulation errors and makes the process more maintainable.
@@ -382,7 +383,8 @@ Without calling the closure (`()`), `flag` would be a closure object, not a stri
 
 # Exercise 4 —  Using `task.cpus` (Groovy metadata)
 
-* Goal: use **all allocated CPUs** for the task, but allow for a **minimum of 1 thread**.
+use **all allocated CPUs** for the task, but allow for a **minimum of 1 thread**.
+
 * If `task.cpus` is set to 2, then use 2 threads.
 * If `task.cpus` is higher, use that many threads.
 * If `task.cpus` is unset, default to 1.
@@ -419,10 +421,6 @@ echo "Threads: ${threads}" >> ${sample}.txt
 ## Question
 
 Why is this preferable to hard-coding thread counts?
-
----
-
-## Answer
 
 * Using `task.cpus` ensures that the process **adapts to the allocated resources**.
 * Hard-coding thread counts can lead to **over- or under-utilization** of CPUs.
@@ -466,10 +464,6 @@ echo "Memory option: ${memOpt}" >> memory.txt
 
 Why is this preferable to hard-coding memory values?
 
----
-
-### Answer
-
 * Using `task.memory` ensures the process **adapts to the allocated resources**.
 * Hard-coded memory options can **exceed available memory** or **underutilize resources**.
 * Computing the option in Groovy guarantees a **deterministic and safe value** that reflects the environment.
@@ -477,7 +471,6 @@ Why is this preferable to hard-coding memory values?
 ---
 
 # Exercise 7 — Groovy vs Bash expansion
-
 
 Inside the `script:` block, print a Groovy variable and a Bash environment variable:
 
@@ -523,7 +516,3 @@ Confusing the two is the source of most bugs in advanced Nextflow scripting.
 * **Bash phase:** shell variables (`$VAR`) and commands are executed **at runtime**.
 
 By separating the Groovy and Bash outputs, you can **see clearly which variables are evaluated when**, and avoid the most common Nextflow scripting errors.
-
-```
-
----
