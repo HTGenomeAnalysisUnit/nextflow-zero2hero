@@ -337,7 +337,6 @@ results/
 ??? example "View solution"
 
     ```
-    
         process FASTP {
             publishDir "${params.outdir}/processed_reads/${sample_id}", pattern: '*-qced.fastq.gz'
             publishDir "${params.outdir}/qc_reports/${sample_id}", pattern: '*.json'
@@ -368,5 +367,4 @@ results/
                 --thread ${task.cpus}
             """
         }
-        
     ```
