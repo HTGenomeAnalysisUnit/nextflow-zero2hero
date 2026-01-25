@@ -233,8 +233,297 @@ However, this behavior is implicit and unsafe.
 
 ---
 
-# Exercise 3 — ...
+# Exercise 3 — Groovy Closures
+
+Inside the `script:` block, define a variable `readType` using a closure:
+
+```nextflow
+def readType = {
+    simpleName.endsWith('_R1') ? 'forward' :
+    simpleName.endsWith('_R2') ? 'reverse' :
+    'single'
+}()
+````
+
+Then print it to the output:
+
+```bash
+echo "Read type: ${readType}" >> ${sample}.txt
+```
+
+---
+
+### What is happening
+
+* The `{ ... }` syntax defines a **Groovy closure**, which is like a small function or code block.
+* The `()` at the end **calls the closure immediately**, producing a value that is stored in `readType`.
+* Inside the closure:
+
+  * `simpleName.endsWith('_R1') ? 'forward' : ...` is a **ternary expression**.
+  * It checks the filename suffix and returns `"forward"`, `"reverse"`, or `"single"`.
+* This all happens during **Groovy evaluation** (pipeline construction), before Bash executes the command.
+* The value of `readType` (a string) is then injected into the Bash command.
+
+If you remove the `()`, `readType` becomes the **closure object itself**, not the computed value. Bash cannot use a closure object, so the command will fail or produce unexpected output.
+
+---
+
+### Questions
+
+1. Why is the closure executed with `()`?
+2. What happens if you remove the parentheses?
+
+---
+
+### Answers
+
+* **Why is the closure executed with `()`?**
+  The parentheses call the closure immediately, returning the value (e.g., `"forward"`).
+  Without calling it, `readType` is just a closure object, not a usable string.
+
+* **What happens if you remove the parentheses?**
+  `readType` becomes a closure object. When Bash tries to use it, it will **not produce the expected string**, leading to errors or incorrect output.
+
+---
+
+### Key point
+
+Closures in Nextflow are **evaluated during the Groovy phase**.
+
+Use them to compute values dynamically at pipeline construction time, and always call them with `()` if you want their result.
+
+```
+
+---
 
 
 
 
+
+
+
+
+Perfect — let’s adapt this as **Exercise 4**, fully consistent with your previous exercises:
+
+* No separate “Theory” section, just integrated explanation.
+* Explicit explanation of what is happening inside the `def`.
+* Clear instructions, questions, and answers.
+* Fully `README.md`-ready formatting.
+
+Here’s the full Exercise 4:
+
+---
+
+# Exercise 4 — Conditional behavior from filenames
+
+### Practice
+
+Inside the `script:` block, define a variable `flag` based on the filename:
+
+```nextflow
+def flag = { 
+    sample.contains('tumor') ? '--tumor' : '--normal' 
+}()
+````
+
+Then print the generated command:
+
+```bash
+echo "Command: mytool ${flag} -i ${read.name}" >> ${sample}.txt
+```
+
+Test with these files:
+
+```text
+sample_tumor.fastq.gz
+sample_normal.fastq.gz
+```
+
+---
+
+### What is happening
+
+* The `{ ... }` syntax defines a **closure** (a code block that computes a value).
+* The `()` at the end **calls the closure immediately**, producing the string value for `flag`.
+* Inside the closure:
+
+  * `sample.contains('tumor') ? '--tumor' : '--normal'` is a **ternary expression**.
+  * It checks whether the sample name includes `"tumor"` and returns the appropriate flag.
+* This computation happens **during Groovy evaluation**, so the final Bash command already includes the resolved value.
+
+Without calling the closure (`()`), `flag` would be a closure object, not a string, and the Bash command would fail.
+
+---
+
+### Questions
+
+1. Why is the closure executed with `()`?
+2. What happens if you remove the parentheses?
+3. Why is it preferable to compute this flag in Groovy rather than inside Bash?
+
+---
+
+### Answers
+
+* **Why is the closure executed with `()`?**
+  Calling the closure immediately returns the computed string (e.g., `"--tumor"`).
+  Without `()`, `flag` is just a closure object.
+
+* **What happens if you remove the parentheses?**
+  The Bash command receives a closure object, not a string, causing errors or unexpected behavior.
+
+* **Why is it preferable to compute this flag in Groovy rather than inside Bash?**
+  Computing it in Groovy ensures the **pipeline is explicit and predictable**:
+  the command already contains the correct value before execution.
+  It avoids Bash string manipulation errors and makes the process more maintainable.
+
+---
+
+
+# Exercise 4 —  Using `task.cpus` (Groovy metadata)
+
+* Goal: use **all allocated CPUs** for the task, but allow for a **minimum of 1 thread**.
+* If `task.cpus` is set to 2, then use 2 threads.
+* If `task.cpus` is higher, use that many threads.
+* If `task.cpus` is unset, default to 1.
+
+Set the process header to specify available CPUs:
+
+```nextflow
+cpus 2
+````
+
+Inside the `script:` block, define the number of threads dynamically:
+
+```nextflow
+def threads = { task.cpus ?: 1 }()
+```
+
+Then use it in the command:
+
+```bash
+echo "Threads: ${threads}" >> ${sample}.txt
+```
+
+---
+
+## What is happening
+
+* `task.cpus` gives the **number of CPUs allocated** to this process.
+* The closure `{ task.cpus ?: 1 }` returns `task.cpus` if it exists, otherwise defaults to 1.
+* `()` calls the closure immediately during **Groovy evaluation**, storing the value in `threads`.
+* The Bash command can now safely use `${threads}` for multithreading tools.
+
+---
+
+## Question
+
+Why is this preferable to hard-coding thread counts?
+
+---
+
+## Answer
+
+* Using `task.cpus` ensures that the process **adapts to the allocated resources**.
+* Hard-coding thread counts can lead to **over- or under-utilization** of CPUs.
+* This approach guarantees a **dynamic, deterministic, and safe value** that reflects the actual environment.
+
+---
+
+# Exercise 6 — Using `task.memory` (Groovy metadata)
+
+Set the process header to specify memory:
+
+```nextflow
+memory '8 GB'
+````
+
+Inside the `script:` block, define a memory option for your tool based on the allocated memory:
+
+```nextflow
+def memOpt = { "-m ${task.memory.toMega()}" }()
+```
+
+Then print it to the output:
+
+```bash
+echo "Memory option: ${memOpt}" >> memory.txt
+```
+
+---
+
+### What is happening
+
+* `task.memory` gives the **memory allocated** to the process.
+* `task.memory.toMega()` converts the value to **megabytes**, which many tools require for command-line options.
+* The closure `{ "-m ${task.memory.toMega()}" }` constructs the tool-specific memory string.
+* `()` calls the closure immediately during **Groovy evaluation**, so `${memOpt}` is a proper string before Bash execution.
+* The Bash command can now safely use `${memOpt}` when running memory-aware tools.
+
+---
+
+### Question
+
+Why is this preferable to hard-coding memory values?
+
+---
+
+### Answer
+
+* Using `task.memory` ensures the process **adapts to the allocated resources**.
+* Hard-coded memory options can **exceed available memory** or **underutilize resources**.
+* Computing the option in Groovy guarantees a **deterministic and safe value** that reflects the environment.
+
+---
+
+# Exercise 7 — Groovy vs Bash expansion
+
+
+Inside the `script:` block, print a Groovy variable and a Bash environment variable:
+
+```bash
+echo "Home: \$HOME" > bash_variables.txt
+echo "Path: \$PATH" >> bash_variables.txt
+
+```
+
+
+## What is happening
+
+* `${sample}`, `${readType}`, `${flag}`, `${threads}`, `${memOpt}` are all **Groovy variables**.
+
+  * Their values are computed during **Groovy evaluation** (pipeline construction) and injected into the Bash commands.
+* `$HOME` is a **Bash environment variable**.
+
+  * It is expanded **at task runtime**.
+  * Saving it in a separate file (`bash_variables.txt`) makes the distinction explicit.
+* **Takeaway rule:** Always ask:
+
+> “Is this evaluated by Groovy, or by Bash?”
+
+Confusing the two is the source of most bugs in advanced Nextflow scripting.
+
+---
+
+## Examples of expansion
+
+| Variable      | Expanded by | When             |
+| ------------- | ----------- | ---------------- |
+| `${sample}`   | Groovy      | Before execution |
+| `${threads}`  | Groovy      | Before execution |
+| `${readType}` | Groovy      | Before execution |
+| `$HOME`       | Bash        | Runtime          |
+| `$PATH`       | Bash        | Runtime          |
+
+---
+
+## Key point
+
+* **Groovy phase:** variables (`def var`, closures) and `${var}` are computed **before Bash runs**.
+* **Bash phase:** shell variables (`$VAR`) and commands are executed **at runtime**.
+
+By separating the Groovy and Bash outputs, you can **see clearly which variables are evaluated when**, and avoid the most common Nextflow scripting errors.
+
+```
+
+---
