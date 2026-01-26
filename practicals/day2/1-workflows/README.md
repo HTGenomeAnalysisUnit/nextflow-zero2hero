@@ -63,8 +63,8 @@ You should have as results 2 folders with the following structure:
 
 1. **Expand the Main Workflow**:
 
-   - Take a file reference_genome that describe the params.reference_genome or the path /processing_data/reference_datasets/iGenomes/2025.1/Homo_sapiens/NCBI/GRCh38/Sequence/BWAIndex/genome.fa
-   - Add a channel called bwa_index_ch that contains a tuple with the BWA indexes. The indexes are: genome.fa.amb  genome.fa.ann  genome.fa.bwt  genome.fa.pac  genome.fa.sa 
+   - Set `reference_genome` from `params.reference_genome` (for example: `/processing_data/reference_datasets/iGenomes/2025.1/Homo_sapiens/NCBI/GRCh38/Sequence/BWAIndex/genome.fa`).
+   - Create a channel called `bwa_index_ch` that emits tuples containing the five BWA index files for `reference_genome`: `genome.fa.amb`, `genome.fa.ann`, `genome.fa.bwt`, `genome.fa.pac`, and `genome.fa.sa`.
 
 2. **Update the FASTP Module**:
    - Add an [`emit`] to output the first tuple as [`qced_reads`].
