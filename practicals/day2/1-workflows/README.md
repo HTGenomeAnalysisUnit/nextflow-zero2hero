@@ -30,7 +30,7 @@ This document outlines the steps to create a Nextflow workflow with one main wor
 1. Create a module called **FASTP** that:
    - Takes as input a tuple with the structure shown above.
    - Outputs two tuples:
-     - **First tuple**: Contains `sample_id`, `${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz`, `${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz`.
+     - **First tuple**: Contains `sample_id`, `${sample_id}_${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz`, `${sample_id}_${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz`.
      - **Second tuple**: Contains log and HTML files (not used for now).
 
 2. Use the following script to process the input and generate the output:
