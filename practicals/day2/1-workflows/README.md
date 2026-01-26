@@ -62,11 +62,9 @@ You should have as results 2 folders with the following structure:
 ### 1. Align and Merge FASTQ Files
 
 1. **Expand the Main Workflow**:
-   - Add a channel called [`processed_genome`] that contains a tuple with the reference genome and BWA indexes. The channel should look like this:
 
-     ```
-     [/.../genome.fa, [/.../genome.fa.amb, /.../genome.fa.ann, /.../genome.fa.bwt, /.../genome.fa.pac, /.../genome.fa.sa]]
-     ```
+   - Take a file reference_genome that describe the params.reference_genome or the path /processing_data/reference_datasets/iGenomes/2025.1/Homo_sapiens/NCBI/GRCh38/Sequence/BWAIndex/genome.fa
+   - Add a channel called bwa_index_ch that contains a tuple with the BWA indexes. The indexes are: genome.fa.amb  genome.fa.ann  genome.fa.bwt  genome.fa.pac  genome.fa.sa 
 
 2. **Update the FASTP Module**:
    - Add an [`emit`] to output the first tuple as [`qced_reads`].
@@ -79,10 +77,8 @@ You should have as results 2 folders with the following structure:
 ### 2. Creating the BWA_MEM Module
 
 1. Create a module called **BWA_MEM** that:
-   - Takes as input the [`bwa_input_ch`] channel with the following structure:
-     ```
-     val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2), path(reference_genome), path(reference_genome_indexes)
-     ```
+   - Takes as input the reference_genome file and the qced_reads and bwa_input_ch channel with the following structure:
+
    - Outputs two tuples:
      - `val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.bam")`
      - `val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.log")`
@@ -97,6 +93,9 @@ You should have as results 2 folders with the following structure:
         2> ${sample_id}-${fastq_set_id}.bwa.log \
         | samtools view --threads 4 -Sb - > ${sample_id}-${fastq_set_id}.bwa.bam
     ```
+
+
+3. Output the files of bwa in the folders results/alignments/sample_1/bwa/ and results/alignments/sample_2/bwa/
 
 ---
 
@@ -118,6 +117,7 @@ You should have as results 2 folders with the following structure:
     samtools merge -n -@ ${task.cpus} -o ${sample_id}.merged_raw.bam ${bam_files}
     ```
 
+3. The output of the program needs to go in the folders results/alignments/sample_1/merged_bam/ and results/alignments/sample_2/merged_bam/ 
 ---
 
 ### 4. Results: Alignments
