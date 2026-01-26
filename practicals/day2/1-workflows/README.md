@@ -30,7 +30,7 @@ This document outlines the steps to create a Nextflow workflow with one main wor
 1. Create a module called **FASTP** that:
    - Takes as input a tuple with the structure shown above.
    - Outputs two tuples:
-     - **First tuple**: Contains [`sample_id`], `${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz`, `${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz`.
+     - **First tuple**: Contains `sample_id`, `${fastq_R1_basename}-${fastq_set_id}-qced.fastq.gz`, `${fastq_R2_basename}-${fastq_set_id}-qced.fastq.gz`.
      - **Second tuple**: Contains log and HTML files (not used for now).
 
 2. Use the following script to process the input and generate the output:
@@ -43,6 +43,9 @@ This document outlines the steps to create a Nextflow workflow with one main wor
         --html ${sample_id}_${fastq_set_id}_fastp.html \
         --thread 4
     ```
+3. Gives in output the following tuples
+    -   tuple val(sample_id), val(fastq_set_id), "sample_id_fastq_set_id_R1_qced.fastq.gz", "sample_id_fastq_set_id_R2_qced.fastq.gz"
+    -   tuple "*.json", "*.html"
 
 ---
 
@@ -51,8 +54,8 @@ This document outlines the steps to create a Nextflow workflow with one main wor
 The results should be organized into two folders with the following structure:
 
 You should have as results 2 folders with the following structure:
-	- results/reads_qc/sample_1/fastp/sample_1_1_fastp.html  sample_1_1_R1_qced.fastq.gz ...
-	- results/reads_qc/sample_2/fastp/sample_2_1_fastp.html  sample_2_1_fastp.json ...
+-   results/reads_qc/sample_1/fastp/sample_1_1_fastp ....
+- results/reads_qc/sample_2/fastp/sample_2_1_fastp ....
 
 
 ---
@@ -63,21 +66,18 @@ You should have as results 2 folders with the following structure:
 
 1. **Expand the Main Workflow**:
 
-   - Set `reference_genome` from `params.reference_genome` (for example: `/processing_data/reference_datasets/iGenomes/2025.1/Homo_sapiens/NCBI/GRCh38/Sequence/BWAIndex/genome.fa`).
-   - Create a channel called `bwa_index_ch` that emits tuples containing the five BWA index files for `reference_genome`: `genome.fa.amb`, `genome.fa.ann`, `genome.fa.bwt`, `genome.fa.pac`, and `genome.fa.sa`.
+   - Set the object `reference_genome` from `params.reference_genome`.
+   - Create a channel called `bwa_index_ch` that contains tuples with the five BWA index files for `reference_genome`: `genome.fa.amb`, `genome.fa.ann`, `genome.fa.bwt`, `genome.fa.pac`, and `genome.fa.sa`. All these indexes are in the same path as the `params.reference_genome`. 
 
 2. **Update the FASTP Module**:
-   - Add an [`emit`] to output the first tuple as [`qced_reads`].
-
-3. **Combine Channels**:
-   - Combine [`processed_genome`] and [`qced_reads`] into a new channel called [`bwa_input_ch`].
+   - Add an `emit` to output the first tuple of the FASTP module as `qced_reads`.
 
 ---
 
 ### 2. Creating the BWA_MEM Module
 
 1. Create a module called **BWA_MEM** that:
-   - Takes as input the reference_genome file and the qced_reads and bwa_input_ch channel with the following structure:
+   - Takes as input the reference_genome file and the qced_reads and bwa_input_ch channel:
 
    - Outputs two tuples:
      - `val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.bam")`
@@ -95,7 +95,9 @@ You should have as results 2 folders with the following structure:
     ```
 
 
-3. Output the files of bwa in the folders results/alignments/sample_1/bwa/ and results/alignments/sample_2/bwa/
+3. Output the files of bwa in the folders 
+     - results/alignments/sample_1/bwa/
+     - results/alignments/sample_2/bwa/
 
 ---
 
@@ -117,7 +119,9 @@ You should have as results 2 folders with the following structure:
     samtools merge -n -@ ${task.cpus} -o ${sample_id}.merged_raw.bam ${bam_files}
     ```
 
-3. The output of the program needs to go in the folders results/alignments/sample_1/merged_bam/ and results/alignments/sample_2/merged_bam/ 
+3. The output of the program needs to go in the folders 
+     - results/alignments/sample_1/merged_bam/
+     - results/alignments/sample_2/merged_bam/ 
 ---
 
 ### 4. Results: Alignments

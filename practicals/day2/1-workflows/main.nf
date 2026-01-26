@@ -18,7 +18,7 @@ process FASTP {
             -I ${fastq_R2} -O ${sample_id}_${fastq_set_id}_R2_qced.fastq.gz \
             --json ${sample_id}_${fastq_set_id}_fastp.json \
             --html ${sample_id}_${fastq_set_id}_fastp.html \
-            --thread ${task.cpus}
+            --thread 4
     """
 }
 
@@ -62,13 +62,11 @@ process SAMTOOLS_MERGE {
     
     script:
     """
-    samtools merge -n -@ ${task.cpus} -o ${sample_id}.merged_raw.bam ${bam_files}
+    samtools merge -n -@ 4 -o ${sample_id}.merged_raw.bam ${bam_files}
     """
 }
 
-workflow {
-    
-    // FASTP emits both qced_reads (used) and fastp_reports (optional)
+workflow {    
     Channel
         .fromPath(params.input_file)
         .splitCsv(header: true, sep: '\t')
