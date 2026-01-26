@@ -45,7 +45,7 @@ workflow PREPARE_GENOME {
 		.map { fasta_file -> tuple(
 			"${fasta_file.baseName}",
 			fasta_file,
-			file("${fasta_file.baseName}.fai")
+			file("${fasta_file}.fai")
 		) }
 
 	genome_fai_input
