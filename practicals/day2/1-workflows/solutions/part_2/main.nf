@@ -18,7 +18,7 @@ process FASTP {
             -I ${fastq_R2} -O ${sample_id}_${fastq_set_id}_R2_qced.fastq.gz \
             --json ${sample_id}_${fastq_set_id}_fastp.json \
             --html ${sample_id}_${fastq_set_id}_fastp.html \
-            --thread ${task.cpus}
+            --thread 4
     """
 }
 
@@ -29,7 +29,9 @@ process BWA_MEM {
     container 'community.wave.seqera.io/library/bwa_htslib_samtools:83b50ff84ead50d0'
 
     input:
-    tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2), path(reference_genome),  path(reference_genome_indexes) 
+    tuple val(sample_id), val(fastq_set_id), path(fastq_R1), path(fastq_R2)
+    path reference_genome
+    path bwa_index_ch 
 
     output:
     tuple val(sample_id), path("${sample_id}-${fastq_set_id}.bwa.bam"), emit: bam_file
@@ -60,13 +62,11 @@ process SAMTOOLS_MERGE {
     
     script:
     """
-    samtools merge -n -@ ${task.cpus} -o ${sample_id}.merged_raw.bam ${bam_files}
+    samtools merge -n -@ 4 -o ${sample_id}.merged_raw.bam ${bam_files}
     """
 }
 
-workflow {
-    
-    // FASTP emits both qced_reads (used) and fastp_reports (optional)
+workflow {    
     Channel
         .fromPath(params.input_file)
         .splitCsv(header: true, sep: '\t')
@@ -81,21 +81,9 @@ workflow {
         .set { input_fastq_ch }
     FASTP(input_fastq_ch)
     qc_reads_ch = FASTP.out.qced_reads
-    def ref_fa = file(params.reference_genome, checkIfExists: true)
-    def bwa_indexes = [
-    file("${params.reference_genome}.amb", checkIfExists: true),
-    file("${params.reference_genome}.ann", checkIfExists: true),
-    file("${params.reference_genome}.bwt", checkIfExists: true),
-    file("${params.reference_genome}.pac", checkIfExists: true),
-    file("${params.reference_genome}.sa",  checkIfExists: true)
-        ]
-
-    processed_genome = Channel.value(
-        tuple(ref_fa, bwa_indexes)   // 2 items: fasta, list-of-index-files
-        )
-    // IMPORTANT: processed_genome must be a CHANNEL emitting ONE tuple    
-    bwa_input_ch = qc_reads_ch.combine(processed_genome)
-    BWA_MEM(bwa_input_ch)
+    reference_genome = file(params.reference_genome, checkIfExists: true)
+    bwa_index_ch = Channel.fromPath("${params.reference_genome}.{amb,ann,bwt,pac,sa}", checkIfExists: true).collect()
+    BWA_MEM(qc_reads_ch, reference_genome, bwa_index_ch)
     bam_files_by_sample = BWA_MEM.out.bam_file.groupTuple(by: 0)
     SAMTOOLS_MERGE(bam_files_by_sample)
 }
