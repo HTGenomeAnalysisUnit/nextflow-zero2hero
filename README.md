@@ -8,7 +8,7 @@ Please refer to the [github pages website](https://htgenomeanalysisunit.github.i
 
 The data, slides and code examples used during the course are provided for you on out HPC in
 
-```
+```text
 /project/nextflow_zero2hero
 ```
 

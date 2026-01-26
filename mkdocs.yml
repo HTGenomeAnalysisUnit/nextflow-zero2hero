@@ -48,6 +48,7 @@ nav:
           - 2. Modules and subworkflows: practicals/day2/2-module-and-subworkflows.md
           - 3. Container basics: practicals/day2/3-containers-basics.md
           - 4. Using containers in Nextflow: practicals/day2/4-containers-nextflow.md
+          - 5. Basic configuration: practicals/day2/5-basic-config.md
       - Day 3:
           - Day3 Overview: practicals/day3/index.md
           - 1. Advanced configuration:
@@ -56,6 +57,8 @@ nav:
               - Practical exercises: practicals/day3/1-advanced-config/exercises.md
           - 2. Advanced publish: practicals/day3/2-advanced-publish.md
           - 3. Best practices for pipeline structure: practicals/day3/3-best-practises-pipeline-structure.md
+          - 4. Advanced scripting: practicals/day3/4-advanced-controls.md
+          - 5. Report and monitoring: practicals/day3/5-report-and-monitoring.md
       - Day 4:
           - Day4 Overview: practicals/day4/index.md
           - 1. configure and launch nf-core pipeline: practicals/day4/1-configuring-launching-pipelines.md
