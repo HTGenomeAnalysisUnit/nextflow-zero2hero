@@ -1,0 +1,7 @@
+input_file: "./assets/test_input.tsv"
+
+reference_genome: "/processing_data/reference_datasets/iGenomes/2025.1/Homo_sapiens/NCBI/GRCh38/Sequence/BWAIndex/genome.fa"
+
+outdir: "test_GRCh38"
+
+publish_mode: "copy" 

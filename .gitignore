@@ -14,3 +14,7 @@ work/
 # Other 
 .DS_Store
 *.log
+
+work/
+.nextflow/
+.nextflow.log*
