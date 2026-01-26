@@ -43,9 +43,9 @@ This document outlines the steps to create a Nextflow workflow with one main wor
         --html ${sample_id}_${fastq_set_id}_fastp.html \
         --thread 4
     ```
-3. Gives in output the following tuples
+3. Outputs the following tuples:
     -   tuple val(sample_id), val(fastq_set_id), "sample_id_fastq_set_id_R1_qced.fastq.gz", "sample_id_fastq_set_id_R2_qced.fastq.gz"
-    -   tuple "*.json", "*.html"
+    -   tuple val(sample_id), val(fastq_set_id), "*.json", "*.html"
 
 ---
 
