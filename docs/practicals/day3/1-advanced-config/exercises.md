@@ -26,9 +26,8 @@ For each exercise,
 
 1. create a new folder in your working space.
 2. in this folder you can customise the configuration by
-
-   - creating a new `nextflow.config` file. Remember that if a file named `nextflow.config` is present in the same directory where you run Nextflow, it will be merged with any other configuration file present in the pipeline directory.
-   - creating a new config file with a dedicate name (e.g. `my_config.config`) and passing it to Nextflow using the `-c` option.
+  - creating a new `nextflow.config` file. Remember that if a file named `nextflow.config` is present in the same directory where you run Nextflow, it will be merged with any other configuration file present in the pipeline directory.
+  - creating a new config file with a dedicate name (e.g. `my_config.config`) and passing it to Nextflow using the `-c` option.
 
 ### Inspect the example workflow and configuration
 
@@ -566,8 +565,9 @@ profiles {
 }
 ```
 
-- `local` profile should:
+**Suggestions**:
 
+- `local` profile should:
   - set a maximum limit to the executor of 4 cpus and 16 GB of RAM
   - set the process executor to `local` 
   - set the process errorStrategy to `finish`
@@ -576,7 +576,6 @@ profiles {
   - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
 
 - `slurm` profile should allow us to submit job to the SLURM scheduler:
-
   - set a maximum limit to the executor queue size of 3
   - set the process executor to `slurm` and the queue to `cpuq`
   - set the resource limits of the system to 32 cpus, 550 GB memory and 30 days time
@@ -586,7 +585,6 @@ profiles {
   - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
 
 - `singularity` profile should enable singularity support and:
-
   - set the singularity cache directory to `/scratch/$USER/nextflow_singularity_cache`
   - add a Singularity run option to bind the `/localscratch` directory inside the container
 
