@@ -22,12 +22,12 @@ export PIPELINE_GPU_PATH=/my/work/folder/practicals/day3/1-advanced_config/workf
 
 ### How we will customise the configuration
 
-For each exercise, 
+For each exercise,
 
-1. create a new folder in your working space. 
+1. create a new folder in your working space.
 2. in this folder you can customise the configuration by
-	- creating a new `nextflow.config` file. Remember that if a file named `nextflow.config` is present in the same directory where you run Nextflow, it will be merged with any other configuration file present in the pipeline directory.
-	- creating a new config file with a dedicate name (e.g. `my_config.config`) and passing it to Nextflow using the `-c` option.
+  - creating a new `nextflow.config` file. Remember that if a file named `nextflow.config` is present in the same directory where you run Nextflow, it will be merged with any other configuration file present in the pipeline directory.
+  - creating a new config file with a dedicate name (e.g. `my_config.config`) and passing it to Nextflow using the `-c` option.
 
 ### Inspect the example workflow and configuration
 
@@ -52,7 +52,7 @@ params {
 
 ### Inspecting configuration changes
 
-During the exercises you are encourage to use the `nextflow config` command to inspect the resulting configuration before actually try to run the pipeline. 
+During the exercises you are encourage to use the `nextflow config` command to inspect the resulting configuration before actually try to run the pipeline.
 
 If you decided to modify the configuration using a custom config file name (e.g. `my_config.config` instead of `nextflow.config`), remember to pass it to Nextflow using the `-c` option before the `config` command.
 
@@ -64,7 +64,6 @@ nextflow config $PIPELINE_PATH
 # In case you created a custom config file named my_custom_file.config
 nextflow -c my_custom_file.config config $PIPELINE_PATH
 ```
-
 
 ## Exercise 1 - Activate singularity
 
@@ -137,7 +136,7 @@ cd my_work_dir/day3/1-advanced_config/2-executor
 
 For example, if you created a config file named `nextflow.config` in the previous exercise, copy it into this new directory:
 
-```
+```bash
 cp my_work_dir/day3/1-advanced_config/1-singularity/nextflow.config .
 ```
 
@@ -191,7 +190,7 @@ cd my_work_dir/day3/1-advanced_config/3-process_config1
 
 For example, if you created a config file named `nextflow.config` in the previous exercise, copy it into this new directory:
 
-```
+```bash
 cp my_work_dir/day3/1-advanced_config/2-executor/nextflow.config .
 ```
 
@@ -262,7 +261,7 @@ cd my_work_dir/day3/1-advanced_config/4-process_config2
 
 For example, if you created a config file named `nextflow.config` in the previous exercise, copy it into this new directory:
 
-```
+```bash
 cp my_work_dir/day3/1-advanced_config/3-process_config1/nextflow.config .
 ```
 
@@ -276,7 +275,8 @@ Modify the configuration in the `parabrick-haplotypecaller.nf` module to be able
 
 For this you will need to set relevant properties directly in the process definition. Specifically, you will need to set relevant [process resources parameters](reference_documentation.md#main-directives-to-control-resource-usage) and [container parameters](reference_documentation.md##container--environment-directives)
 
-To be able to use GPUs in our HPC, we need to modify the file `parabrick-haplotypecaller.nf` in `workflow_gpu` to 
+To be able to use GPUs in our HPC, we need to modify the file `parabrick-haplotypecaller.nf` in `workflow_gpu` to:
+
 - set the queue to `gpuq`
 - request one GPU to the scheduler by passing `--gres=gpu:1` to the `sbatch` command
 - enable GPU support in singularity by adding the `--nv` option to the `singularity exec` command
@@ -284,6 +284,7 @@ To be able to use GPUs in our HPC, we need to modify the file `parabrick-haploty
 To solve this, remember you can fine tune configuration of your computational environment at the process level by using directives like `clusterOptions` and `containerOptions`.
 
 Additionally, we need to configure the process to use more resources:
+
 - 8 cpus
 - 32 GB of RAM.
 
@@ -330,7 +331,8 @@ cd my_work_dir/day3/1-advanced_config/5-dynamic_resources
 ```
 
 For example, if you created a config file named `nextflow.config` in the previous exercise, copy it into this new directory.
-```
+
+```bash
 cp my_work_dir/day3/1-advanced_config/4-process_config2/nextflow.config .
 ```
 
@@ -363,13 +365,13 @@ Once you modified and saved the module code, you can run the standard pipeline i
 
 Note how the process BWA_MEM fails, but it is automatically retried with increased resources. The log notify you about this
 
-```
+```text
 [c3/cf932f] NOTE: Process `BWA_MEM (sample_1)` terminated with an error exit status (140) -- Execution is retried (1)
 ```
 
 And at the end you can see that some tasks were retried:
 
-```
+```text
 [11/050994] BWA_MEM (sample_2)        [100%] 4 of 4, retries: 4 ✔
 ```
 
@@ -399,7 +401,8 @@ cd my_work_dir/day3/1-advanced_config/6-fine_grained_process_config
 ```
 
 For example, if you created a config file named `nextflow.config` in the previous exercise, copy it into this new directory.
-```
+
+```bash
 cp my_work_dir/day3/1-advanced_config/5-dynamic_resources/nextflow.config .
 ```
 
@@ -408,6 +411,7 @@ cp my_work_dir/day3/1-advanced_config/5-dynamic_resources/nextflow.config .
 Instead of having the same resource settings for all processes, assign specific resources to each process by combining labels and name-based process configuration and use them to assign resources to each process as needed.
 
 We want to define three labels:
+
 - `process_low` for processes that require low resources (2 cpus, 4 GB memory, 1 hour time)
 - `process_high` for processes that require high resources (8 cpus, 16 GB memory, 4 hours time)
 - `process_high_memory` for processes that have special memory requirements with high memory (32 GB memory)
@@ -441,6 +445,7 @@ includeConfig 'process_labels.config'
 ```
 
 Finally, modify the modules and assign the appropriate labels to each process in the module files (`bwa.nf`, `samtools-merge.nf` and `samtools-sort.nf`) based on their resource requirements. In the end we want to have:
+
 - `BWA_MEM` process should require 4 cpus, 32 GB memory and 30 minutes time
 - `SAMTOOLS_MERGE` and `SAMTOOLS_SORT` processes should require 2 cpus, 4 GB memory and 5 minutes time
 
@@ -478,14 +483,14 @@ Now how can we edit our additional configuration file (`process_labels.config`) 
 
 Basically we want a way to assign the following properties specifically to this process directly from our configuration file:
 
-```
+```nextflow
 cpus = 8
 queue = 'gpuq'
 clusterOptions = '--gres=gpu:1'
 containerOptions = '--nv'
 ```
 
-Suggestion: you can define name-based configuration using the `withName` selector inside the `process` scope. Keep in mind that name-based configuration has higher priority than label-based configuration when there are conflicting settings.
+**Suggestion**: you can define name-based configuration using the `withName` selector inside the `process` scope. Keep in mind that name-based configuration has higher priority than label-based configuration when there are conflicting settings.
 
 Once you modified and saved the module code and your configuration file, you can run the gpu pipeline including this new configuration. You can inspect the `.command.run` files in the work directory to verify that the resource settings are correctly applied for each process based on the assigned labels.
 
@@ -521,7 +526,7 @@ cd my_work_dir/day3/1-advanced_config/7-profiles
 
 Copy all configuration files made in the previous exercise. We will likely have a `nextflow.config` file and a `process_labels.config` file. Copy them into this new directory.
 
-```
+```bash
 cp my_work_dir/day3/1-advanced_config/6-fine_grained_process_config/nextflow.config .
 cp my_work_dir/day3/1-advanced_config/6-fine_grained_process_config/process_labels.config .
 ```
@@ -541,6 +546,7 @@ We also want to create a `singularity` profile to quickly enable singularity sup
 For this you will need to restructure your main configuration file to create a [profile scope](reference_documentation.md#profiles-and-institutional-profiles) where we define multiple profiles to separate the configuration settings we added so far in multiple named profiles that will allows to quickly switch between computational environments (local or HPC) and activate Singularity support. 
 
 Modify your main configuration file (e.g. `nextflow.config`) to create a `profiles` scope where you will define the following profile blocks:
+
 - `local` profile for local execution that contains all the relevant settings for `executor` and `process` scope needed for local execution
 - `slurm` profile for HPC execution that contains all the relevant settings for `executor` and `process` scope needed for HPC execution
 - `singularity` profile to enable singularity support that contains all the relevant settings for the `singularity` scope needed to enable singularity support
@@ -559,28 +565,30 @@ profiles {
 }
 ```
 
-- `local` profile should
-   - set a maximum limit to the executor of 4 cpus and 16 GB of RAM
-   - set the process executor to `local` 
-   - set the process errorStrategy to `finish`
-   - set static resource allocation for all processes to 2 cpus, 8 GB memory and 5 minutes time for all processes
-   - ensure the `singularityce/3.10.3` module is loaded before running code in all processes
-   - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
-- `slurm` profile should allow us to submit job to the SLURM scheduler
-   - set a maximum limit to the executor queue size of 3
-   - set the process executor to `slurm` and the queue to `cpuq`
-   - set the resource limits of the system to 32 cpus, 550 GB memory and 30 days time
-   - ensure the `singularityce/3.10.3` module is loaded before running code in all processes
-   - set dynamic resource allocation for all processes based on the number of retry attempts as done in the previous exercise
-   - set the process `errorStrategy` to retry tasks that fail due to OOM or preemption for a maximum of 3 retries
-   - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
-- `singularity` profile should enable singularity support and
-   - set the singularity cache directory to `/scratch/$USER/nextflow_singularity_cache`
-   - add a Singularity run option to bind the `/localscratch` directory inside the container
+- `local` profile should:
+  - set a maximum limit to the executor of 4 cpus and 16 GB of RAM
+  - set the process executor to `local` 
+  - set the process errorStrategy to `finish`
+  - set static resource allocation for all processes to 2 cpus, 8 GB memory and 5 minutes time for all processes
+  - ensure the `singularityce/3.10.3` module is loaded before running code in all processes
+  - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
 
-Suggestions: Remember that inside each profile block, you can define all the setting and scopes you usually use in the configuration, using the same syntax.
+- `slurm` profile should allow us to submit job to the SLURM scheduler:
+  - set a maximum limit to the executor queue size of 3
+  - set the process executor to `slurm` and the queue to `cpuq`
+  - set the resource limits of the system to 32 cpus, 550 GB memory and 30 days time
+  - ensure the `singularityce/3.10.3` module is loaded before running code in all processes
+  - set dynamic resource allocation for all processes based on the number of retry attempts as done in the previous exercise
+  - set the process `errorStrategy` to retry tasks that fail due to OOM or preemption for a maximum of 3 retries
+  - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
 
-Once you modified and saved the configuration file, you can run the standard pipeline including this new configuration. You can now use the profile switches to decide if the processes will be executed on your local system or submitted to the HPC scheduler. 
+- `singularity` profile should enable singularity support and:
+  - set the singularity cache directory to `/scratch/$USER/nextflow_singularity_cache`
+  - add a Singularity run option to bind the `/localscratch` directory inside the container
+
+**Suggestions**: Remember that inside each profile block, you can define all the setting and scopes you usually use in the configuration, using the same syntax.
+
+Once you modified and saved the configuration file, you can run the standard pipeline including this new configuration. You can now use the profile switches to decide if the processes will be executed on your local system or submitted to the HPC scheduler.
 
 You can run the pipeline with the following command:
 
@@ -617,7 +625,7 @@ cd my_work_dir/day3/1-advanced_config/8-institutional_profiles
 
 Copy all configuration files made in the previous exercise. We will likely have a `nextflow.config` file and a `process_labels.config` file. Copy them into this new directory.
 
-```
+```bash
 cp my_work_dir/day3/1-advanced_config/7-profiles/nextflow.config .
 cp my_work_dir/day3/1-advanced_config/7-profiles/process_labels.config .
 ```
