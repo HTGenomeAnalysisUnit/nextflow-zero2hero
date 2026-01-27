@@ -1,0 +1,33 @@
+name: Attach GH-pages to Release
+
+# Trigger this workflow when a Release is published
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  upload-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the gh-pages branch specifically
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages # This tells git to grab the built website branch
+          path: gh-pages-files # Put it in a subdirectory to keep things clean
+
+      # 2. Zip the contents
+      - name: Zip the Website
+        run: |
+          cd gh-pages-files
+          # Zip everything but exclude the hidden .git folder
+          zip -r ../website-html.zip . -x ".git/*"
+
+      # 3. Upload the Zip to the Release
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: website-html.zip
