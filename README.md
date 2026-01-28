@@ -1,4 +1,4 @@
-# NEXTLFOW - From zero to hero
+# NEXTFLOW - From zero to hero
 
 Welcome to Nextflow - From zero to hero!
 
