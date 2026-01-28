@@ -22,19 +22,15 @@ process PROCESS_READ {
     
     suffix = "_processed"
     
-    def readType = {
-    read.simpleName.endsWith('_R1') ? 'forward' :
-    read.simpleName.endsWith('_R2') ? 'reverse' :
-    'single'
-    }()
+    def readType = read.simpleName.endsWith('_R1') ? 'forward' :
+                   read.simpleName.endsWith('_R2') ? 'reverse' :
+                    'single'
 
-    def flag = { 
-    sample.contains('tumor') ? '--tumor' : '--normal' 
-    }()
+    def flag = sample.contains('tumor') ? '--tumor' : '--normal' 
 
-    def threads = { task.cpus ?: 1 }()
+    def threads =  task.cpus ?: 1 
 
-    def memOpt = { "-m ${task.memory.toMega()}" }()
+    def memOpt =  "-m ${task.memory.toMega()}"
 
     """
     echo "Processing file: ${read.name}" > ${sample}${suffix}.txt
