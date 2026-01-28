@@ -123,7 +123,7 @@ Scopes in bold will be covered in more detail later.
 
 | Scope             | Purpose                          |
 | ----------------- | -------------------------------- |
-| **`docker`**      | Docker container execution       |
+| `docker`.         | Docker container execution       |
 | **`singularity`** | Singularity/Apptainer containers |
 | `podman`          | Podman container execution       |
 | `charliecloud`    | Charliecloud containers          |
@@ -187,7 +187,7 @@ Scopes in bold will be covered in more detail later.
 
 When using environmental variables in the configuration file, it is recommended to use the `env('VAR_NAME')`, but you can also include them directly using the `${}` syntax.
 
-```
+```groovy
 // Assuming your main.nf file is located at /my/workflow/dir
 // And you launch the nextflow run command from /my/current/dir
 params.data_dir = "${projectDir}/data" // sets params.data_dir to /my/workflow/dir/data
@@ -209,7 +209,7 @@ In general, you can activate support for a specific environmen§t/container tech
 - Conda based execution can be customised using the `createOptions` setting to pass extra command line options to the `conda/mamba create` command.
 - If mamba or micromamba is installed on the system, conda environments can be created faster by enabling the respective `useMamba` or `useMicromamba` flags.
 
-###  Singularity scope
+### Singularity scope
 
 | Setting         | Description                                                                                                             |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -250,7 +250,7 @@ In general, you can activate support for a specific environmen§t/container tech
 
 Key Settings:
 
-```
+```groovy
 executor {
     cpus = 16                   // MAX CPUs available to the executor (system limit)
     memory = '64.GB'            // MAX memory available to the executor (system limit)
@@ -276,7 +276,7 @@ Use case: Specify how much each process needs when it runs.
 
 Key Settings:
 
-```
+```groovy
 process {
     executor = 'slurm'          // Which executor each process uses
     cpus = 4                    // Request 4 CPUs for each task
@@ -298,7 +298,7 @@ These are per-task resource requests
 
 Scenario: Local Executor
 
-```
+```groovy
 executor {
     cpus = 16        // System has 16 CPUs total
     memory = '64.GB' // System has 64GB total
@@ -318,7 +318,7 @@ The more restrictive constraint (CPUs) wins → 4 parallel tasks
 
 Scenario: Cluster Executor (SLURM, SGE, etc.)
 
-```
+```groovy
 executor {
     queueSize = 50      // Submit up to 50 jobs at once
     account = 'myproject'
@@ -332,7 +332,8 @@ process {
     clusterOptions = '--gres=gpu:1'  // Extra options
 }
 ```
-Result:
+
+**Result**:
 
 Nextflow will use the SLURM executor to submit jobs to the 'batch' queue, requesting 8 CPUs and 32GB memory per job. It will limit the number of simultaneously submitted jobs to 50. 
 
@@ -340,7 +341,7 @@ Nextflow will use the SLURM executor to submit jobs to the 'batch' queue, reques
 
 It is also possible to set different executor settings for different executors in the executor scope:
 
-```
+```groovy
 executor {
     // Defaults for all executors
     pollInterval = '5sec'
@@ -399,7 +400,7 @@ process GPU_ANALYSIS {
 }
 ```
 
-Similarly you can define these directives in the `nextflow.config` configuration file under the `process` scope to apply them globally.
+Similarly, you can define these directives in the `nextflow.config` configuration file under the `process` scope to apply them globally.
 
 ```groovy
 process { // applies to all your processes
@@ -472,12 +473,14 @@ docker [engineOptions] run [runOptions] [containerOptions] image command
 Resources (and in general any directive) in a process can be defined dynamically using a closure (a piece of code within curly brackets `{}` that returns a compatible value). This allows you to set resources based on input file size, task attempt number, or any other logic.
 
 The most common use case is to adapt computational resources of environment based on:
+
 1. Retry attempts (`task.attempt`) - Scale resources when tasks fail and retry
 2. Exit status (`task.exitStatus`) - Previous failure reason (more on point 1 and 2 later)
 3. Input characteristics - Size, count, or type of input files
 4. Task metadata - Sample characteristics, parameters, etc.
 
 Few important notes:
+
 - closures are always enclosed in curly braces `{}` and must return a value compatible with the directive type
 - inside the closure you can access special `task` properties like `task.attempt` and any value from input channels
 - you can not access variables defined in the `script` block.
@@ -593,7 +596,7 @@ Nextflow provides several directives to control how task failures are handled an
 | --------- | ------- | ------ |
 | 0         | Success | Task completed normally |
 | 1         | General error | Script/command failure |
-| 104      | General error | Indicating resource issues like Out Of Memory or timeout in cloud platforms |
+| 104       | General error | Indicating resource issues like Out Of Memory or timeout in cloud platforms |
 | 127       | Command not found | Tool not in PATH |
 | 130       | SIGINT (Ctrl+C) | User interrupt |
 | 137       | SIGKILL (OOM) | Out of memory / killed by system |
@@ -688,7 +691,7 @@ You can combine both `withName` and `withLabel` selectors in the same configurat
 
 1. Example referring to a process directly by name:
 
-```groovy
+```nextflow
 // This is in your configuration file
 process {
     withName: 'RSCRIPT' {
@@ -705,7 +708,7 @@ process {
 
 Then in your process definition:
 
-```groovy
+```nextflow
 process RSCRIPT {
     // This will use 4 cpus and 16 GB of memory
     
@@ -727,7 +730,7 @@ process ANOTHER_RSCRIPT {
 
 2. Example using labels to group processes:
 
-```groovy
+```nextflow
 // This is in your configuration file
 process {
     withLabel: 'large_process' {
@@ -739,7 +742,7 @@ process {
 
 Then in your process definition:
 
-```groovy
+```nextflow
 // Both processes will use 64 GB and 16 CPUs as defined by the large_process label   
 process LARGE_ANALYSIS {
     label 'large_process'  
@@ -870,7 +873,7 @@ You can consult the full list of available nf-core institutional profiles visiti
 
 This is the `humantechnopole` profile used at Human Technopole HPC cluster and available from the [nf-core/configs repository](https://nf-co.re/configs/humantechnopole/).
 
-```
+```groovy
 params {
     max_memory = 550.GB
     max_time   = 30.d
@@ -921,14 +924,14 @@ singularity {
 3. `nextflow.config` in the launch directory
 4. `-c <config-file>` command line option
 5. Command line parameters (e.g., `--param value`)
-   
+
 ### Process-Specific Settings Priority (lowest → highest):
 
 When the same process directive is defined in multiple places the following order of precedence is applied:
 
 1. Process scope (base settings) - No selector in nextflow.config:
 
-```
+```groovy
 process {
     cpus = 4  // Applied to ALL processes
 }
@@ -936,7 +939,7 @@ process {
 
 2. Process definition directives - Inside the process itself:
 
-```
+```groovy
 process FOO {
     cpus 8  // Overrides base process scope
 }
@@ -944,7 +947,7 @@ process FOO {
 
 3. withLabel selectors - Matching process labels:
 
-```
+```groovy
 process {
     withLabel: big_mem {
         cpus = 16  // Overrides process directive
@@ -954,7 +957,7 @@ process {
 
 4. withName selectors - Matching process name:
 
-```
+```groovy
 process {
     withName: FOO {
         cpus = 32  // Overrides withLabel
@@ -964,7 +967,7 @@ process {
 
 5. withName with fully qualified name - workflow + name:
 
-```
+```groovy
 process {
     withName: 'WORKFLOW:SUBWORKFLOW:FOO' {
         cpus = 128  // HIGHEST PRIORITY
@@ -972,21 +975,21 @@ process {
 }
 ```
 
-### Configuration profiles 
+### Configuration profiles
 
 Profiles are just conditional config blocks that get applied when selected via `-profile`. 
 Settings inside a selected profile follow the same hierarchy above, but override non-profile settings at their respective level.
 
-### Environment Variables & CLI:
+### Environment Variables & CLI
 
 - `-c` option: Adds config files to the hierarchy (#4 above)
 - Command line params (`--param`): Highest priority for parameter values, override params in all config files
 
 ## Manifest scope
 
-The manifest scope is a configuration block in Nextflow that allows you to define essential metadata about your pipeline project. 
+The manifest scope is a configuration block in Nextflow that allows you to define essential metadata about your pipeline project.
 
-```
+```groovy
 manifest {
     name            = 'my-awesome-pipeline'
     author          = 'Jane Doe'

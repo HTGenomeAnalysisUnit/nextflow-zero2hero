@@ -84,6 +84,7 @@ cd my_work_dir/day3/1-advanced_config/1-singularity
 
 Prepare a config file to enable Singularity support for containerised execution. 
 
+- In our configuration we have pre-fetched container images available in a central location, we want to read images from here, but not store our new images in this location. For this, set the singularity library directory to `/project/nextflow_zero2hero/containers`
 - To be sure we are not clogging our working directory with output files, change the cache directory to a subfolder in your scratch space, let's say `/scratch/$USER/nextflow_cache`.
 - Additionally, add a Singularity run option to bind the `/localscratch` directory inside the container (required by our HPC setup).
 
@@ -153,7 +154,7 @@ Basically, you have to add new configuration blocks to your configuration file f
 - in which scope will you set the executor and the queue?
 - in which scope will you set the maximum number of concurrent jobs to be submitted?
 
-When you run the pipeline with the modified configuration, you will notice from the log that nextflow is now using SLURM to submit jobs to the specified queue. The logg will report `executor >  slurm (x)`. 
+When you run the pipeline with the modified configuration, you will notice from the log that nextflow is now using SLURM to submit jobs to the specified queue. The logg will report `executor >  slurm (x)`.
 
 If you check your HPC queue using `squeue -u $USER`, you will see that nextflow is submitting jobs for yout and that only 3 jobs are queued at any one time, as per the configuration.
 
@@ -221,7 +222,7 @@ How can you configure this in the configuration file?
 
 Hint: `beforeScript` can likely help you here.
 
-Once you added this additional setting to your configuration file, you can run the pipeline again. This time it should work fine. You can inspect one of the `.command.run` files in the work directory to verify that the singularity module is loaded before executing the actual command. 
+Once you added this additional setting to your configuration file, you can run the pipeline again. This time it should work fine. You can inspect one of the `.command.run` files in the work directory to verify that the singularity module is loaded before executing the actual command.
 
 If you load the tail of the file:
 
@@ -569,11 +570,15 @@ profiles {
 
 - `local` profile should:
     - set a maximum limit to the executor of 4 cpus and 16 GB of RAM
-    - set the process executor to `local` 
+    - set the process executor to `local`
     - set the process errorStrategy to `finish`
     - set static resource allocation for all processes to 2 cpus, 8 GB memory and 5 minutes time for all processes
     - ensure the `singularityce/3.10.3` module is loaded before running code in all processes
     - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
+- `singularity` profile should:
+    - enable singularity support
+    - set the singularity library directory to `/project/nextflow_zero2hero/containers`
+    - set the singularity cache directory to `/scratch/${env('USER')}/singularity_cache`
 - `slurm` profile should allow us to submit job to the SLURM scheduler:
     - set a maximum limit to the executor queue size of 3
     - set the process executor to `slurm` and the queue to `cpuq`
@@ -582,9 +587,8 @@ profiles {
     - set dynamic resource allocation for all processes based on the number of retry attempts as done in the previous exercise
     - set the process `errorStrategy` to retry tasks that fail due to OOM or preemption for a maximum of 3 retries
     - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
-- `singularity` profile should enable singularity support and:
-    - set the singularity cache directory to `/scratch/$USER/nextflow_singularity_cache`
     - add a Singularity run option to bind the `/localscratch` directory inside the container
+    - add a Singularity run option to activate the `--cleanenv` flag
 
 **Suggestions**: Remember that inside each profile block, you can define all the setting and scopes you usually use in the configuration, using the same syntax.
 

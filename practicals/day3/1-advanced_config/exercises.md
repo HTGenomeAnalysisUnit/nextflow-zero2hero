@@ -566,7 +566,10 @@ profiles {
    - set static resource allocation for all processes to 2 cpus, 8 GB memory and 5 minutes time for all processes
    - ensure the `singularityce/3.10.3` module is loaded before running code in all processes
    - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
-- `slurm` profile should allow us to submit job to the SLURM scheduler
+- `singularity` profile should:
+   - enable singularity support
+   - set the singularity cache directory to `/project/nextflow_zero2hero/containers`
+- `slurm` profile should allow us to submit job to the SLURM scheduler:
    - set a maximum limit to the executor queue size of 3
    - set the process executor to `slurm` and the queue to `cpuq`
    - set the resource limits of the system to 32 cpus, 550 GB memory and 30 days time
@@ -574,9 +577,9 @@ profiles {
    - set dynamic resource allocation for all processes based on the number of retry attempts as done in the previous exercise
    - set the process `errorStrategy` to retry tasks that fail due to OOM or preemption for a maximum of 3 retries
    - include special configuration for the `HAPLOTYPECALLER_GPU` process to enable GPU support as done in the previous exercise
-- `singularity` profile should enable singularity support and
-   - set the singularity cache directory to `/scratch/$USER/nextflow_singularity_cache`
    - add a Singularity run option to bind the `/localscratch` directory inside the container
+   - add a Singularity run option to activate the `--cleanenv` flag
+
 
 Suggestions: Remember that inside each profile block, you can define all the setting and scopes you usually use in the configuration, using the same syntax.
 
