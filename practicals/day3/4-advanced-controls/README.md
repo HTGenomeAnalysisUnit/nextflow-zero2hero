@@ -1,4 +1,4 @@
-# Advanced scripting inside a Nextflow process
+# Day 3 - section 4 - Groovy scripting inside Nextflow processes
 
 This practical focuses on **Groovy scripting inside a single Nextflow process**.
 
@@ -24,7 +24,7 @@ During this phase:
 
 Anything written as:
 
-```nextflow
+```groovy
 ${variable}
 ```
 
@@ -83,7 +83,7 @@ This is equivalent to a simple if/else statement but written in a compact and re
 
 Example (generic)
 
-```bash
+```groovy
 def result = condition ? "Yes" : "No"
 ```
 
@@ -101,16 +101,13 @@ Why ternary operators are used in Nextflow
 
 ---
 
-# Exercise 1 — Sample names and variable scope
+## Exercise 1 — Sample names and variable scope
 
 Modify the `main.nf` so that:
 
 * Each input file produces a distinct output file
-
 * The output filename is derived safely from the input
-
 * Variables inside script: are declared correctly using Groovy
-
 
 The initial pipeline always writes:
 
@@ -120,9 +117,9 @@ result.txt
 
 Because the process runs once per input file, outputs overwrite each other.
 
-## Step 1 — Introduce a sample-specific variable (Groovy)
+### Step 1 — Introduce a sample-specific variable (Groovy)
 
-### Choosing the right file property
+#### Choosing the right file property
 
 Given the input file:
 
@@ -168,7 +165,7 @@ def sample = read.simpleName
 
 ```
 
-## Step 2 — Use the variable in the command
+### Step 2 — Use the variable in the command
 
 Replace the command with:
 
@@ -182,8 +179,7 @@ Note that:
 
 * sample does not exist at runtime
 
-
-## Step 3 — Fix the output declaration
+### Step 3 — Fix the output declaration
 
 Because the filename is now dynamic, update the output: block:
 
@@ -213,7 +209,7 @@ process PROCESS_READ {
 }
 ```
 
-## Questions?
+### Questions?
 
 * **Why must `sample` be declared with `def`?**  
   Declaring `sample` with `def` makes it a **local Groovy variable**, scoped only to the `script:` block.  
@@ -235,7 +231,6 @@ process PROCESS_READ {
   By the time Bash executes, the value is already inserted into the command.
 
 ---
-
 
 ## Exercise 2 — Variable declaration inside the `script:` block
 
@@ -275,16 +270,16 @@ However, this behavior is implicit and unsafe.
 
 ---
 
-# Exercise 3 — Conditional behavior from filenames #1
+## Exercise 3 — Conditional behavior from filenames #1
 
 Inside the `script:` block, define a variable `readType` using a closure:
 
-```nextflow
+```groovy
 def readType = 
     simpleName.endsWith('_R1') ? 'forward' :
     simpleName.endsWith('_R2') ? 'reverse' :
     'single'
-````
+```
 
 Then print it to the output:
 
@@ -296,7 +291,6 @@ echo "Read type: ${readType}" >> ${sample}.txt
 
 ### What is happening
 
-
 * `simpleName.endsWith('_R1') ? 'forward' : ...` is a **ternary expression**.
 * It checks the filename suffix and returns `"forward"`, `"reverse"`, or `"single"`.
 * This all happens during **Groovy evaluation** (pipeline construction), before Bash executes the command.
@@ -304,15 +298,15 @@ echo "Read type: ${readType}" >> ${sample}.txt
 
 ---
 
-# Exercise 4 — Conditional behavior from filenames #2
+## Exercise 4 — Conditional behavior from filenames #2
 
 ### Practice
 
 Inside the `script:` block, define a variable `flag` based on the filename:
 
-```nextflow
+```groovy
 def flag =  sample.contains('tumor') ? '--tumor' : '--normal'
-````
+```
 
 Then print the generated command:
 
@@ -337,8 +331,7 @@ sample_normal.fastq.gz
 
 ---
 
-
-# Exercise 4 —  Using `task.cpus` (Groovy metadata)
+## Exercise 5 —  Using `task.cpus` (Groovy metadata)
 
 use **all allocated CPUs** for the task, but allow for a **minimum of 1 thread**.
 
@@ -348,13 +341,13 @@ use **all allocated CPUs** for the task, but allow for a **minimum of 1 thread**
 
 Set the process header to specify available CPUs:
 
-```nextflow
+```groovy
 cpus 2
-````
+```
 
 Inside the `script:` block, define the number of threads dynamically:
 
-```nextflow
+```groovy
 def threads =  task.cpus ?: 1
 ```
 
@@ -366,14 +359,14 @@ echo "Threads: ${threads}" >> ${sample}.txt
 
 ---
 
-## What is happening
+### What is happening
 
 * `task.cpus` gives the **number of CPUs allocated** to this process.
 * The Bash command can now safely use `${threads}` for multithreading tools.
 
 ---
 
-## Question
+### Question
 
 Why is this preferable to hard-coding thread counts?
 
@@ -383,17 +376,17 @@ Why is this preferable to hard-coding thread counts?
 
 ---
 
-# Exercise 6 — Using `task.memory` (Groovy metadata)
+## Exercise 6 — Using `task.memory` (Groovy metadata)
 
 Set the process header to specify memory:
 
-```nextflow
+```groovy
 memory '8 GB'
-````
+```
 
 Inside the `script:` block, define a memory option for your tool based on the allocated memory:
 
-```nextflow
+```groovy
 def memOpt = "-m ${task.memory.toMega()}"
 ```
 
@@ -424,7 +417,7 @@ Why is this preferable to hard-coding memory values?
 
 ---
 
-# Exercise 7 — Groovy vs Bash expansion
+## Exercise 7 — Groovy vs Bash expansion
 
 Inside the `script:` block, print a Groovy variable and a Bash environment variable:
 
@@ -434,8 +427,7 @@ echo "Path: \$PATH" >> bash_variables.txt
 
 ```
 
-
-## What is happening
+### What is happening
 
 * `${sample}`, `${readType}`, `${flag}`, `${threads}`, `${memOpt}` are all **Groovy variables**.
 
@@ -452,7 +444,7 @@ Confusing the two is the source of most bugs in advanced Nextflow scripting.
 
 ---
 
-## Examples of expansion
+### Examples of expansion
 
 | Variable      | Expanded by | When             |
 | ------------- | ----------- | ---------------- |
@@ -464,7 +456,7 @@ Confusing the two is the source of most bugs in advanced Nextflow scripting.
 
 ---
 
-## Key point
+### Key point
 
 * **Groovy phase:** variables (`def var`, closures) and `${var}` are computed **before Bash runs**.
 * **Bash phase:** shell variables (`$VAR`) and commands are executed **at runtime**.

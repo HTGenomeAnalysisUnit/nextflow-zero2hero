@@ -1,4 +1,4 @@
-# Day 3 - Section 4 - Advanced scripting inside a Nextflow process
+# Day 3 - section 4 - Groovy scripting inside Nextflow processes
 
 This practical focuses on **Groovy scripting inside a single Nextflow process**.
 
@@ -24,7 +24,7 @@ During this phase:
 
 Anything written as:
 
-```nextflow
+```groovy
 ${variable}
 ```
 
@@ -83,7 +83,7 @@ This is equivalent to a simple if/else statement but written in a compact and re
 
 Example (generic)
 
-```bash
+```groovy
 def result = condition ? "Yes" : "No"
 ```
 
@@ -106,9 +106,7 @@ Why ternary operators are used in Nextflow
 Modify the `main.nf` so that:
 
 * Each input file produces a distinct output file
-
 * The output filename is derived safely from the input
-
 * Variables inside script: are declared correctly using Groovy
 
 The initial pipeline always writes:
@@ -270,19 +268,18 @@ successfully injected into the command before execution.
 
 However, this behavior is implicit and unsafe.
 
----§
+---
 
-## Exercise 3 — Groovy Closures
+## Exercise 3 — Conditional behavior from filenames #1
 
 Inside the `script:` block, define a variable `readType` using a closure:
 
-```nextflow
-def readType = {
+```groovy
+def readType = 
     simpleName.endsWith('_R1') ? 'forward' :
     simpleName.endsWith('_R2') ? 'reverse' :
     'single'
-}()
-````
+```
 
 Then print it to the output:
 
@@ -294,41 +291,22 @@ echo "Read type: ${readType}" >> ${sample}.txt
 
 ### What is happening
 
-* The `{ ... }` syntax defines a **Groovy closure**, which is like a small function or code block.
-* The `()` at the end **calls the closure immediately**, producing a value that is stored in `readType`.
-* Inside the closure:
-
-  * `simpleName.endsWith('_R1') ? 'forward' : ...` is a **ternary expression**.
-  * It checks the filename suffix and returns `"forward"`, `"reverse"`, or `"single"`.
+* `simpleName.endsWith('_R1') ? 'forward' : ...` is a **ternary expression**.
+* It checks the filename suffix and returns `"forward"`, `"reverse"`, or `"single"`.
 * This all happens during **Groovy evaluation** (pipeline construction), before Bash executes the command.
 * The value of `readType` (a string) is then injected into the Bash command.
 
-If you remove the `()`, `readType` becomes the **closure object itself**, not the computed value. Bash cannot use a closure object, so the command will fail or produce unexpected output.
-
 ---
 
-### Questions
-
-* **Why is the closure executed with `()`?**
-  The parentheses call the closure immediately, returning the value (e.g., `"forward"`).
-  Without calling it, `readType` is just a closure object, not a usable string.
-
-* **What happens if you remove the parentheses?**
-  `readType` becomes a closure object. When Bash tries to use it, it will **not produce the expected string**, leading to errors or incorrect output.
-
----
-
-## Exercise 4 — Conditional behavior from filenames
+## Exercise 4 — Conditional behavior from filenames #2
 
 ### Practice
 
 Inside the `script:` block, define a variable `flag` based on the filename:
 
-```nextflow
-def flag = { 
-    sample.contains('tumor') ? '--tumor' : '--normal' 
-}()
-````
+```groovy
+def flag =  sample.contains('tumor') ? '--tumor' : '--normal'
+```
 
 Then print the generated command:
 
@@ -347,34 +325,9 @@ sample_normal.fastq.gz
 
 ### What is happening
 
-* The `{ ... }` syntax defines a **closure** (a code block that computes a value).
-* The `()` at the end **calls the closure immediately**, producing the string value for `flag`.
-* Inside the closure:
-
-  * `sample.contains('tumor') ? '--tumor' : '--normal'` is a **ternary expression**.
-  * It checks whether the sample name includes `"tumor"` and returns the appropriate flag.
+* `sample.contains('tumor') ? '--tumor' : '--normal'` is a **ternary expression**.
+* It checks whether the sample name includes `"tumor"` and returns the appropriate flag.
 * This computation happens **during Groovy evaluation**, so the final Bash command already includes the resolved value.
-
-Without calling the closure (`()`), `flag` would be a closure object, not a string, and the Bash command would fail.
-
----
-
-### Questions
-
-* **Why is the closure executed with `()`?**
-
-  Calling the closure immediately returns the computed string (e.g., `"--tumor"`).
-  Without `()`, `flag` is just a closure object.
-
-* **What happens if you remove the parentheses?**
-
-  The Bash command receives a closure object, not a string, causing errors or unexpected behavior.
-
-* **Why is it preferable to compute this flag in Groovy rather than inside Bash?**
-
-  Computing it in Groovy ensures the **pipeline is explicit and predictable**:
-  the command already contains the correct value before execution.
-  It avoids Bash string manipulation errors and makes the process more maintainable.
 
 ---
 
@@ -388,14 +341,14 @@ use **all allocated CPUs** for the task, but allow for a **minimum of 1 thread**
 
 Set the process header to specify available CPUs:
 
-```nextflow
+```groovy
 cpus 2
-````
+```
 
 Inside the `script:` block, define the number of threads dynamically:
 
-```nextflow
-def threads = { task.cpus ?: 1 }()
+```groovy
+def threads =  task.cpus ?: 1
 ```
 
 Then use it in the command:
@@ -409,8 +362,6 @@ echo "Threads: ${threads}" >> ${sample}.txt
 ### What is happening
 
 * `task.cpus` gives the **number of CPUs allocated** to this process.
-* The closure `{ task.cpus ?: 1 }` returns `task.cpus` if it exists, otherwise defaults to 1.
-* `()` calls the closure immediately during **Groovy evaluation**, storing the value in `threads`.
 * The Bash command can now safely use `${threads}` for multithreading tools.
 
 ---
@@ -429,14 +380,14 @@ Why is this preferable to hard-coding thread counts?
 
 Set the process header to specify memory:
 
-```nextflow
+```groovy
 memory '8 GB'
-````
+```
 
 Inside the `script:` block, define a memory option for your tool based on the allocated memory:
 
-```nextflow
-def memOpt = { "-m ${task.memory.toMega()}" }()
+```groovy
+def memOpt = "-m ${task.memory.toMega()}"
 ```
 
 Then print it to the output:
@@ -452,7 +403,6 @@ echo "Memory option: ${memOpt}" >> memory.txt
 * `task.memory` gives the **memory allocated** to the process.
 * `task.memory.toMega()` converts the value to **megabytes**, which many tools require for command-line options.
 * The closure `{ "-m ${task.memory.toMega()}" }` constructs the tool-specific memory string.
-* `()` calls the closure immediately during **Groovy evaluation**, so `${memOpt}` is a proper string before Bash execution.
 * The Bash command can now safely use `${memOpt}` when running memory-aware tools.
 
 ---
