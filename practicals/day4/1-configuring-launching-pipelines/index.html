@@ -1,0 +1,2395 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Edoardo Giacopuzzi">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../2-developing-pipeline/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>1. configure and launch nf-core pipeline - nextflow-zero2hero</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-configuring-and-launching-nf-core-pipelines" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="nextflow-zero2hero" class="md-header__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nextflow-zero2hero
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. configure and launch nf-core pipeline
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Practicals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../slides/" class="md-tabs__link">
+        
+  
+    
+  
+  Slides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="nextflow-zero2hero" class="md-nav__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    nextflow-zero2hero
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Practicals
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practicals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day1/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/1-nextflow-run-intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Running a Nextflow pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/2-basic-workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Workflow and channels basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/3-operators-playground/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Channels operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day2/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/1-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/2-module-and-subworkflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Modules and subworkflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/3-containers-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Container basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/4-containers-nextflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Using containers in Nextflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/5-basic-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Basic configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day3/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day3/1-advanced-config/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    1. Advanced configuration
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            1. Advanced configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/1-advanced-config/reference_documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reference documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/1-advanced-config/exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Practical exercises
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/2-advanced-publish/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Advanced publish
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/3-best-practises-pipeline-structure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Best practices for pipeline structure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/4-advanced-controls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Advanced scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/5-report-and-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Report and monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1. configure and launch nf-core pipeline
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1. configure and launch nf-core pipeline
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-exploring-nf-core-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: Exploring nf-core Pipelines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1: Exploring nf-core Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-visit-the-nf-core-website" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Visit the nf-core Website
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-understanding-pipeline-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: Understanding Pipeline Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-pulling-and-launching-nf-core-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Pulling and Launching nf-core Pipelines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2: Pulling and Launching nf-core Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-method-1-manual-cloning" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: Method 1 - Manual Cloning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-method-2-direct-execution-with-nextflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: Method 2 - Direct Execution with Nextflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-pipeline-configuration-with-nf-core-configs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Pipeline Configuration with nf-core configs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3: Pipeline Configuration with nf-core configs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-explore-available-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1: Explore Available Profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-use-the-humantechnopole-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2: Use the humantechnopole Profile
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-preparing-input-and-configuring-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: Preparing Input and Configuring Parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4: Preparing Input and Configuring Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41-prepare-a-samplesheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1: Prepare a Samplesheet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-generate-parameters-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2: Generate Parameters Template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-add-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3: Add Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-launch-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4: Launch the Test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-understanding-pipeline-output-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5: Understanding Pipeline Output Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5: Understanding Pipeline Output Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51-explore-output-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1: Explore Output Directory Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-review-the-multiqc-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2: Review the MultiQC Report
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-check-execution-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3: Check Execution Metadata
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-advanced-customization-with-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6: Advanced Customization with Configuration Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6: Advanced Customization with Configuration Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#61-create-a-custom-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1: Create a Custom Configuration File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-apply-custom-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2: Apply Custom Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-developing-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. develop nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-contributing-to-nf-core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. contribute to nf-core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slides/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-exploring-nf-core-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: Exploring nf-core Pipelines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1: Exploring nf-core Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-visit-the-nf-core-website" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Visit the nf-core Website
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-understanding-pipeline-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: Understanding Pipeline Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-pulling-and-launching-nf-core-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Pulling and Launching nf-core Pipelines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2: Pulling and Launching nf-core Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-method-1-manual-cloning" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: Method 1 - Manual Cloning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-method-2-direct-execution-with-nextflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: Method 2 - Direct Execution with Nextflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-pipeline-configuration-with-nf-core-configs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Pipeline Configuration with nf-core configs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3: Pipeline Configuration with nf-core configs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-explore-available-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1: Explore Available Profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-use-the-humantechnopole-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2: Use the humantechnopole Profile
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-preparing-input-and-configuring-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: Preparing Input and Configuring Parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4: Preparing Input and Configuring Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41-prepare-a-samplesheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1: Prepare a Samplesheet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-generate-parameters-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2: Generate Parameters Template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-add-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3: Add Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-launch-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4: Launch the Test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-understanding-pipeline-output-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5: Understanding Pipeline Output Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5: Understanding Pipeline Output Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51-explore-output-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1: Explore Output Directory Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-review-the-multiqc-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2: Review the MultiQC Report
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-check-execution-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3: Check Execution Metadata
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-advanced-customization-with-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6: Advanced Customization with Configuration Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6: Advanced Customization with Configuration Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#61-create-a-custom-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1: Create a Custom Configuration File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-apply-custom-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2: Apply Custom Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="1-configuring-and-launching-nf-core-pipelines">1. Configuring and Launching nf-core Pipelines</h1>
+<p>This section covers the practical steps to discover, configure, and execute nf-core pipelines on the cluster.</p>
+<hr />
+<h2 id="exercise-1-exploring-nf-core-pipelines">Exercise 1: Exploring nf-core Pipelines</h2>
+<h3 id="objective">Objective</h3>
+<p>Familiarize yourself with the nf-core website, understand pipeline formats, and identify available pipelines.</p>
+<h3 id="11-visit-the-nf-core-website">1.1: Visit the nf-core Website</h3>
+<p>Open your browser and navigate to: <code>https://nf-co.re/</code></p>
+<p><strong>What to explore:</strong></p>
+<ul>
+<li>The <a href="https://nf-co.re/pipelines"><strong>Pipelines</strong> section</a></li>
+<li>Browse available pipelines and their categories (RNA-seq, scRNA-seq, ChIP-seq, etc.)</li>
+</ul>
+<h3 id="12-understanding-pipeline-documentation">1.2: Understanding Pipeline Documentation</h3>
+<p>For this course, we will work with <strong>nf-core/rnaseq</strong> (RNA-seq analysis pipeline).
+Find and click on <code>nf-core/rnaseq</code> to access the detailed documentation, which includes:</p>
+<ul>
+<li><strong>Pipeline name and versions</strong></li>
+<li><strong>Introduction</strong>: general README and overview</li>
+<li><strong>Usage</strong>: detailed instructions on running the pipeline and structuring input files</li>
+<li><strong>Parameters</strong>: comprehensive reference for all available pipeline parameters</li>
+<li><strong>Output</strong>: expected structure of pipeline output directories</li>
+</ul>
+<hr />
+<h2 id="exercise-2-pulling-and-launching-nf-core-pipelines">Exercise 2: Pulling and Launching nf-core Pipelines</h2>
+<h3 id="objective_1">Objective</h3>
+<p>Learn how to obtain nf-core pipelines using Nextflow's caching mechanism.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Ensure you have:</p>
+<ol>
+<li>Access to a compute node on the cluster</li>
+</ol>
+<pre><code class="language-bash">srun --wait=0 --pty -p cpu-interactive -c 1 --mem 8G -J nxf_training /bin/bash
+</code></pre>
+<ol>
+<li>Loaded the nextflow and Singularity modules</li>
+</ol>
+<pre><code class="language-bash">module load singularity
+module load nextflow/25.04.3
+</code></pre>
+<ol>
+<li>A work folder for the course in your home directory where you will create, clone, and modify pipelines</li>
+</ol>
+<pre><code class="language-bash">cd $HOME/nextflow_training/practicals_outputs/day4
+</code></pre>
+<h3 id="21-method-1-manual-cloning">2.1: Method 1 - Manual Cloning</h3>
+<p>To maintain a local copy of the pipeline, clone it using git:</p>
+<pre><code class="language-bash">git clone https://github.com/nf-core/rnaseq.git nf-core-rnaseq-3.22.0
+cd nf-core-rnaseq-3.22.0
+git checkout 3.22.0
+cd ..
+</code></pre>
+<h3 id="22-method-2-direct-execution-with-nextflow">2.2: Method 2 - Direct Execution with Nextflow</h3>
+<p>To run a pipeline directly without manual cloning:</p>
+<pre><code class="language-bash">nextflow run nf-core/rnaseq --help
+</code></pre>
+<p><strong>What happens:</strong></p>
+<ul>
+<li>Nextflow downloads the pipeline from GitHub</li>
+<li>The pipeline is cached in <code>~/.nextflow/assets/nf-core/rnaseq/</code></li>
+<li><code>--help</code> displays all available parameters with descriptions, defaults, and types</li>
+</ul>
+<p><strong>Verify the cached pipeline:</strong></p>
+<pre><code class="language-bash">ls ~/.nextflow/assets/nf-core/rnaseq/
+</code></pre>
+<p><strong>Expected output:</strong></p>
+<pre><code class="language-text">CHANGELOG.md        LICENSE    bin   main.nf       nextflow.config       ro-crate-metadata.json  tower.yml
+CITATIONS.md        README.md  conf  modules       nextflow_schema.json  subworkflows            workflows
+CODE_OF_CONDUCT.md  assets     docs  modules.json  nf-test.config        tests
+</code></pre>
+<p><strong>Managing pipeline versions:</strong></p>
+<p>Nextflow caches pipelines and reuses them for subsequent runs. To update to the latest version:</p>
+<pre><code class="language-bash">nextflow pull nf-core/rnaseq
+</code></pre>
+<p>To pull or run a specific release (identified by git tags):</p>
+<pre><code class="language-bash">nextflow pull nf-core/rnaseq -r 3.22.0
+</code></pre>
+<p>Verify that the cached pipeline is checked out at the correct tag:</p>
+<pre><code class="language-bash">cd  ~/.nextflow/assets/nf-core/rnaseq/
+git status
+cd -
+</code></pre>
+<p>Expected output:</p>
+<pre><code class="language-text">Refresh index: 100% (677/677), done.
+HEAD detached at 3.22.0
+nothing to commit, working tree clean
+</code></pre>
+<p>The <code>-r</code> flag can be used directly with the run command:</p>
+<pre><code class="language-bash">nextflow run nf-core/rnaseq -r 3.22.0 --help
+</code></pre>
+<p>Use <code>-r</code> to specify any release, branch, or commit hash.</p>
+<hr />
+<h2 id="exercise-3-pipeline-configuration-with-nf-core-configs">Exercise 3: Pipeline Configuration with nf-core configs</h2>
+<h3 id="objective_2">Objective</h3>
+<p>Learn how to use nf-core public profiles for HPC cluster configuration and understand profile structure.</p>
+<h3 id="background">Background</h3>
+<p><strong>nf-core/configs</strong> are pre-configured parameter sets that:</p>
+<ul>
+<li>Set maximum resource allocations (CPU, memory, time)</li>
+<li>Configure execution environments (Docker, Singularity, Conda)</li>
+<li>Optimize for specific compute systems (HPC clusters, cloud platforms)</li>
+</ul>
+<p>nf-core maintains profiles for common systems in the <code>https://github.com/nf-core/configs/</code> repository.
+These profiles are automatically sourced by nf-core pipelines and can be used with the <code>-profile</code> flag.</p>
+<h3 id="31-explore-available-profiles">3.1: Explore Available Profiles</h3>
+<ul>
+<li>Go to <a href="https://nf-co.re/configs/">nf-core institutional config page</a> and search for "Human Technopole"</li>
+<li>Select the <code>humantechnopole</code> profile</li>
+<li>Review the <a href="https://nf-co.re/configs/humantechnopole/">Human Technopole profile page</a> for general information, job file templates, and configuration details</li>
+</ul>
+<h3 id="32-use-the-humantechnopole-profile">3.2: Use the <code>humantechnopole</code> Profile</h3>
+<p>Apply the Human Technopole profile to configure Nextflow for the cluster:</p>
+<pre><code class="language-bash">nextflow config nf-core/sarek -profile humantechnopole &gt; final_config
+grep config_profile final_config
+</code></pre>
+<p><strong>Expected output:</strong></p>
+<pre><code class="language-groovy">  config_profile_name = null
+  config_profile_description = 'Human Technopole cluster profile provided by nf-core/configs.'
+  config_profile_contact = 'Edoardo Giacopuzzi (@edg1983)'
+  config_profile_url = 'https://humantechnopole.it/en/'
+</code></pre>
+<p>This confirms that Nextflow has successfully loaded the configuration from the nf-core/configs repository. The profile automatically configures:</p>
+<ul>
+<li><strong>Containerization</strong>: Singularity containerization</li>
+<li><strong>Job scheduler</strong>: SLURM integration for cluster job submission</li>
+<li><strong>Resource limits</strong>: Maximum CPU, memory, and time allocations</li>
+</ul>
+<hr />
+<h2 id="exercise-4-preparing-input-and-configuring-parameters">Exercise 4: Preparing Input and Configuring Parameters</h2>
+<h3 id="objective_3">Objective</h3>
+<p>Learn how to prepare input data, generate parameter templates, and configure a pipeline run.</p>
+<h3 id="41-prepare-a-samplesheet">4.1: Prepare a Samplesheet</h3>
+<p>nf-core pipelines typically accept input sequences via a samplesheet with a common format:</p>
+<p><strong>Samplesheet format:</strong></p>
+<ul>
+<li>CSV file with header row</li>
+<li>Columns: <code>sample</code>, <code>fastq_1</code>, <code>fastq_2</code></li>
+<li>Paths can be absolute or relative to the working directory</li>
+<li>Multiple lanes per sample are automatically merged</li>
+</ul>
+<p>For nf-core/rnaseq, an additional column specifies strandedness:</p>
+<ul>
+<li><code>strandedness</code>: RNA sequence strandness in the corresponding FASTQ file</li>
+</ul>
+<p>Create a folder named <code>rnaseq_test_01</code> and create <code>samplesheet.csv</code> with this content:</p>
+<pre><code class="language-csv">sample,fastq_1,fastq_2,strandedness
+SRR6357070_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_1.fastq.gz,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_2.fastq.gz,reverse
+SRR6357071_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357071_1.fastq.gz,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357071_2.fastq.gz,reverse
+</code></pre>
+<h3 id="42-generate-parameters-template">4.2: Generate Parameters Template</h3>
+<p>We recommend saving pipeline parameters in a YAML file to ensure reproducibility and easy recovery of settings.
+For this exercise, create a custom <code>rnaseq_test_01/params.yaml</code> with minimal settings:</p>
+<pre><code class="language-yaml"># Input/Output
+input: './samplesheet.csv'
+outdir: './results'
+
+# Genome references
+fasta: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/genome.fasta'
+gtf: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/genes.gtf.gz'
+transcript_fasta: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/transcriptome.fasta'
+salmon_index: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/salmon.tar.gz'
+
+# Processing parameters
+pseudo_aligner: 'salmon'
+</code></pre>
+<h3 id="43-add-configuration">4.3: Add Configuration</h3>
+<p>As for any Nextflow run, other configuration options can be defined
+in several places. For this test, we include a configuration file
+from command line.</p>
+<p>Create <code>rnaseq_test_01/custom.config</code> with the following content:</p>
+<pre><code class="language-groovy">// Custom nf-core/rnaseq configuration
+
+singularity.cacheDir = &quot;/scratch/matteo.bonfanti/nextflow/.singularity&quot;
+</code></pre>
+<p>This option specifies the cache directory where Nextflow stores downloaded Singularity images.</p>
+<h3 id="44-launch-the-test">4.4: Launch the Test</h3>
+<p>Run the pipeline with the command:</p>
+<pre><code class="language-bash">cd rnaseq_test_01
+nextflow run nf-core/rnaseq \
+  -profile humantechnopole,singularity \
+  -params-file params.yaml \
+  -c custom.config \
+  -w ./work_test
+</code></pre>
+<p>If the pipeline version is stuck on a previous tag, you will encounter this error:</p>
+<pre><code class="language-text">Project `nf-core/rnaseq` is currently stuck on revision: 3.22.0 -- you need to explicitly specify a revision with the option `-r` in order to use it
+</code></pre>
+<p>This happens because the pipeline version stored in the cache is in a detached state, pointing to a previous release tag.
+As a safety measure, Nextflow requires pipelines in this state to be explicitly referenced on the command line using the <code>-r</code> option.</p>
+<p>To update the cached pipeline and move it back to the latest
+commit on the <code>master</code> branch, you can run:</p>
+<pre><code class="language-bash">nextflow pull nf-core/rnaseq -r master
+</code></pre>
+<p>Then re-run the pipeline:</p>
+<pre><code class="language-bash">nextflow run nf-core/rnaseq \
+  -profile humantechnopole,singularity \
+  -params-file params.yaml \
+  -c custom.config \
+  -w ./work_test
+</code></pre>
+<p><strong>Command-line flags explained:</strong></p>
+<ul>
+<li><code>-profile humantechnopole,singularity</code>: apply HT profile with Singularity containers</li>
+<li><code>-params-file params.yaml</code>: load parameters from the YAML file</li>
+<li><code>-w</code>: specify the work directory</li>
+<li><code>-c</code>: include an additional configuration file</li>
+</ul>
+<p><strong>Note:</strong> Run Nextflow from compute nodes, not the head node. While Nextflow itself is lightweight, certain steps (such as copying output files) can be I/O-intensive.</p>
+<p>We recommend launching Nextflow via an sbatch script:</p>
+<pre><code class="language-bash">#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --mem=8GB
+#SBATCH --time=48:00:00
+#SBATCH --partition=cpuq
+#SBATCH --job-name=sarek_test
+#SBATCH --mail-type=END
+#SBATCH --output=%x_%j.log
+
+echo; echo &quot;Starting slurm job...&quot;
+echo &quot;PWD:  $(pwd)&quot;
+echo &quot;HOST: $(hostname)&quot;
+echo &quot;DATE: $(date)&quot;; echo
+
+# Activate modules
+module load openjdk/17.0.8.1_1
+module load singularity/3.8.5
+module load nextflow
+
+# Run the pipeline
+nextflow run nf-core/rnaseq \
+  -profile humantechnopole,singularity \
+  -params-file params.yaml \
+  -c custom.config \
+  -w ./work_test \
+  -resume -ansi-log false
+
+echo; echo &quot;Terminating slurm job...&quot;
+echo &quot;DATE: $(date)&quot;; echo
+exit
+</code></pre>
+<h2 id="exercise-5-understanding-pipeline-output-structure">Exercise 5: Understanding Pipeline Output Structure</h2>
+<h3 id="objective_4">Objective</h3>
+<p>Learn how to interpret and navigate nf-core pipeline output directories.</p>
+<h3 id="steps">Steps</h3>
+<h3 id="51-explore-output-directory-structure">5.1: Explore Output Directory Structure</h3>
+<p>After a successful pipeline run, examine the output:</p>
+<pre><code class="language-bash">cd results
+tree -L 2
+</code></pre>
+<p><strong>Expected directory structure:</strong></p>
+<pre><code class="language-bash">├── custom
+│   └── out
+├── fastqc
+│   └── trim
+├── fq_lint
+│   ├── raw
+│   └── trimmed
+├── multiqc
+│   ├── multiqc_report.html
+│   ├── multiqc_report_data
+│   └── multiqc_report_plots
+├── pipeline_info
+│   ├── execution_report_2026-01-22_12-10-41.html
+│   ├── execution_timeline_2026-01-22_12-10-41.html
+│   ├── execution_trace_2026-01-22_12-10-41.txt
+│   ├── nf_core_rnaseq_software_mqc_versions.yml
+│   ├── params_2026-01-22_12-11-14.json
+│   └── pipeline_dag_2026-01-22_12-10-41.html
+├── salmon
+│   ├── SRR6357070_2
+│   ├── SRR6357071_2
+│   ├── deseq2_qc
+│   ├── salmon.merged.gene.SummarizedExperiment.rds
+│   ├── salmon.merged.gene_counts.tsv
+│   ├── salmon.merged.gene_counts_length_scaled.tsv
+│   ├── salmon.merged.gene_counts_scaled.tsv
+│   ├── salmon.merged.gene_lengths.tsv
+│   ├── salmon.merged.gene_tpm.tsv
+│   ├── salmon.merged.transcript.SummarizedExperiment.rds
+│   ├── salmon.merged.transcript_counts.tsv
+│   ├── salmon.merged.transcript_lengths.tsv
+│   ├── salmon.merged.transcript_tpm.tsv
+│   └── tx2gene.tsv
+└── trimgalore
+    ├── SRR6357070_2_trimmed_1.fastq.gz_trimming_report.txt
+    ├── SRR6357070_2_trimmed_2.fastq.gz_trimming_report.txt
+    ├── SRR6357071_2_trimmed_1.fastq.gz_trimming_report.txt
+    └── SRR6357071_2_trimmed_2.fastq.gz_trimming_report.txt
+</code></pre>
+<h3 id="52-review-the-multiqc-report">5.2: Review the MultiQC Report</h3>
+<p>Open the MultiQC report in a web browser for a comprehensive pipeline summary:</p>
+<p><strong>What to examine:</strong></p>
+<ul>
+<li>General statistics across all samples</li>
+<li>Trimming metrics</li>
+<li>Salmon pseudo-alignment results</li>
+<li>Software versions used</li>
+<li>Methods description</li>
+<li>Workflow summary</li>
+</ul>
+<h3 id="53-check-execution-metadata">5.3: Check Execution Metadata</h3>
+<p>The <code>pipeline_info</code> folder contains detailed execution information:</p>
+<ul>
+<li><code>execution_report_*.html</code>: Summary of pipeline execution with performance metrics</li>
+<li><code>execution_timeline_*.html</code>: Timeline visualization showing when jobs were executed</li>
+<li><code>execution_trace_*.txt</code>: Detailed system metrics (CPU, memory, runtime) for each task</li>
+<li><code>nf_core_rnaseq_software_mqc_versions.yml</code>: Software version inventory</li>
+<li><code>params_*.json</code>: Complete parameter set used for the run (useful for reproducibility and debugging)</li>
+<li><code>pipeline_dag_*.html</code>: Directed acyclic graph visualization of the workflow</li>
+</ul>
+<h2 id="exercise-6-advanced-customization-with-configuration-files">Exercise 6: Advanced Customization with Configuration Files</h2>
+<h3 id="objective_5">Objective</h3>
+<p>Learn how to customize pipeline behavior using configuration files beyond public profiles.</p>
+<h3 id="background_1">Background</h3>
+<p>Configuration files enable fine-grained control over pipeline execution:</p>
+<ul>
+<li>Override default parameters</li>
+<li>Customize resource allocation per process</li>
+<li>Add custom command-line arguments to individual tools</li>
+<li>Configure error handling and retry policies</li>
+<li>...</li>
+</ul>
+<h3 id="61-create-a-custom-configuration-file">6.1: Create a Custom Configuration File</h3>
+<p>Enhance the <code>custom.config</code> file with additional custom options:</p>
+<pre><code class="language-groovy">// Custom nf-core/rnaseq configuration
+
+// Set singularity cache
+singularity.cacheDir = &quot;/scratch/matteo.bonfanti/nextflow/.singularity&quot;
+
+process {
+
+  // Override resource allocation
+  withLabel: 'process_high' {
+    cpus = 4
+    memory = '8.GB'
+    time = '1.h'
+  }
+
+  withLabel: 'process_medium' {
+    cpus = 2
+    memory = '4.GB'
+    time = '1.h'
+  }
+
+  withLabel: 'process_low' {
+    cpus = 1
+    memory = '2.GB'
+    time = '1.h'
+  }
+
+  // Retry failed tasks
+  maxRetries = 4
+
+  // Customize the behaviour of a process
+  withName: '.*:QUANTIFY_PSEUDO_ALIGNMENT:SALMON_QUANT' {
+      ext.args = &quot;--seqBias&quot;
+      publishDir = [
+          path: { &quot;${params.outdir}/pseudoalignment&quot; },
+          saveAs: { filename -&gt; filename.equals('versions.yml') ? null : filename }
+      ]
+  }
+
+}
+</code></pre>
+<h3 id="62-apply-custom-configuration">6.2: Apply Custom Configuration</h3>
+<p>Re-run the pipeline with your custom configuration:</p>
+<pre><code class="language-bash">nextflow run nf-core/rnaseq \
+  -profile humantechnopole,singularity \
+  -params-file params.yaml \
+  -c custom.config \
+  -w ./work_test -resume
+</code></pre>
+<hr />
+<h2 id="summary-checklist">Summary Checklist</h2>
+<p>By completing these exercises, you should be able to:</p>
+<ul>
+<li>[ ] Navigate the nf-core website and understand pipeline structure</li>
+<li>[ ] Pull and cache nf-core pipelines with version control</li>
+<li>[ ] Select and combine profiles appropriately</li>
+<li>[ ] Prepare input data and samplesheets</li>
+<li>[ ] Generate and customize parameter files</li>
+<li>[ ] Submit pipelines to HPC using batch scripts</li>
+<li>[ ] Interpret pipeline output directories</li>
+<li>[ ] Create custom configuration files</li>
+</ul>
+<hr />
+<h2 id="resources">Resources</h2>
+<ul>
+<li><strong>nf-core website</strong>: <a href="https://nf-co.re/">https://nf-co.re/</a></li>
+<li><strong>Nextflow documentation</strong>: <a href="https://www.nextflow.io/docs/latest/">https://www.nextflow.io/docs/latest/</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Day4 Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Day4 Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2-developing-pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: 2. develop nf-core pipeline">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                2. develop nf-core pipeline
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The materials here are licensed under the MIT license
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

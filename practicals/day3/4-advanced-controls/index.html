@@ -1,0 +1,2313 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Edoardo Giacopuzzi">
+      
+      
+      
+        <link rel="prev" href="../3-best-practises-pipeline-structure/">
+      
+      
+        <link rel="next" href="../5-report-and-monitoring/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>4. Advanced scripting - nextflow-zero2hero</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#day-3-section-4-groovy-scripting-inside-nextflow-processes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="nextflow-zero2hero" class="md-header__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nextflow-zero2hero
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Advanced scripting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Practicals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../slides/" class="md-tabs__link">
+        
+  
+    
+  
+  Slides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="nextflow-zero2hero" class="md-nav__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    nextflow-zero2hero
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Practicals
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practicals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day1/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/1-nextflow-run-intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Running a Nextflow pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/2-basic-workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Workflow and channels basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/3-operators-playground/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Channels operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day2/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/1-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/2-module-and-subworkflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Modules and subworkflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/3-containers-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Container basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/4-containers-nextflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Using containers in Nextflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/5-basic-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Basic configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../1-advanced-config/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    1. Advanced configuration
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            1. Advanced configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-advanced-config/reference_documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reference documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-advanced-config/exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Practical exercises
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-advanced-publish/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Advanced publish
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-best-practises-pipeline-structure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Best practices for pipeline structure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4. Advanced scripting
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4. Advanced scripting
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#two-phases-two-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two phases, two languages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two phases, two languages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-groovy-pipeline-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1 — Groovy (pipeline construction)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-bash-task-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2 — Bash (task runtime)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-ternary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to Ternary Operators
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to Ternary Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-sample-names-and-variable-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1 — Sample names and variable scope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1 — Sample names and variable scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-introduce-a-sample-specific-variable-groovy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 — Introduce a sample-specific variable (Groovy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-use-the-variable-in-the-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 — Use the variable in the command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-fix-the-output-declaration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 — Fix the output declaration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Questions?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-variable-declaration-inside-the-script-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2 — Variable declaration inside the script: block
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2 — Variable declaration inside the script: block">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-conditional-behavior-from-filenames-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3 — Conditional behavior from filenames #1
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3 — Conditional behavior from filenames #1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-conditional-behavior-from-filenames-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4 — Conditional behavior from filenames #2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 — Conditional behavior from filenames #2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#practice_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-using-taskcpus-groovy-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5 — Using task.cpus (Groovy metadata)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5 — Using task.cpus (Groovy metadata)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-using-taskmemory-groovy-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6 — Using task.memory (Groovy metadata)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6 — Using task.memory (Groovy metadata)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-7-groovy-vs-bash-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 7 — Groovy vs Bash expansion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 7 — Groovy vs Bash expansion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples of expansion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key point
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-report-and-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Report and monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day4/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/1-configuring-launching-pipelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. configure and launch nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/2-developing-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. develop nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day4/3-contributing-to-nf-core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. contribute to nf-core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slides/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#two-phases-two-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two phases, two languages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two phases, two languages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-groovy-pipeline-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1 — Groovy (pipeline construction)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-bash-task-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2 — Bash (task runtime)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-ternary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to Ternary Operators
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to Ternary Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Syntax
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-sample-names-and-variable-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1 — Sample names and variable scope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1 — Sample names and variable scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-introduce-a-sample-specific-variable-groovy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 — Introduce a sample-specific variable (Groovy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-use-the-variable-in-the-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 — Use the variable in the command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-fix-the-output-declaration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 — Fix the output declaration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Questions?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-variable-declaration-inside-the-script-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2 — Variable declaration inside the script: block
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2 — Variable declaration inside the script: block">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-conditional-behavior-from-filenames-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3 — Conditional behavior from filenames #1
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3 — Conditional behavior from filenames #1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-conditional-behavior-from-filenames-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4 — Conditional behavior from filenames #2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 — Conditional behavior from filenames #2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#practice_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-using-taskcpus-groovy-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5 — Using task.cpus (Groovy metadata)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5 — Using task.cpus (Groovy metadata)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-using-taskmemory-groovy-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6 — Using task.memory (Groovy metadata)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6 — Using task.memory (Groovy metadata)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Question
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-7-groovy-vs-bash-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 7 — Groovy vs Bash expansion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 7 — Groovy vs Bash expansion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples of expansion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key point
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="day-3-section-4-groovy-scripting-inside-nextflow-processes">Day 3 - section 4 - Groovy scripting inside Nextflow processes</h1>
+<p>This practical focuses on <strong>Groovy scripting inside a single Nextflow process</strong>.</p>
+<p>You will start from a <strong>minimal working pipeline</strong> and progressively extend the <em>same process</em>, learning <strong>how Groovy is evaluated inside <code>script:</code> blocks</strong> and how it differs from <strong>Bash execution at runtime</strong>.</p>
+<hr />
+<h2 id="two-phases-two-languages">Two phases, two languages</h2>
+<p>A Nextflow process is evaluated in <strong>two distinct phases</strong>.</p>
+<h3 id="phase-1-groovy-pipeline-construction">Phase 1 — Groovy (pipeline construction)</h3>
+<p>Before any task is executed, Nextflow evaluates the process definition using <strong>Groovy</strong>.</p>
+<p>During this phase:</p>
+<ul>
+<li><code>script:</code> blocks are parsed</li>
+<li>Groovy variables are resolved</li>
+<li>Closures are executed</li>
+<li>File object properties are accessed</li>
+<li><code>task.cpus</code> and <code>task.memory</code> are known</li>
+</ul>
+<p>Anything written as:</p>
+<pre><code class="language-groovy">${variable}
+</code></pre>
+<p>inside a triple-quoted string is <strong>expanded by Groovy before execution</strong>.</p>
+<p>By the time the task runs, Groovy variables no longer exist only their <em>values</em> remain.</p>
+<hr />
+<h3 id="phase-2-bash-task-runtime">Phase 2 — Bash (task runtime)</h3>
+<p>After Groovy evaluation, Nextflow launches the task using the system shell (usually Bash).</p>
+<p>During this phase:</p>
+<ul>
+<li>The command is executed line by line</li>
+<li>Shell variables are expanded</li>
+<li>Environment variables become available</li>
+<li>Files are created and modified</li>
+</ul>
+<p>Variables such as:</p>
+<pre><code class="language-bash">$HOME
+$PATH
+$PWD
+</code></pre>
+<p>are <strong>expanded by Bash at runtime</strong>, not by Groovy.</p>
+<p>To prevent Groovy from expanding a Bash variable, it must be escaped:</p>
+<pre><code class="language-bash">\$HOME
+</code></pre>
+<hr />
+<h2 id="introduction-to-ternary-operators">Introduction to Ternary Operators</h2>
+<p>The <strong>ternary operator</strong> is a concise way to write simple conditional expressions in Groovy, the language used by Nextflow. It allows you to select between two values depending on a condition, all in a single line.</p>
+<h3 id="syntax">Syntax</h3>
+<pre><code class="language-bash">condition ? valueIfTrue : valueIfFalse
+
+condition — a Boolean expression that is evaluated.
+
+valueIfTrue — the result returned if the condition is true.
+
+valueIfFalse — the result returned if the condition is false.
+</code></pre>
+<p>This is equivalent to a simple if/else statement but written in a compact and readable form.</p>
+<p>Example (generic)</p>
+<pre><code class="language-groovy">def result = condition ? &quot;Yes&quot; : &quot;No&quot;
+</code></pre>
+<p>If condition is true, result will be "Yes".</p>
+<p>If condition is false, result will be "No".</p>
+<p>Why ternary operators are used in Nextflow</p>
+<ul>
+<li>
+<p>Dynamic value assignment — compute values based on conditions during pipeline construction (Groovy evaluation).</p>
+</li>
+<li>
+<p>Simplify commands and options — generate flags, parameters, or metadata without verbose if/else blocks.</p>
+</li>
+<li>
+<p>Concise and readable — keeps pipelines maintainable, especially when multiple conditional values are needed.</p>
+</li>
+</ul>
+<hr />
+<h2 id="exercise-1-sample-names-and-variable-scope">Exercise 1 — Sample names and variable scope</h2>
+<p>Modify the <code>main.nf</code> so that:</p>
+<ul>
+<li>Each input file produces a distinct output file</li>
+<li>The output filename is derived safely from the input</li>
+<li>Variables inside script: are declared correctly using Groovy</li>
+</ul>
+<p>The initial pipeline always writes:</p>
+<pre><code class="language-bash">result.txt
+</code></pre>
+<p>Because the process runs once per input file, outputs overwrite each other.</p>
+<h3 id="step-1-introduce-a-sample-specific-variable-groovy">Step 1 — Introduce a sample-specific variable (Groovy)</h3>
+<h4 id="choosing-the-right-file-property">Choosing the right file property</h4>
+<p>Given the input file:</p>
+<pre><code class="language-text">sample1_R1.fastq.gz
+````
+
+Nextflow exposes several file properties that behave differently.
+
+* **`read.name`** — keeps all extensions
+  *(e.g.)*
+
+  ```text
+  sample1_R1.fastq.gz
+  ```
+
+* **`read.baseName`** — removes only the **last** extension
+  *(e.g.)*
+
+  ```text
+  sample1_R1.fastq
+  ```
+
+* **`read.simpleName`** — removes **all** extensions
+  *(e.g.)*
+
+  ```text
+  sample1_R1
+  ```
+
+Because output filenames should usually be **extension-free and stable**,
+`read.simpleName` is the safest default when deriving sample names for outputs.
+
+---
+
+Inside the script: block, define a variable derived from the input file:
+
+```bash
+
+script:
+def sample = read.simpleName
+
+
+</code></pre>
+<h3 id="step-2-use-the-variable-in-the-command">Step 2 — Use the variable in the command</h3>
+<p>Replace the command with:</p>
+<pre><code class="language-bash">echo &quot;Processing file: ${read.name}&quot; &gt; ${sample}.txt
+</code></pre>
+<p>Note that:</p>
+<ul>
+<li>
+<p>${sample} is expanded by Groovy</p>
+</li>
+<li>
+<p>sample does not exist at runtime</p>
+</li>
+</ul>
+<h3 id="step-3-fix-the-output-declaration">Step 3 — Fix the output declaration</h3>
+<p>Because the filename is now dynamic, update the output: block:</p>
+<pre><code class="language-bash">output:
+path &quot;*.txt&quot;
+</code></pre>
+<p>Expected solution</p>
+<pre><code class="language-bash">process PROCESS_READ {
+
+    publishDir &quot;./results&quot;, mode: 'copy'
+
+    input:
+    path read
+
+    output:
+    path &quot;*.txt&quot;
+
+    script:
+    def sample = read.simpleName
+    &quot;&quot;&quot;
+    echo &quot;Processing file: ${read.name}&quot; &gt; ${sample}.txt
+    &quot;&quot;&quot;
+}
+</code></pre>
+<h3 id="questions">Questions?</h3>
+<ul>
+<li>
+<p><strong>Why must <code>sample</code> be declared with <code>def</code>?</strong><br />
+  Declaring <code>sample</code> with <code>def</code> makes it a <strong>local Groovy variable</strong>, scoped only to the <code>script:</code> block.<br />
+  This prevents accidental overwriting of other variables and ensures predictable behavior.</p>
+</li>
+<li>
+<p><strong>Why is <code>simpleName</code> preferable to <code>name</code> and <code>baseName</code> here?</strong><br />
+<code>simpleName</code> removes <strong>all file extensions</strong>, producing a clean, stable sample name.<br />
+<code>name</code> keeps all extensions, which may lead to long filenames.<br />
+<code>baseName</code> removes only the last extension, which can leave residual extensions like <code>.fastq</code>.<br />
+  For output files, <code>simpleName</code> is usually safest.</p>
+</li>
+<li>
+<p><strong>Why would <code>&gt; $sample.txt</code> not work?</strong><br />
+<code>$sample</code> is a <strong>Bash variable</strong>, but <code>sample</code> is a <strong>Groovy variable</strong>.<br />
+  Bash has no knowledge of Groovy variables unless they are expanded first.<br />
+  Using <code>${sample}</code> ensures the value is <strong>injected by Groovy before Bash executes</strong>.</p>
+</li>
+<li>
+<p><strong>At which phase is <code>${sample}</code> expanded?</strong><br />
+<code>${sample}</code> is expanded during the <strong>Groovy phase</strong> (pipeline construction), <strong>before the task runs</strong>.<br />
+  By the time Bash executes, the value is already inserted into the command.</p>
+</li>
+</ul>
+<hr />
+<h2 id="exercise-2-variable-declaration-inside-the-script-block">Exercise 2 — Variable declaration inside the <code>script:</code> block</h2>
+<h3 id="practice">Practice</h3>
+<p>Modify the <code>script:</code> section and add:</p>
+<pre><code class="language-bash">def sample = read.simpleName
+suffix = &quot;_processed&quot;
+</code></pre>
+<p>Then change the command to:</p>
+<pre><code class="language-bash">echo &quot;Processing file: ${read.name}&quot; &gt; ${sample}${suffix}.txt
+</code></pre>
+<p>Questions</p>
+<ul>
+<li>What is the difference between def prefix and suffix?</li>
+</ul>
+<p>def prefix declares a local Groovy variable that exists only inside the script: block.</p>
+<p>suffix, declared without def, becomes a Groovy binding variable.
+Binding variables are placed in the global script binding instead of a local scope.</p>
+<ul>
+<li>Why does the pipeline still work?</li>
+</ul>
+<p>The pipeline still works because Groovy automatically creates binding variables
+when an undeclared variable is assigned.</p>
+<p>suffix is therefore resolved during Groovy evaluation, and its value is
+successfully injected into the command before execution.</p>
+<p>However, this behavior is implicit and unsafe.</p>
+<hr />
+<h2 id="exercise-3-conditional-behavior-from-filenames-1">Exercise 3 — Conditional behavior from filenames #1</h2>
+<p>Inside the <code>script:</code> block, define a variable <code>readType</code> using a closure:</p>
+<pre><code class="language-groovy">def readType = 
+    simpleName.endsWith('_R1') ? 'forward' :
+    simpleName.endsWith('_R2') ? 'reverse' :
+    'single'
+</code></pre>
+<p>Then print it to the output:</p>
+<pre><code class="language-bash">echo &quot;Read type: ${readType}&quot; &gt;&gt; ${sample}.txt
+</code></pre>
+<hr />
+<h3 id="what-is-happening">What is happening</h3>
+<ul>
+<li><code>simpleName.endsWith('_R1') ? 'forward' : ...</code> is a <strong>ternary expression</strong>.</li>
+<li>It checks the filename suffix and returns <code>"forward"</code>, <code>"reverse"</code>, or <code>"single"</code>.</li>
+<li>This all happens during <strong>Groovy evaluation</strong> (pipeline construction), before Bash executes the command.</li>
+<li>The value of <code>readType</code> (a string) is then injected into the Bash command.</li>
+</ul>
+<hr />
+<h2 id="exercise-4-conditional-behavior-from-filenames-2">Exercise 4 — Conditional behavior from filenames #2</h2>
+<h3 id="practice_1">Practice</h3>
+<p>Inside the <code>script:</code> block, define a variable <code>flag</code> based on the filename:</p>
+<pre><code class="language-groovy">def flag =  sample.contains('tumor') ? '--tumor' : '--normal'
+</code></pre>
+<p>Then print the generated command:</p>
+<pre><code class="language-bash">echo &quot;Command: mytool ${flag} -i ${read.name}&quot; &gt;&gt; ${sample}.txt
+</code></pre>
+<p>Test with these files:</p>
+<pre><code class="language-text">sample_tumor.fastq.gz
+sample_normal.fastq.gz
+</code></pre>
+<hr />
+<h3 id="what-is-happening_1">What is happening</h3>
+<ul>
+<li><code>sample.contains('tumor') ? '--tumor' : '--normal'</code> is a <strong>ternary expression</strong>.</li>
+<li>It checks whether the sample name includes <code>"tumor"</code> and returns the appropriate flag.</li>
+<li>This computation happens <strong>during Groovy evaluation</strong>, so the final Bash command already includes the resolved value.</li>
+</ul>
+<hr />
+<h2 id="exercise-5-using-taskcpus-groovy-metadata">Exercise 5 —  Using <code>task.cpus</code> (Groovy metadata)</h2>
+<p>use <strong>all allocated CPUs</strong> for the task, but allow for a <strong>minimum of 1 thread</strong>.</p>
+<ul>
+<li>If <code>task.cpus</code> is set to 2, then use 2 threads.</li>
+<li>If <code>task.cpus</code> is higher, use that many threads.</li>
+<li>If <code>task.cpus</code> is unset, default to 1.</li>
+</ul>
+<p>Set the process header to specify available CPUs:</p>
+<pre><code class="language-groovy">cpus 2
+</code></pre>
+<p>Inside the <code>script:</code> block, define the number of threads dynamically:</p>
+<pre><code class="language-groovy">def threads =  task.cpus ?: 1
+</code></pre>
+<p>Then use it in the command:</p>
+<pre><code class="language-bash">echo &quot;Threads: ${threads}&quot; &gt;&gt; ${sample}.txt
+</code></pre>
+<hr />
+<h3 id="what-is-happening_2">What is happening</h3>
+<ul>
+<li><code>task.cpus</code> gives the <strong>number of CPUs allocated</strong> to this process.</li>
+<li>The Bash command can now safely use <code>${threads}</code> for multithreading tools.</li>
+</ul>
+<hr />
+<h3 id="question">Question</h3>
+<p>Why is this preferable to hard-coding thread counts?</p>
+<ul>
+<li>Using <code>task.cpus</code> ensures that the process <strong>adapts to the allocated resources</strong>.</li>
+<li>Hard-coding thread counts can lead to <strong>over- or under-utilization</strong> of CPUs.</li>
+<li>This approach guarantees a <strong>dynamic, deterministic, and safe value</strong> that reflects the actual environment.</li>
+</ul>
+<hr />
+<h2 id="exercise-6-using-taskmemory-groovy-metadata">Exercise 6 — Using <code>task.memory</code> (Groovy metadata)</h2>
+<p>Set the process header to specify memory:</p>
+<pre><code class="language-groovy">memory '8 GB'
+</code></pre>
+<p>Inside the <code>script:</code> block, define a memory option for your tool based on the allocated memory:</p>
+<pre><code class="language-groovy">def memOpt = &quot;-m ${task.memory.toMega()}&quot;
+</code></pre>
+<p>Then print it to the output:</p>
+<pre><code class="language-bash">echo &quot;Memory option: ${memOpt}&quot; &gt;&gt; memory.txt
+</code></pre>
+<hr />
+<h3 id="what-is-happening_3">What is happening</h3>
+<ul>
+<li><code>task.memory</code> gives the <strong>memory allocated</strong> to the process.</li>
+<li><code>task.memory.toMega()</code> converts the value to <strong>megabytes</strong>, which many tools require for command-line options.</li>
+<li>The closure <code>{ "-m ${task.memory.toMega()}" }</code> constructs the tool-specific memory string.</li>
+<li>The Bash command can now safely use <code>${memOpt}</code> when running memory-aware tools.</li>
+</ul>
+<hr />
+<h3 id="question_1">Question</h3>
+<p>Why is this preferable to hard-coding memory values?</p>
+<ul>
+<li>Using <code>task.memory</code> ensures the process <strong>adapts to the allocated resources</strong>.</li>
+<li>Hard-coded memory options can <strong>exceed available memory</strong> or <strong>underutilize resources</strong>.</li>
+<li>Computing the option in Groovy guarantees a <strong>deterministic and safe value</strong> that reflects the environment.</li>
+</ul>
+<hr />
+<h2 id="exercise-7-groovy-vs-bash-expansion">Exercise 7 — Groovy vs Bash expansion</h2>
+<p>Inside the <code>script:</code> block, print a Groovy variable and a Bash environment variable:</p>
+<pre><code class="language-bash">echo &quot;Home: \$HOME&quot; &gt; bash_variables.txt
+echo &quot;Path: \$PATH&quot; &gt;&gt; bash_variables.txt
+
+</code></pre>
+<h3 id="what-is-happening_4">What is happening</h3>
+<ul>
+<li>
+<p><code>${sample}</code>, <code>${readType}</code>, <code>${flag}</code>, <code>${threads}</code>, <code>${memOpt}</code> are all <strong>Groovy variables</strong>.</p>
+</li>
+<li>
+<p>Their values are computed during <strong>Groovy evaluation</strong> (pipeline construction) and injected into the Bash commands.</p>
+</li>
+<li>
+<p><code>$HOME</code> is a <strong>Bash environment variable</strong>.</p>
+</li>
+<li>
+<p>It is expanded <strong>at task runtime</strong>.</p>
+</li>
+<li>Saving it in a separate file (<code>bash_variables.txt</code>) makes the distinction explicit.</li>
+<li><strong>Takeaway rule:</strong> Always ask:</li>
+</ul>
+<blockquote>
+<p>“Is this evaluated by Groovy, or by Bash?”</p>
+</blockquote>
+<p>Confusing the two is the source of most bugs in advanced Nextflow scripting.</p>
+<hr />
+<h3 id="examples-of-expansion">Examples of expansion</h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Expanded by</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>${sample}</code></td>
+<td>Groovy</td>
+<td>Before execution</td>
+</tr>
+<tr>
+<td><code>${threads}</code></td>
+<td>Groovy</td>
+<td>Before execution</td>
+</tr>
+<tr>
+<td><code>${readType}</code></td>
+<td>Groovy</td>
+<td>Before execution</td>
+</tr>
+<tr>
+<td><code>$HOME</code></td>
+<td>Bash</td>
+<td>Runtime</td>
+</tr>
+<tr>
+<td><code>$PATH</code></td>
+<td>Bash</td>
+<td>Runtime</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="key-point">Key point</h3>
+<ul>
+<li><strong>Groovy phase:</strong> variables (<code>def var</code>, closures) and <code>${var}</code> are computed <strong>before Bash runs</strong>.</li>
+<li><strong>Bash phase:</strong> shell variables (<code>$VAR</code>) and commands are executed <strong>at runtime</strong>.</li>
+</ul>
+<p>By separating the Groovy and Bash outputs, you can <strong>see clearly which variables are evaluated when</strong>, and avoid the most common Nextflow scripting errors.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../3-best-practises-pipeline-structure/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Best practices for pipeline structure">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Best practices for pipeline structure
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../5-report-and-monitoring/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Report and monitoring">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                5. Report and monitoring
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The materials here are licensed under the MIT license
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

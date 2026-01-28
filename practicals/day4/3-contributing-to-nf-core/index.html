@@ -1,0 +1,1943 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Edoardo Giacopuzzi">
+      
+      
+      
+        <link rel="prev" href="../2-developing-pipeline/">
+      
+      
+        <link rel="next" href="../../../slides/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>3. contribute to nf-core - nextflow-zero2hero</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-contributing-to-nf-core" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="nextflow-zero2hero" class="md-header__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nextflow-zero2hero
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. contribute to nf-core
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Practicals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../slides/" class="md-tabs__link">
+        
+  
+    
+  
+  Slides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="nextflow-zero2hero" class="md-nav__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    nextflow-zero2hero
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Practicals
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practicals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day1/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/1-nextflow-run-intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Running a Nextflow pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/2-basic-workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Workflow and channels basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/3-operators-playground/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Channels operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day2/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/1-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/2-module-and-subworkflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Modules and subworkflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/3-containers-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Container basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/4-containers-nextflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Using containers in Nextflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/5-basic-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Basic configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day3/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day3/1-advanced-config/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    1. Advanced configuration
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            1. Advanced configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/1-advanced-config/reference_documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reference documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/1-advanced-config/exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Practical exercises
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/2-advanced-publish/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Advanced publish
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/3-best-practises-pipeline-structure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Best practices for pipeline structure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/4-advanced-controls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Advanced scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/5-report-and-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Report and monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-configuring-launching-pipelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. configure and launch nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-developing-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. develop nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    3. contribute to nf-core
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    3. contribute to nf-core
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#staying-connected-with-the-nf-core-community" class="md-nav__link">
+    <span class="md-ellipsis">
+      Staying Connected with the nf-core Community
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Staying Connected with the nf-core Community">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-join-the-nf-core-slack-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Join the nf-core Slack Workspace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-subscribe-to-github-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: Subscribe to GitHub Repositories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-participating-in-nf-core-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3: Participating in nf-core Events
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-github-development-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the GitHub Development Cycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the GitHub Development Cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-understanding-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: Understanding Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-the-branching-model-adopted-by-nf-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: The Branching Model Adopted by nf-core
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-the-pull-request-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3: The Pull Request Lifecycle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-world-contribution-exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real-World Contribution Exercise
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real-World Contribution Exercise">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-identify-a-feature-to-implement" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1: Identify a Feature to Implement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-create-a-pr-proposing-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2: Create a PR Proposing Changes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slides/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#staying-connected-with-the-nf-core-community" class="md-nav__link">
+    <span class="md-ellipsis">
+      Staying Connected with the nf-core Community
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Staying Connected with the nf-core Community">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-join-the-nf-core-slack-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Join the nf-core Slack Workspace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-subscribe-to-github-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: Subscribe to GitHub Repositories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-participating-in-nf-core-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3: Participating in nf-core Events
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-github-development-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the GitHub Development Cycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the GitHub Development Cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-understanding-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: Understanding Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-the-branching-model-adopted-by-nf-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: The Branching Model Adopted by nf-core
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-the-pull-request-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3: The Pull Request Lifecycle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-world-contribution-exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real-World Contribution Exercise
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real-World Contribution Exercise">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-identify-a-feature-to-implement" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1: Identify a Feature to Implement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-create-a-pr-proposing-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2: Create a PR Proposing Changes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="3-contributing-to-nf-core">3. Contributing to nf-core</h1>
+<p>This section covers the practical steps to engage with the nf-core community and contribute to the project through code development, collaborative discussion, and pull requests.</p>
+<hr />
+<h2 id="staying-connected-with-the-nf-core-community">Staying Connected with the nf-core Community</h2>
+<h3 id="11-join-the-nf-core-slack-workspace">1.1: Join the nf-core Slack Workspace</h3>
+<p>The nf-core community is most active on Slack. This is where discussions, announcements, and collaborative problem-solving happen.</p>
+<p><strong>How to join:</strong></p>
+<ol>
+<li>Visit: <a href="https://nf-co.re/join/slack">https://nf-co.re/join/slack</a></li>
+<li>You'll receive an invitation to join the nf-core Slack workspace</li>
+<li>Create your account and set your profile</li>
+</ol>
+<p><strong>Key Slack channels to follow:</strong></p>
+<ul>
+<li><code>#announcements</code>: Major nf-core news, releases, and events</li>
+<li><code>#help</code>: General questions and troubleshooting</li>
+<li><code>#tools</code>: Discussion about nf-core tools</li>
+<li><code>#bytesize</code>: Quick 10-minute presentations on specific topics</li>
+<li><code>#events</code>: Information about upcoming webinars, hackathons, and conferences</li>
+<li>Pipeline-specific channels: <code>#rnaseq</code>, <code>#scrnaseq</code>, <code>#sarek</code>, etc.</li>
+</ul>
+<h3 id="12-subscribe-to-github-repositories">1.2: Subscribe to GitHub Repositories</h3>
+<p>Watch important repositories to receive notifications:</p>
+<ol>
+<li>Go to <a href="https://github.com/nf-core/">https://github.com/nf-core/</a></li>
+<li>Select repositories of interest (<code>nf-core/modules</code>, <code>nf-core/configs</code>, <code>nf-core/tools</code>)</li>
+<li>Click <strong>Watch</strong> &gt; <strong>Custom</strong> &gt; Select notification preferences</li>
+</ol>
+<h3 id="13-participating-in-nf-core-events">1.3: Participating in nf-core Events</h3>
+<p><strong>Regular Events:</strong></p>
+<ul>
+<li><strong>Bytesize Talks</strong>: Short (10-15 minute) technical presentations held regularly</li>
+<li>Schedule: Check Slack <code>#events</code> or <a href="https://nf-co.re/events">https://nf-co.re/events</a></li>
+<li>Topics: Recent developments, community tools, data management, best practices</li>
+<li>
+<p>Format: Live presentation + Q&amp;A + recording available</p>
+</li>
+<li>
+<p><strong>nf-core Hackathons</strong>: Intensive collaborative events where developers work on specific features</p>
+</li>
+<li>Typically held 2-3 times per year</li>
+<li>Multi-day events with mentorship and support</li>
+<li>
+<p>Great opportunity to contribute or learn from experienced developers</p>
+</li>
+<li>
+<p><strong>Nextflow Summit</strong>: Conferences bringing together the Nextflow and nf-core communities</p>
+</li>
+<li>Held twice a year</li>
+<li>Dedicated nf-core track with talks on pipeline development and best practices</li>
+<li>Networking opportunities with core developers and the broader community</li>
+<li>Check <a href="https://summit.nextflow.io">https://summit.nextflow.io</a> for dates and registration</li>
+</ul>
+<hr />
+<h2 id="understanding-the-github-development-cycle">Understanding the GitHub Development Cycle</h2>
+<h3 id="background">Background</h3>
+<p>Contributing to nf-core follows a structured GitHub workflow:</p>
+<pre><code class="language-text">Identify issue
+    ↓
+Discuss solution
+    ↓
+Fork repository
+    ↓
+Create branch
+    ↓
+Make changes
+    ↓
+Test locally
+    ↓
+Push to fork
+    ↓
+Open pull request
+    ↓
+Code review
+    ↓
+Address feedback
+    ↓
+Approve &amp; merge
+</code></pre>
+<h3 id="21-understanding-issues">2.1: Understanding Issues</h3>
+<p><strong>Issues</strong> are the starting point for any contribution. They describe:</p>
+<ul>
+<li>Bug reports: Something is broken and needs fixing</li>
+<li>Feature requests: New functionality that would benefit the pipeline</li>
+<li>Documentation: Missing or unclear documentation</li>
+</ul>
+<p><strong>Finding issues:</strong></p>
+<ol>
+<li>Navigate to the pipeline repository (e.g., <a href="https://github.com/nf-core/rnaseq">https://github.com/nf-core/rnaseq</a>)</li>
+<li>Click <strong>Issues</strong> tab</li>
+<li>Filter by labels:<ul>
+<li><code>good first issue</code>: Recommended for newcomers</li>
+<li><code>help wanted</code>: Community assistance needed</li>
+<li><code>bug</code>: Bug fixes</li>
+<li><code>enhancement</code>: New features</li>
+<li><code>documentation</code>: Documentation improvements</li>
+</ul>
+</li>
+</ol>
+<p><strong>Engaging with issues:</strong></p>
+<p>The discussion in issues usually covers several topics:</p>
+<ol>
+<li><strong>Explanations about the issue reported</strong>: Details about the bug or the feature request</li>
+<li><strong>Check for duplicates</strong>: Is this issue already being addressed?</li>
+<li><strong>Comment and discuss</strong>:<ul>
+<li>Share your ideas about the solution</li>
+<li>Ask clarifying questions</li>
+<li>Link related issues or PRs</li>
+</ul>
+</li>
+<li><strong>Reach consensus</strong>: The maintainers and the proponent agree on the approach</li>
+<li><strong>Assign yourself</strong>: Comment with "I'll take this!" to let others know you're working on it</li>
+</ol>
+<h3 id="22-the-branching-model-adopted-by-nf-core">2.2: The Branching Model Adopted by nf-core</h3>
+<p>The nf-core project uses a structured branching model to manage development:</p>
+<ul>
+<li><strong><code>master</code> branch</strong>: Contains official releases and stable code. Only production-ready code is merged here.</li>
+<li><strong><code>dev</code> branch</strong>: The main development branch where active feature development happens. This is the base branch for new feature branches.</li>
+<li><strong>Feature branches</strong>: Individual branches created from <code>dev</code> for specific features or bug fixes.</li>
+<li><strong><code>TEMPLATE</code> branch</strong>: Reserved for updates to the nf-core pipeline template.</li>
+</ul>
+<h3 id="23-the-pull-request-lifecycle">2.3: The Pull Request Lifecycle</h3>
+<p><strong>Pull Request (PR)</strong>: A request to merge your changes into the main repository. It is the formal way to propose changes and have them reviewed before being integrated into the project's development.</p>
+<p>We will exemplify this with the <code>salmoquant</code> workflow that was developed in the previous section of the course ("2. Developing an nf-core Pipeline from Scratch"), hosted on the nf-data organization.</p>
+<p><strong>Scenario</strong>: The SALMON_QUANT process has memory issues, and we want to increase the available memory allocation.</p>
+<h4 id="forks">Forks</h4>
+<p>The first step is forking the repository. A <strong>fork</strong> is your personal copy of the repository where you can make changes without affecting the original. This prevents contributors from creating many branches and keeps the original project clean.</p>
+<ol>
+<li>Visit the <a href="https://github.com/nfdata-omics/salmoquant">https://github.com/nfdata-omics/salmoquant</a> repository</li>
+<li>Click the <strong>Fork</strong> button (top right)</li>
+<li>Choose where to fork (select your personal GitHub account)</li>
+<li>GitHub creates a copy at <code>https://github.com/YOUR_USERNAME/salmoquant</code></li>
+</ol>
+<h4 id="feature-branches">Feature Branches</h4>
+<p><strong>Branches</strong> allow you to work on features independently:</p>
+<ul>
+<li>Create a feature branch from the <code>dev</code> branch for your specific changes</li>
+</ul>
+<p>To create a branch <code>fix-salmon-memory</code> on your fork of nfdata-omics/salmoquant directly on GitHub:</p>
+<ul>
+<li>Visit your forked repository at <code>https://github.com/YOUR_USERNAME/salmoquant</code></li>
+<li>Click the <strong>Branch</strong> dropdown and select <code>dev</code></li>
+<li>Again in the <strong>Branch</strong> dropdown, type <code>fix-salmon-memory</code> in the text field</li>
+<li>Click <strong>Create branch: fix-salmon-memory from 'dev'</strong></li>
+</ul>
+<p>GitHub creates your feature branch directly without needing local setup.</p>
+<h4 id="make-changes-to-the-code">Make Changes to the Code</h4>
+<p>Typically, you would clone the fork to your local environment and perform development there. However, for this exercise, we will work through the remaining steps on the GitHub web interface to highlight the process with a simple code change.</p>
+<p>We can edit the <code>conf/modules.config</code> configuration file to increase memory allocation:</p>
+<pre><code class="language-diff">
+    withName: 'SALMON_QUANT' {
+        ext.args = '--validateMappings'
++       memory = { check_max( 8.GB * task.attempt, 'memory' ) }
+        publishDir = [
+            path: { &quot;${params.outdir}/salmon&quot; },
+            mode: params.publish_dir_mode,
+            saveAs: { filename -&gt; filename.equals('versions.yml') ? null : filename }
+        ]
+    }
+
+</code></pre>
+<p>When working in a proper development environment, you should perform these validation steps:</p>
+<ul>
+<li>Use pre-commit hooks to catch issues early</li>
+<li>Run the nf-core linting: <code>nf-core pipelines lint</code></li>
+<li>Run the test profile: <code>nextflow run -profile test,...</code></li>
+<li>Run the nf-test suite: <code>nf-test tests ...</code></li>
+</ul>
+<h4 id="open-a-pull-request">Open a Pull Request</h4>
+<p>Once you've committed your changes to your feature branch and pushed them to your fork:</p>
+<ol>
+<li>Go to <code>https://github.com/YOUR_USERNAME/salmoquant</code></li>
+<li>You'll see a banner: "fix-salmon-memory had recent pushes"</li>
+<li>Click the <strong>Compare &amp; pull request</strong> button</li>
+</ol>
+<p>Fill in the PR description using the provided PR template. Be clear about:</p>
+<ul>
+<li>What changes you made</li>
+<li>Why you made them</li>
+</ul>
+<p>Click <strong>Create pull request</strong> to submit your PR.</p>
+<p><strong>What happens next:</strong></p>
+<p>Automated checks run automatically:</p>
+<ul>
+<li>Code linting</li>
+<li>GitHub Actions tests</li>
+</ul>
+<p>Status indicators show:</p>
+<ul>
+<li>✅ All checks passed</li>
+<li>⚠️ Some checks failing (address before merge)</li>
+<li>🔄 Checks in progress</li>
+</ul>
+<h4 id="code-review">Code Review</h4>
+<p>When the feature is implemented and tests are successful, the PR needs to be reviewed by the project maintainers.</p>
+<p>Reviewers may request:</p>
+<ul>
+<li><strong>Changes</strong>: Modifications required before merge</li>
+<li><strong>Comments</strong>: Questions or suggestions</li>
+<li><strong>Approvals</strong>: Confirmation that code is acceptable</li>
+</ul>
+<p>Be patient: reviews may take a few days. Watch for notifications from GitHub about comments or reviews. If needed, you can notify the maintainers on Slack.</p>
+<p>When reviewers request changes:</p>
+<ul>
+<li>Respond to their comments</li>
+<li>Commit new changes to your feature branch to address their requests</li>
+<li>The PR automatically updates with your new commits—no need to create a new PR</li>
+</ul>
+<p>Once the PR is approved:</p>
+<ul>
+<li>You or a maintainer can merge the PR</li>
+<li>If there are conflicts, they need to be resolved first</li>
+<li>Your changes are then integrated into the <code>dev</code> branch</li>
+</ul>
+<h4 id="summary">Summary</h4>
+<ol>
+<li>
+<p><strong>Before opening a PR</strong>:</p>
+<ul>
+<li>Your changes should address a specific issue</li>
+<li>Discuss your approach in the related issue or on Slack</li>
+</ul>
+</li>
+<li>
+<p><strong>Opening a PR</strong>:</p>
+<ul>
+<li>Provide a clear description of your changes</li>
+<li>Link to related issues</li>
+<li>Explain what was changed and why</li>
+</ul>
+</li>
+<li>
+<p><strong>Code Review</strong>:</p>
+<ul>
+<li>Maintainers review your code</li>
+<li>Automated checks (linting, testing) are run</li>
+<li>Feedback is provided as comments on specific lines</li>
+</ul>
+</li>
+<li>
+<p><strong>Addressing Feedback</strong>:</p>
+<ul>
+<li>Make requested changes</li>
+<li>Reply to each comment</li>
+<li>Push changes to your branch (the PR updates automatically)</li>
+</ul>
+</li>
+<li>
+<p><strong>Approval and Merge</strong>:</p>
+<ul>
+<li>Once approved, you or the maintainers can merge your PR</li>
+<li>Your changes become part of the project</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="real-world-contribution-exercise">Real-World Contribution Exercise</h2>
+<h3 id="objective">Objective</h3>
+<p>Apply all learned concepts by contributing to the salmoquant pipeline. This comprehensive exercise demonstrates the full development cycle.</p>
+<h3 id="31-identify-a-feature-to-implement">3.1: Identify a Feature to Implement</h3>
+<p>Identify a feature you want to implement in the salmoquant pipeline. Here are some suggestions, ranging from easier to more complicated tasks:</p>
+<ul>
+<li>Update the template README file with information about the pipeline</li>
+<li>Update the <code>CITATIONS.md</code> file with the Salmon citation</li>
+<li>Use the <code>strandedness</code> column from the samplesheet to provide the <code>libType</code> argument to Salmon</li>
+<li>Add FASTQ validation using <code>fq lint</code></li>
+<li>Concatenate different FASTQ files for the same samples before running MultiQC (use the nf-core <code>cat/fastq</code> module)</li>
+<li>Add a module to build the Salmon index from a transcriptome FASTA file (as an alternative when not provided externally)</li>
+<li>Implement Kallisto as an alternative tool for pseudoalignment</li>
+</ul>
+<h3 id="32-create-a-pr-proposing-changes">3.2: Create a PR Proposing Changes</h3>
+<p>Complete these steps to submit your contribution:</p>
+<ol>
+<li>Fork <a href="https://github.com/nfdata-omics/salmoquant">https://github.com/nfdata-omics/salmoquant</a> to your personal namespace</li>
+<li>Create a feature branch on your fork (starting from <code>dev</code>)</li>
+<li>Open a new GitHub codespace from your fork on your feature branch.</li>
+<li>Work on your changes, ensuring your code passes linting and testing steps</li>
+<li>Commit and push the changes to the feature branch on your fork</li>
+<li>Open a pull request to nfdata-omics/salmoquant</li>
+</ol>
+<hr />
+<h2 id="summary-checklist">Summary Checklist</h2>
+<p>By completing these exercises, you should be able to:</p>
+<ul>
+<li>[ ] Understand the GitHub development cycle and workflow</li>
+<li>[ ] Fork and clone repositories for contribution</li>
+<li>[ ] Create feature branches from the appropriate base branch</li>
+<li>[ ] Open pull requests with clear descriptions</li>
+<li>[ ] Respond to code review feedback and iterate on changes</li>
+<li>[ ] See your changes merged and integrated into the project</li>
+<li>[ ] Complete a full contribution cycle on your own pipeline</li>
+</ul>
+<hr />
+<h2 id="resources">Resources</h2>
+<ul>
+<li><strong>nf-core website</strong>: <a href="https://nf-co.re/">https://nf-co.re/</a></li>
+<li><strong>nf-core Slack</strong>: <a href="https://nf-co.re/join/slack">https://nf-co.re/join/slack</a></li>
+<li><strong>GitHub Guides</strong>: <a href="https://guides.github.com/">https://guides.github.com/</a></li>
+<li><strong>Nextflow Documentation</strong>: <a href="https://www.nextflow.io/docs/latest/">https://www.nextflow.io/docs/latest/</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../2-developing-pipeline/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. develop nf-core pipeline">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                2. develop nf-core pipeline
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../slides/" class="md-footer__link md-footer__link--next" aria-label="Next: Slides">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Slides
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The materials here are licensed under the MIT license
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

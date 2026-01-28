@@ -1,0 +1,3558 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Edoardo Giacopuzzi">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../exercises/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Reference documentation - nextflow-zero2hero</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="nextflow-zero2hero" class="md-header__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../../images/course_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nextflow-zero2hero
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reference documentation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+    
+  
+  Practicals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../slides/" class="md-tabs__link">
+        
+  
+    
+  
+  Slides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="nextflow-zero2hero" class="md-nav__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../../images/course_logo.png" alt="logo">
+
+    </a>
+    nextflow-zero2hero
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Practicals
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practicals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../day1/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day1/1-nextflow-run-intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Running a Nextflow pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day1/2-basic-workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Workflow and channels basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day1/3-operators-playground/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Channels operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../day2/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/1-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/2-module-and-subworkflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Modules and subworkflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/3-containers-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Container basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/4-containers-nextflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Using containers in Nextflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/5-basic-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Basic configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    1. Advanced configuration
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            1. Advanced configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Reference documentation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Reference documentation
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-configuration-comes-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where configuration comes from?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basic-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      The basic principles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The basic principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect-the-resolved-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspect the resolved configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-configuration-modular" class="md-nav__link">
+    <span class="md-ellipsis">
+      Make configuration modular
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-configuration-scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main configuration scopes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Main configuration scopes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Core Settings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Container Technologies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#software-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧬 Software Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloud-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☁️ Cloud Platforms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reports-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Reports &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      📝 Metadata &amp; Workflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Advanced
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-variables-in-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use variables in configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-environment-management-scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container &amp; environment management scopes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container & environment management scopes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#useful-points-to-keep-in-mind" class="md-nav__link">
+    <span class="md-ellipsis">
+      Useful points to keep in mind
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#singularity-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Singularity scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conda scope
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executor-scope-and-executor-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executor scope and executor control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Executor scope and executor control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-executor-scope-root-level-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. executor Scope (Root-level configuration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-process-directives-task-level-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. process Directives (Task-level configuration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-when-both-are-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Happens When Both Are Set?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-multiple-executors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure multiple executors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-configuration-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      process configuration scope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="process configuration scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#main-directives-to-control-resource-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main directives to control resource usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directives-to-control-the-computational-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Directives to control the computational environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-resource-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic resource allocation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-error-strategy-and-retry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control error strategy and retry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-grained-process-configuration-using-labels-and-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fine-grained process configuration using labels and names
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profiles-and-institutional-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profiles (and institutional profiles)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profiles (and institutional profiles)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Syntax
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#main-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main Use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activate-a-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activate a profile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-nf-core-institutional-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use nf-core institutional profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ht-institutional-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      HT institutional profile
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration hierarchy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration hierarchy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-configuration-file-priority-lowest-highest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall Configuration File Priority (lowest → highest):
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-specific-settings-priority-lowest-highest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process-Specific Settings Priority (lowest → highest):
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables &amp; CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manifest-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manifest scope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Manifest scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-is-it-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is it Important?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Practical exercises
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2-advanced-publish/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Advanced publish
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-best-practises-pipeline-structure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Best practices for pipeline structure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-advanced-controls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Advanced scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-report-and-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Report and monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../day4/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day4/1-configuring-launching-pipelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. configure and launch nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day4/2-developing-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. develop nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day4/3-contributing-to-nf-core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. contribute to nf-core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../slides/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-configuration-comes-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where configuration comes from?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basic-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      The basic principles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The basic principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect-the-resolved-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspect the resolved configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-configuration-modular" class="md-nav__link">
+    <span class="md-ellipsis">
+      Make configuration modular
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-configuration-scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main configuration scopes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Main configuration scopes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Core Settings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Container Technologies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#software-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧬 Software Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloud-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☁️ Cloud Platforms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reports-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Reports &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      📝 Metadata &amp; Workflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Advanced
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-variables-in-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use variables in configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-environment-management-scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container &amp; environment management scopes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container & environment management scopes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#useful-points-to-keep-in-mind" class="md-nav__link">
+    <span class="md-ellipsis">
+      Useful points to keep in mind
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#singularity-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Singularity scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conda scope
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executor-scope-and-executor-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executor scope and executor control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Executor scope and executor control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-executor-scope-root-level-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. executor Scope (Root-level configuration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-process-directives-task-level-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. process Directives (Task-level configuration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-when-both-are-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Happens When Both Are Set?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-multiple-executors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure multiple executors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-configuration-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      process configuration scope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="process configuration scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#main-directives-to-control-resource-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main directives to control resource usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directives-to-control-the-computational-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Directives to control the computational environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-resource-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic resource allocation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-error-strategy-and-retry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control error strategy and retry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-grained-process-configuration-using-labels-and-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fine-grained process configuration using labels and names
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profiles-and-institutional-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profiles (and institutional profiles)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profiles (and institutional profiles)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Syntax
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#main-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main Use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activate-a-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activate a profile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-nf-core-institutional-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use nf-core institutional profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ht-institutional-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      HT institutional profile
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration hierarchy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration hierarchy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-configuration-file-priority-lowest-highest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall Configuration File Priority (lowest → highest):
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-specific-settings-priority-lowest-highest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process-Specific Settings Priority (lowest → highest):
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration profiles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables &amp; CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manifest-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manifest scope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Manifest scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-is-it-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is it Important?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="advanced-configuration">Advanced configuration</h1>
+<h2 id="where-configuration-comes-from">Where configuration comes from?</h2>
+<ol>
+<li><code>nextflow.config</code> file in the project directory (where <code>main.nf</code> is located) is always loaded by Nextflow when running a pipeline.</li>
+<li><code>nextflow.config</code> file in the current working directory (where you launch the <code>nextflow run</code> command) is also loaded if present. This allows you to have project-specific configuration when running the same pipeline from different locations.</li>
+<li>additional configuration files can be included specifically using the <code>-c</code> argument of <code>includeConfig</code> command.</li>
+</ol>
+<p><strong>IMPORTANT LOGIC</strong>:</p>
+<p>Nextflow merge your configuration following the above order strictly, hence any conflicting setting is overwritten following the above priority.</p>
+<p>When the same configuration setting is defined in multiple places HAVING THE SAME PRIORITY (see the label example later), Nextflow load them in order, hence the last definition wins and overwrites the previous ones.</p>
+<h2 id="the-basic-principles">The basic principles</h2>
+<p>A Nextflow configuration file is composed of different sections called scopes. Each scope controls a specific aspect of the pipeline execution, for example defining parameters, process execution settings, container options, etc.</p>
+<p>When defining values for your settings, you can include environmental variables using the <code>${VAR_NAME}</code> or <code>${env('VAR_NAME')}</code> syntax. Note that you need to specify the value using double quotes <code>"</code> for the variable interpolation to work.</p>
+<p>You can define configuration settings within a scope using either dot notation (<code>scope.property = value</code>) or curly braces notation (<code>scope { property = value }</code>). The following example shows both styles:</p>
+<pre><code class="language-groovy">// Pipeline parameters
+params {
+    input = 'data/*.fastq'
+    outdir = 'results'
+}
+
+// Process configuration using curly braces notation
+process {
+    executor = 'slurm'
+    cpus = 4
+    memory = '8.GB'
+
+    withLabel: big_mem {
+        memory = '64.GB'
+    }
+
+    withName: 'ALIGN' {
+        cpus = 16
+    }
+}
+
+// Container configuration using dot notation
+singularity.enabled = true
+singularity.runOptions = '--cleanenv'
+// We double quotes for env var interpolation
+singularity.cacheDir = &quot;/scratch/${USER}/singularity_cache&quot; 
+// This works as well: singularity.cacheDir = &quot;/scratch/${env('USER')}/singularity_cache&quot;
+
+// Profiles, more about this later
+profiles {
+    standard {
+        process.executor = 'local'
+    }
+    cluster {
+        process.executor = 'slurm'
+        process.queue = 'batch'
+    }
+}
+</code></pre>
+<h3 id="inspect-the-resolved-configuration">Inspect the resolved configuration</h3>
+<p>You can inspect the final resolved configuration used by Nextflow (after applying all the <code>includeConfig</code> statements) by using the <code>config</code> command. The <code>-output</code> option allows you to specify the output format (default is grouped by scope). Unfortunately, the <code>-c</code> option is not supported with the <code>config</code> command.</p>
+<pre><code class="language-bash">nextflow config my/pipeline/main.nf
+nextflow config my/pipeline/main.nf -output flat
+nextflow config my/pipeline/main.nf -output json
+</code></pre>
+<h3 id="make-configuration-modular">Make configuration modular</h3>
+<p>Additional configuration files can be included in any point using the <code>includeConfig</code> command. Imagine this as a copy-paste of the included file at that point in the configuration.</p>
+<p>Example 1: Include at the top level</p>
+<pre><code>includeConfig 'root_config.config'
+</code></pre>
+<p>Example 2: Include inside a profile</p>
+<p>The content of <code>cluster_config.config</code> will only be applied when the <code>-profile cluster</code> option is used.</p>
+<pre><code>profiles {
+    cluster {
+        includeConfig 'cluster_config.config'
+   }
+}
+</code></pre>
+<p><strong>Important note</strong>: Relative paths in <code>includeConfig</code> are resolved against the location of the including file (i.e., the config file where the <code>includeConfig</code> statement is written), <strong>NOT</strong> from the project directory.</p>
+<p>You can also import an external configuration file at run time using the <code>-c</code> command line option:</p>
+<pre><code>nextflow run my_pipeline -c custom_config.config
+</code></pre>
+<p>In this case the content of <code>custom_config.config</code> will be applied with higher priority and overwrite equivalent settings from your configuration files if present. </p>
+<p>This can be useful when you want to quickly complement settings from an existing configuration without modifying the original files, for example to add a new profile specific for your environment.</p>
+<h2 id="main-configuration-scopes">Main configuration scopes</h2>
+<p>Scopes in bold will be covered in more detail later.</p>
+<h3 id="core-settings">🔧 Core Settings</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>params</code></strong></td>
+<td>Pipeline parameters (inputs, options)</td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>Environment variables for task execution</td>
+</tr>
+<tr>
+<td><strong><code>process</code></strong></td>
+<td>Process execution directives (cpus, memory, etc.)</td>
+</tr>
+<tr>
+<td><strong><code>executor</code></strong></td>
+<td>Executor behavior (local, cluster, cloud)</td>
+</tr>
+<tr>
+<td><strong><code>workDir</code></strong></td>
+<td>Working directory path (default: ./work)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="container-technologies">📦 Container Technologies</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker</code>.</td>
+<td>Docker container execution</td>
+</tr>
+<tr>
+<td><strong><code>singularity</code></strong></td>
+<td>Singularity/Apptainer containers</td>
+</tr>
+<tr>
+<td><code>podman</code></td>
+<td>Podman container execution</td>
+</tr>
+<tr>
+<td><code>charliecloud</code></td>
+<td>Charliecloud containers</td>
+</tr>
+<tr>
+<td><code>sarus</code></td>
+<td>Sarus containers</td>
+</tr>
+<tr>
+<td><code>shifter</code></td>
+<td>Shifter containers</td>
+</tr>
+</tbody>
+</table>
+<h3 id="software-management">🧬 Software Management</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>conda</code></strong></td>
+<td>Conda environment configuration</td>
+</tr>
+<tr>
+<td><code>spack</code></td>
+<td>Spack package manager</td>
+</tr>
+<tr>
+<td><code>wave</code></td>
+<td>Wave container provisioning</td>
+</tr>
+<tr>
+<td><code>fusion</code></td>
+<td>Fusion file system (fast cloud I/O)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cloud-platforms">☁️ Cloud Platforms</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws</code></td>
+<td>AWS-specific settings (Batch, S3, etc.)</td>
+</tr>
+<tr>
+<td><code>azure</code></td>
+<td>Azure configuration</td>
+</tr>
+<tr>
+<td><code>google</code></td>
+<td>Google Cloud settings (Batch, Storage)</td>
+</tr>
+<tr>
+<td><code>k8s</code></td>
+<td>Kubernetes cluster deployment</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reports-monitoring">📊 Reports &amp; Monitoring</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>report</code></td>
+<td>HTML execution report</td>
+</tr>
+<tr>
+<td><code>timeline</code></td>
+<td>Timeline visualization</td>
+</tr>
+<tr>
+<td><code>trace</code></td>
+<td>Task execution trace file</td>
+</tr>
+<tr>
+<td><code>dag</code></td>
+<td>Workflow DAG diagram</td>
+</tr>
+<tr>
+<td><code>tower</code> / <code>seqera</code></td>
+<td>Seqera Platform integration</td>
+</tr>
+<tr>
+<td><code>notification</code></td>
+<td>Email notifications</td>
+</tr>
+</tbody>
+</table>
+<h3 id="metadata-workflow">📝 Metadata &amp; Workflow</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>manifest</code></strong></td>
+<td>Pipeline metadata (name, version, author)</td>
+</tr>
+<tr>
+<td><code>workflow</code></td>
+<td>Workflow-level settings</td>
+</tr>
+<tr>
+<td><code>profiles</code></td>
+<td>Named configuration profiles</td>
+</tr>
+<tr>
+<td><code>includeConfig</code></td>
+<td>Include other config files</td>
+</tr>
+</tbody>
+</table>
+<h3 id="advanced">⚙️ Advanced</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nextflow</code></td>
+<td>Nextflow runtime behavior &amp; retry policies</td>
+</tr>
+<tr>
+<td><code>mail</code></td>
+<td>SMTP server configuration for notifications</td>
+</tr>
+<tr>
+<td><code>plugins</code></td>
+<td>Plugin configuration</td>
+</tr>
+<tr>
+<td><code>secrets</code></td>
+<td>Secure credential management</td>
+</tr>
+</tbody>
+</table>
+<h2 id="use-variables-in-configuration">Use variables in configuration</h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>projectDir</code></td>
+<td>Path</td>
+<td>Directory where the running nf script (usually <code>main.nf</code>) is located</td>
+</tr>
+<tr>
+<td><code>launchDir</code></td>
+<td>Path</td>
+<td>Directory where the workflow was launched (current working directory)</td>
+</tr>
+<tr>
+<td><code>env('VAR_NAME')</code></td>
+<td>Function</td>
+<td>Get environment variable value from Nextflow launch environment</td>
+</tr>
+</tbody>
+</table>
+<p>When using environmental variables in the configuration file, it is recommended to use the <code>env('VAR_NAME')</code>, but you can also include them directly using the <code>${}</code> syntax.</p>
+<pre><code class="language-groovy">// Assuming your main.nf file is located at /my/workflow/dir
+// And you launch the nextflow run command from /my/current/dir
+params.data_dir = &quot;${projectDir}/data&quot; // sets params.data_dir to /my/workflow/dir/data
+params.result_dir = &quot;${launchDir}/results&quot; // sets params.result_dir to /my/current/dir/results
+
+// ✅ All of these work to set a parameter to the user's home directory using the HOME environment variable
+params.home1 = &quot;$HOME&quot;
+params.home2 = env('HOME')
+</code></pre>
+<h2 id="container-environment-management-scopes">Container &amp; environment management scopes</h2>
+<p>In general, you can activate support for a specific environmen§t/container technology by setting its <code>enabled</code> flag to <code>true</code> in the configuration file.</p>
+<h3 id="useful-points-to-keep-in-mind">Useful points to keep in mind</h3>
+<ul>
+<li>Singularity and conda directives have <code>cacheDir</code> settings to specify where images/environments are stored. If this is not set, they default to the pipeline work directory. It's useful to set this to a shared location on clusters to avoid re-downloading/re-creating them for each run.</li>
+<li>Container based execution (singularity or docker) can be customised using the <code>runOptions</code> and <code>engineOptions</code> settings to pass extra command line options to the container engine.</li>
+<li>Conda based execution can be customised using the <code>createOptions</code> setting to pass extra command line options to the <code>conda/mamba create</code> command.</li>
+<li>If mamba or micromamba is installed on the system, conda environments can be created faster by enabling the respective <code>useMamba</code> or <code>useMicromamba</code> flags.</li>
+</ul>
+<h3 id="singularity-scope">Singularity scope</h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>Execute tasks with Apptainer containers (default: <code>false</code>)</td>
+</tr>
+<tr>
+<td><code>autoMounts</code></td>
+<td>Automatically mount host paths in the executed container (default: <code>true</code>)</td>
+</tr>
+<tr>
+<td><code>engineOptions</code></td>
+<td>Additional options supported by the Apptainer engine (i.e., <code>apptainer [OPTIONS]</code>)</td>
+</tr>
+<tr>
+<td><code>runOptions</code></td>
+<td>Extra command line options supported by <code>apptainer exec</code></td>
+</tr>
+<tr>
+<td><code>cacheDir</code></td>
+<td>Directory where remote Apptainer images are stored. Must be a shared folder accessible to all compute nodes on clusters</td>
+</tr>
+<tr>
+<td><code>libraryDir</code></td>
+<td>Directory where remote Apptainer images are retrieved. Must be shared on clusters</td>
+</tr>
+<tr>
+<td><code>envWhitelist</code></td>
+<td>Comma-separated list of environment variable names to include in the container environment</td>
+</tr>
+</tbody>
+</table>
+<h3 id="docker-scope">Docker scope</h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>Enable Docker execution (default: <code>false</code>)</td>
+</tr>
+<tr>
+<td><code>engineOptions</code></td>
+<td>Additional Docker engine options</td>
+</tr>
+<tr>
+<td><code>runOptions</code></td>
+<td>Extra command line options for <code>docker run</code> command</td>
+</tr>
+<tr>
+<td><code>envWhitelist</code></td>
+<td>Comma-separated list of environment variables to include in container</td>
+</tr>
+</tbody>
+</table>
+<h3 id="conda-scope">Conda scope</h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>Execute tasks with Conda environments (default: <code>false</code>).</td>
+</tr>
+<tr>
+<td><code>cacheDir</code></td>
+<td>Path where Conda environments are stored. Should be accessible from all compute nodes when using a shared file system</td>
+</tr>
+<tr>
+<td><code>channels</code></td>
+<td>List of Conda channels for resolving Conda packages. Channel priority decreases from left to right</td>
+</tr>
+<tr>
+<td><code>createOptions</code></td>
+<td>Extra command line options for the <code>conda create</code> command</td>
+</tr>
+<tr>
+<td><code>useMamba</code></td>
+<td>Use Mamba instead of conda to create Conda environments (default: <code>false</code>)</td>
+</tr>
+<tr>
+<td><code>useMicromamba</code></td>
+<td>Use Micromamba instead of conda to create Conda environments (default: <code>false</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="executor-scope-and-executor-control">Executor scope and executor control</h2>
+<h3 id="1-executor-scope-root-level-configuration">1. executor Scope (Root-level configuration)</h3>
+<ul>
+<li>Purpose: Controls the executor behavior and sets system-level limits for resource management.</li>
+<li>Use case: Define what the executor itself can use (e.g., total available resources on the system).</li>
+</ul>
+<p>Key Settings:</p>
+<pre><code class="language-groovy">executor {
+    cpus = 16                   // MAX CPUs available to the executor (system limit)
+    memory = '64.GB'            // MAX memory available to the executor (system limit)
+    queueSize = 100             // Max number of parallel tasks
+    pollInterval = '5s'         // How often to check job status
+    perCpuMemAllocation = true  // SLURM-specific: use --mem-per-cpu
+    account = 'my-project'      // Cloud/HPC account for billing
+}
+</code></pre>
+<p><strong>Important:</strong></p>
+<p><code>executor.cpus</code> and <code>executor.memory</code> are upper bounds for the <code>local</code> executor only.
+They tell Nextflow: "Don't use more than X CPUs/memory total across all running tasks".</p>
+<p>They are <strong>NOT</strong> applicable to cluster/cloud executors (SLURM, AWS Batch, etc.) - those use process directives</p>
+<h3 id="2-process-directives-task-level-configuration">2. process Directives (Task-level configuration)</h3>
+<p>Purpose: Define the executor to use and the resource requests for individual tasks/processes - what each job submission asks for.</p>
+<p>Use case: Specify how much each process needs when it runs.</p>
+<p>Key Settings:</p>
+<pre><code class="language-groovy">process {
+    executor = 'slurm'          // Which executor each process uses
+    cpus = 4                    // Request 4 CPUs for each task
+    memory = '8.GB'             // Request 8GB memory for each task
+    queue = 'batch'             // Which queue/partition to submit to
+    clusterOptions = '--account=myproject'  // Extra scheduler options
+    time = '2h'                 // Max walltime for the job
+}
+</code></pre>
+<p><strong>Important:</strong></p>
+<p>These are per-task resource requests</p>
+<ul>
+<li>For cluster executors: translated to scheduler commands (e.g., <code>SLURM --cpus-per-task=4</code>)</li>
+<li>For local executor: determines parallelization (but bounded by <code>executor.cpus</code>)</li>
+</ul>
+<h3 id="what-happens-when-both-are-set">What Happens When Both Are Set?</h3>
+<p>Scenario: Local Executor</p>
+<pre><code class="language-groovy">executor {
+    cpus = 16        // System has 16 CPUs total
+    memory = '64.GB' // System has 64GB total
+}
+
+process {
+    cpus = 4         // Each task wants 4 CPUs
+    memory = '8.GB'  // Each task wants 8GB
+}
+</code></pre>
+<p>Result:</p>
+<p>Nextflow will run at most 4 tasks in parallel (16 CPUs / 4 CPUs per task = 4)
+Total memory usage won't exceed 64GB (8 tasks max: 64GB / 8GB = 8)
+The more restrictive constraint (CPUs) wins → 4 parallel tasks</p>
+<p>Scenario: Cluster Executor (SLURM, SGE, etc.)</p>
+<pre><code class="language-groovy">executor {
+    queueSize = 50      // Submit up to 50 jobs at once
+    account = 'myproject'
+}
+
+process {
+    executor = 'slurm'
+    cpus = 8           // Each job requests 8 CPUs
+    memory = '32.GB'   // Each job requests 32GB
+    queue = 'batch'    // Submit to 'batch' partition
+    clusterOptions = '--gres=gpu:1'  // Extra options
+}
+</code></pre>
+<p><strong>Result</strong>:</p>
+<p>Nextflow will use the SLURM executor to submit jobs to the 'batch' queue, requesting 8 CPUs and 32GB memory per job. It will limit the number of simultaneously submitted jobs to 50. </p>
+<h3 id="configure-multiple-executors">Configure multiple executors</h3>
+<p>It is also possible to set different executor settings for different executors in the executor scope:</p>
+<pre><code class="language-groovy">executor {
+    // Defaults for all executors
+    pollInterval = '5sec'
+
+    // Local development
+    $local {
+        cpus = 8              // System has 8 CPUs
+        memory = '32.GB'      // System has 32GB RAM
+    }
+
+    // SLURM cluster
+    $slurm {
+        queueSize = 200       // Can handle 200 jobs
+        pollInterval = '30sec'  // Check less frequently
+        submitRateLimit = '50/1min'  // Don't overwhelm scheduler
+        queueStatInterval = '2min'
+        perCpuMemAllocation = true  // This cluster uses --mem-per-cpu
+    }
+
+    // AWS Batch
+    $awsbatch {
+        queueSize = 1000      // Cloud can handle many jobs
+        pollInterval = '10sec'
+    }
+}
+</code></pre>
+<h2 id="process-configuration-scope">process configuration scope</h2>
+<h3 id="main-directives-to-control-resource-usage">Main directives to control resource usage</h3>
+<p>Using specific directive you can have a fine-grained control of the resources allocated to that process. You can specifiy them directly in the process definition or in the configuration file.</p>
+<p>Here is an example defining resource requirements directly in the process:</p>
+<pre><code class="language-groovy">process ALIGN_READS {
+    cpus 8
+    memory 32.GB
+    time 4.h
+
+    script:
+    &quot;&quot;&quot;
+    bwa mem -t ${task.cpus} reference.fa reads.fq
+    &quot;&quot;&quot;
+}
+
+process GPU_ANALYSIS {
+    accelerator 1, type: 'nvidia-tesla-v100'
+    memory 16.GB
+
+    script:
+    &quot;&quot;&quot;
+    cuda_program --gpu
+    &quot;&quot;&quot;
+}
+</code></pre>
+<p>Similarly, you can define these directives in the <code>nextflow.config</code> configuration file under the <code>process</code> scope to apply them globally.</p>
+<pre><code class="language-groovy">process { // applies to all your processes
+    cpus = 4
+    memory = '8.GB'
+    time = '2.h'
+}
+</code></pre>
+<h4 id="core-resource-directives">Core Resource Directives</h4>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>Description</th>
+<th>Example</th>
+<th>Units/Values</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cpus</code></td>
+<td>Number of (logical) CPUs required</td>
+<td><code>cpus 8</code></td>
+<td>Integer</td>
+<td>Use <code>${task.cpus}</code> in script to reference allocated CPUs</td>
+</tr>
+<tr>
+<td><code>memory</code></td>
+<td>Amount of RAM required</td>
+<td><code>memory 16.GB</code></td>
+<td>B, KB, MB, GB, TB</td>
+<td>Automatically converted to executor-specific format</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>Maximum execution time</td>
+<td><code>time 2.h</code></td>
+<td>s, m, h, d</td>
+<td>Job killed if exceeded; use with retry strategies</td>
+</tr>
+<tr>
+<td><code>queue</code></td>
+<td>Cluster queue/partition name</td>
+<td><code>queue 'long'</code></td>
+<td>String</td>
+<td>Executor-specific (e.g., SLURM partition)</td>
+</tr>
+<tr>
+<td><code>accelerator</code></td>
+<td>GPU/TPU requirements</td>
+<td><code>accelerator 1, type: 'nvidia-tesla-v100'</code></td>
+<td>Integer, type</td>
+<td>For GPU-enabled processes</td>
+</tr>
+<tr>
+<td><code>maxForks</code></td>
+<td>Max parallel instances</td>
+<td><code>maxForks 4</code></td>
+<td>Integer</td>
+<td>Limit concurrency (default: available CPUs - 1)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="memory-unit-reference">Memory Unit Reference</h4>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Size</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>Bytes</td>
+<td><code>memory 1000000.B</code></td>
+</tr>
+<tr>
+<td>KB</td>
+<td>Kilobytes (1000 B)</td>
+<td><code>memory 1000.KB</code></td>
+</tr>
+<tr>
+<td>MB</td>
+<td>Megabytes (1000 KB)</td>
+<td><code>memory 512.MB</code></td>
+</tr>
+<tr>
+<td>GB</td>
+<td>Gigabytes (1000 MB)</td>
+<td><code>memory 16.GB</code></td>
+</tr>
+<tr>
+<td>TB</td>
+<td>Terabytes (1000 GB)</td>
+<td><code>memory 2.TB</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="time-unit-reference">Time Unit Reference</h4>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Duration</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s</td>
+<td>Seconds</td>
+<td><code>time 300.s</code></td>
+</tr>
+<tr>
+<td>m</td>
+<td>Minutes</td>
+<td><code>time 30.m</code></td>
+</tr>
+<tr>
+<td>h</td>
+<td>Hours</td>
+<td><code>time 6.h</code></td>
+</tr>
+<tr>
+<td>d</td>
+<td>Days</td>
+<td><code>time 2.d</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="directives-to-control-the-computational-environment">Directives to control the computational environment</h3>
+<h4 id="configure-the-execution-space">Configure the execution space</h4>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>Description</th>
+<th>Example</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clusterOptions</code></td>
+<td>Pass native scheduler options</td>
+<td><code>clusterOptions '--gres=gpu:2 --constraint=v100'</code></td>
+<td>Scheduler-specific flags (SLURM, PBS, SGE)</td>
+</tr>
+<tr>
+<td><code>beforeScript</code></td>
+<td>Execute command BEFORE main script</td>
+<td><code>beforeScript 'source /etc/profile.d/modules.sh'</code></td>
+<td>Initialize cluster environment, load modules, set env vars</td>
+</tr>
+<tr>
+<td><code>afterScript</code></td>
+<td>Execute command AFTER main script</td>
+<td><code>afterScript 'cleanup_temp_files.sh'</code></td>
+<td>Cleanup, logging, notifications</td>
+</tr>
+</tbody>
+</table>
+<h4 id="container-environment-directives">Container &amp; Environment Directives</h4>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>Description</th>
+<th>Example</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>container</code></td>
+<td>Container image to use</td>
+<td><code>container 'biocontainers/bwa:v0.7.17_cv1'</code></td>
+<td>Specify Docker/Singularity image</td>
+</tr>
+<tr>
+<td><code>containerOptions</code></td>
+<td>Pass custom flags to container engine</td>
+<td><code>containerOptions '--gpus all --shm-size 8g'</code></td>
+<td>Mount volumes, GPU access, memory settings</td>
+</tr>
+<tr>
+<td><code>conda</code></td>
+<td>Specify Conda packages/environment</td>
+<td><code>conda 'bwa=0.7.15 samtools=1.9'</code></td>
+<td>Manage software dependencies</td>
+</tr>
+<tr>
+<td><code>module</code></td>
+<td>Load environment modules</td>
+<td><code>module 'blast/2.2.27:java/11'</code></td>
+<td>Use HPC module system</td>
+</tr>
+</tbody>
+</table>
+<p>When using containers, these directives are combined with the <code>runOptions</code> and <code>engineOptions</code> settings in the respective container/environment scopes in the configuration file. This allows fine-grained control on the container execution.</p>
+<p>The final resulting command will be like </p>
+<pre><code class="language-bash">singularity [engineOptions] exec [runOptions] [containerOptions] image.sif command
+docker [engineOptions] run [runOptions] [containerOptions] image command
+</code></pre>
+<h3 id="dynamic-resource-allocation">Dynamic resource allocation</h3>
+<p>Resources (and in general any directive) in a process can be defined dynamically using a closure (a piece of code within curly brackets <code>{}</code> that returns a compatible value). This allows you to set resources based on input file size, task attempt number, or any other logic.</p>
+<p>The most common use case is to adapt computational resources of environment based on:</p>
+<ol>
+<li>Retry attempts (<code>task.attempt</code>) - Scale resources when tasks fail and retry</li>
+<li>Exit status (<code>task.exitStatus</code>) - Previous failure reason (more on point 1 and 2 later)</li>
+<li>Input characteristics - Size, count, or type of input files</li>
+<li>Task metadata - Sample characteristics, parameters, etc.</li>
+</ol>
+<p>Few important notes:</p>
+<ul>
+<li>closures are always enclosed in curly braces <code>{}</code> and must return a value compatible with the directive type</li>
+<li>inside the closure you can access special <code>task</code> properties like <code>task.attempt</code> and any value from input channels</li>
+<li>you can not access variables defined in the <code>script</code> block.</li>
+</ul>
+<p>For example, the following process uses static resource allocations</p>
+<pre><code class="language-nextflow">process ALIGNMENT {
+    cpus 8              // Always uses 8 CPUs
+    memory 16.GB        // Always uses 16 GB
+    time 2.h            // Always uses 2 hours
+
+    script:
+    &quot;&quot;&quot;
+    bwa mem -t ${task.cpus} ref.fa reads.fq &gt; aligned.sam
+    &quot;&quot;&quot;
+}
+</code></pre>
+<p>Can be made dynamic to adapt based on the input size:</p>
+<pre><code class="language-nextflow">process ADAPTIVE_ANALYSIS {
+    input:
+    tuple val(sample_id), path(bam)
+
+    // Scale memory by BAM file size
+    memory { bam.size() &lt; 1.GB ? 4.GB : bam.size() * 2 }
+
+    // Scale CPUs by file size
+    cpus { bam.size() &lt; 500.MB ? 2 : 8 }
+
+    // Scale time by file size
+    time { bam.size() &lt; 1.GB ? 1.h : 4.h }
+
+    // Change queue based on file size
+    queue { bam.size() &gt; 10.GB ? 'long' : 'short' }
+
+    script:
+    &quot;&quot;&quot;
+    samtools sort -@ ${task.cpus} -m ${task.memory.toGiga() / task.cpus}G ${bam} &gt; sorted.bam
+    &quot;&quot;&quot;
+}
+</code></pre>
+<p>Similarly, you can define a logic based on some sample metadata present in your input channel</p>
+<pre><code class="language-nextflow">process VARIANT_CALLING {
+    input:
+    tuple val(meta), path(bam), path(bai)
+
+    // Scale by sequencing depth
+    memory {
+        def depth = meta.coverage ?: 30
+        if (depth &lt; 10) {
+            4.GB
+        } else if (depth &lt; 50) {
+            16.GB
+        } else {
+            32.GB
+        }
+    }
+
+    // Scale by genome size
+    cpus {
+        def genomeSize = meta.genome_size ?: 3000000000  // Default human
+        genomeSize &gt; 3e9 ? 16 : 8
+    }
+
+    script:
+    &quot;&quot;&quot;
+    gatk HaplotypeCaller \\
+        -I ${bam} \\
+        -R ${params.reference} \\
+        -O ${meta.sample_id}.vcf \\
+        --native-pair-hmm-threads ${task.cpus}
+    &quot;&quot;&quot;
+}
+</code></pre>
+<h4 id="important-resourcelimits">IMPORTANT - resourceLimits</h4>
+<p>The <code>resourceLimits</code> directive defines the maximum resources available in your system. This allows you to set upper bounds for resources so that your dynamic logic does not exceed the available resources.</p>
+<p>You can define it in your process or globally in the <code>process</code> scope in your configuration file like in the example below.</p>
+<pre><code class="language-nextflow">process {
+    resourceLimits = [
+        cpus: 32,
+        memory: 128.GB,
+        time: 1.d
+    ]
+}
+</code></pre>
+<h3 id="control-error-strategy-and-retry">Control error strategy and retry</h3>
+<p>Nextflow provides several directives to control how task failures are handled and how many times to retry failed tasks.</p>
+<table>
+<thead>
+<tr>
+<th>Directive/Property</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task.exitStatus</code></td>
+<td>Task property</td>
+<td>Contains the exit code from the task's script (read-only)</td>
+<td><code>task.exitStatus == 137</code></td>
+<td>Available in dynamic directives to check previous failure reason</td>
+</tr>
+<tr>
+<td><code>errorStrategy</code></td>
+<td>Process directive</td>
+<td>Defines how to handle task failures</td>
+<td><code>errorStrategy 'retry'</code></td>
+<td>Options: <code>'terminate'</code>, <code>'finish'</code>, <code>'ignore'</code>, <code>'retry'</code></td>
+</tr>
+<tr>
+<td><code>maxRetries</code></td>
+<td>Process directive</td>
+<td>Maximum retries per task instance</td>
+<td><code>maxRetries 3</code></td>
+<td>Works with <code>errorStrategy 'retry'</code>; default is 0</td>
+</tr>
+<tr>
+<td><code>maxErrors</code></td>
+<td>Process directive</td>
+<td>Maximum errors across all tasks in a process</td>
+<td><code>maxErrors 5</code></td>
+<td>Pipeline continues until this limit is reached across all task instances</td>
+</tr>
+<tr>
+<td><code>validExitStatus</code></td>
+<td>Process directive</td>
+<td>Define which exit codes are considered "success"</td>
+<td><code>validExitStatus 0,1,2</code></td>
+<td>By default only 0 is success; useful for tools with non-zero success codes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="common-exit-codes">Common Exit Codes</h4>
+<table>
+<thead>
+<tr>
+<th>Exit Code</th>
+<th>Meaning</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Success</td>
+<td>Task completed normally</td>
+</tr>
+<tr>
+<td>1</td>
+<td>General error</td>
+<td>Script/command failure</td>
+</tr>
+<tr>
+<td>104</td>
+<td>General error</td>
+<td>Indicating resource issues like Out Of Memory or timeout in cloud platforms</td>
+</tr>
+<tr>
+<td>127</td>
+<td>Command not found</td>
+<td>Tool not in PATH</td>
+</tr>
+<tr>
+<td>130</td>
+<td>SIGINT (Ctrl+C)</td>
+<td>User interrupt</td>
+</tr>
+<tr>
+<td>137</td>
+<td>SIGKILL (OOM)</td>
+<td>Out of memory / killed by system</td>
+</tr>
+<tr>
+<td>139</td>
+<td>SIGSEGV</td>
+<td>Segmentation fault</td>
+</tr>
+<tr>
+<td>140</td>
+<td>SIGTERM + 128</td>
+<td>Terminated by scheduler (often still OOM, or similar)</td>
+</tr>
+<tr>
+<td>141</td>
+<td>SIGPIPE</td>
+<td>Broken pipe</td>
+</tr>
+<tr>
+<td>143</td>
+<td>SIGTERM</td>
+<td>Walltime exceeded (HPC)</td>
+</tr>
+<tr>
+<td>255</td>
+<td>Exit status out of range</td>
+<td>Unknown error</td>
+</tr>
+</tbody>
+</table>
+<h4 id="errorstrategy-directive">errorStrategy directive</h4>
+<p>Defines the action to take when a task returns a non-zero exit status.</p>
+<p>Available Strategies:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Behavior</th>
+<th>Workflow Exit Code</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'terminate'</code> (default)</td>
+<td>Stop immediately, kill running jobs</td>
+<td>Non-zero</td>
+<td>Production - fail fast</td>
+</tr>
+<tr>
+<td><code>'finish'</code></td>
+<td>Wait for running tasks, then stop</td>
+<td>Non-zero</td>
+<td>Save partial results before failing</td>
+</tr>
+<tr>
+<td><code>'ignore'</code></td>
+<td>Continue pipeline, log error</td>
+<td>Zero (or non-zero with <code>workflow.failOnIgnore=true</code>)</td>
+<td>Optional analyses</td>
+</tr>
+<tr>
+<td><code>'retry'</code></td>
+<td>Re-submit task (up to <code>maxRetries</code>)</td>
+<td>Depends on final outcome</td>
+<td>Transient failures (OOM, network)</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>Important</strong>: With <code>errorStrategy 'ignore'</code>, the workflow exits with code 0 by default. To make the workflow fail, but continue execution you have to set in your configuration file <code>workflow.failOnIgnore = true</code></p>
+<p>The <code>errorStrategy</code> directive can be set dynamically based on the exit code using a closure:</p>
+<pre><code class="language-nextflow">process SMART_RETRY {
+    // Retry on OOM/timeout, terminate on other errors
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
+
+    maxRetries 2
+
+    script:
+    &quot;&quot;&quot;
+    analysis_tool input.bam
+    &quot;&quot;&quot;
+}
+</code></pre>
+<h4 id="taskexitstatus-property">task.exitStatus property</h4>
+<p>This is a read-only property available within the process script that contains the exit code of the last executed command. This is particularly useful, in combination with <code>task.attempt</code> (which tracks the number of retries), to implement dynamic resource usage that will increase resources based on the exit code of the previous attempt.</p>
+<p>Example</p>
+<pre><code class="language-nextflow">process ANALYSIS {
+    // Retry only on specific exit codes (OOM, timeout)
+    errorStrategy { task.exitStatus in 137..143 ? 'retry' : 'terminate' }
+
+    // Increase memory when the processed fails due to OOM (exit code 137)
+    memory { 
+        if (task.exitStatus == 137) {
+            4.GB * task.attempt // the 2nd attempt will have 8GB, 3rd 12GB, etc.
+        } else {
+            4.GB // default memory
+        }
+    }
+
+    time { 
+        if (task.exitStatus == 143) {
+            2.h * task.attempt // increase time on timeout
+        } else {
+            2.h
+        }
+    }
+
+    maxRetries 3 // maximum 3 retries
+
+    script:
+    &quot;&quot;&quot;
+    intensive_tool input.bam
+    &quot;&quot;&quot;
+}
+</code></pre>
+<h3 id="fine-grained-process-configuration-using-labels-and-names">Fine-grained process configuration using labels and names</h3>
+<p>You can define specific configuration settings for individual processes or groups of processes using the <code>withName</code> and <code>withLabel</code> selectors inside the <code>process</code> scope in your configuration file.</p>
+<ul>
+<li>Use <code>withName</code> to assign resources</li>
+<li>Use <code>withLabel</code> to assign resources to multiple process based on a shared label</li>
+</ul>
+<p><strong>Important notes:</strong></p>
+<ul>
+<li>The configuration defined using process <code>withLabel</code> and <code>withName</code> overrides the global configuration defined in the config file (root process scope) and also the configuration defined directly in the process definition. </li>
+<li>The <code>withName</code> configuration has higher priority than the <code>withLabel</code> configuration when there are conflicting settings.</li>
+<li>When multiple labels are assigned to a process, the corresponding settings are collapsed in the order the labels appear. Hence, the last label takes precedence in case of conflicting settings.</li>
+</ul>
+<p>You can combine both <code>withName</code> and <code>withLabel</code> selectors in the same configuration file to have a fine-grained control of your process resource allocation.</p>
+<ol>
+<li>Example referring to a process directly by name:</li>
+</ol>
+<pre><code class="language-nextflow">// This is in your configuration file
+process {
+    withName: 'RSCRIPT' {
+        cpus = 4
+        memory = 16.GB
+    }
+
+    withName: 'ANOTHER_RSCRIPT' {
+        cpus = 1
+        memory = 8.GB
+    }
+}
+</code></pre>
+<p>Then in your process definition:</p>
+<pre><code class="language-nextflow">process RSCRIPT {
+    // This will use 4 cpus and 16 GB of memory
+
+    script:
+    &quot;&quot;&quot;
+    Rscript your_script.R
+    &quot;&quot;&quot;
+}
+
+process ANOTHER_RSCRIPT {
+    // This will use 1 cpus and 8 GB of memory
+
+    script:
+    &quot;&quot;&quot;    
+    Rscript another_script.R
+    &quot;&quot;&quot;
+}
+</code></pre>
+<ol>
+<li>Example using labels to group processes:</li>
+</ol>
+<pre><code class="language-nextflow">// This is in your configuration file
+process {
+    withLabel: 'large_process' {
+        memory = 64.GB
+        cpus = 16
+    }
+}
+</code></pre>
+<p>Then in your process definition:</p>
+<pre><code class="language-nextflow">// Both processes will use 64 GB and 16 CPUs as defined by the large_process label   
+process LARGE_ANALYSIS {
+    label 'large_process'  
+
+    script:
+    &quot;&quot;&quot;
+    big_memory_tool input.dat
+    &quot;&quot;&quot;
+}
+
+process ANOTHER_ANALYSIS {
+    label 'large_process' 
+
+    script:
+    &quot;&quot;&quot;
+    big_memory_tool input.dat
+    &quot;&quot;&quot;
+}
+</code></pre>
+<h2 id="profiles-and-institutional-profiles">Profiles (and institutional profiles)</h2>
+<p>Configuration profiles are named sets of configuration settings that allow you to define different execution environments for your Nextflow pipeline. They enable you to easily switch between configurations (e.g., local, cluster, cloud) without modifying your pipeline code. Essentially they are conditional configuration blocks that get applied when selected on the command-line via <code>-profile</code>. The settings inside a selected profile override non-profile settings at their respective level.</p>
+<p><strong>Note:</strong> As of Nextflow 25.02+, profiles are applied in the order defined in the config file (legacy behavior), but in future versions, they will be applied in command-line order.</p>
+<h3 id="basic-syntax">Basic Syntax</h3>
+<p>Profiles are defined within the profiles scope in <code>nextflow.config</code>:</p>
+<pre><code class="language-groovy">profiles {
+    standard {
+        process.executor = 'local'
+    }
+
+    cluster {
+        process.executor = 'sge'
+        process.queue = 'long'
+        process.memory = '10GB'
+    }
+
+    cloud {
+        process.executor = 'cirrus'
+        process.container = 'cbcrg/imagex'
+        docker.enabled = true
+    }
+}
+</code></pre>
+<h3 id="main-use">Main Use</h3>
+<p>Configuration profiles are mainly used to:</p>
+<ul>
+<li>Switch execution environments - Run the same pipeline on local machines, HPC clusters, or cloud platforms</li>
+<li>Customize resource allocations - Define different CPU, memory, and queue settings per environment</li>
+<li>Enable/disable features - Toggle containers, conda environments, or other execution options</li>
+<li>Maintain portability - Keep pipelines environment-agnostic while supporting multiple platforms</li>
+</ul>
+<h3 id="activate-a-profile">Activate a profile</h3>
+<p>Profiles are activated at runtime using the <code>-profile</code> flag:</p>
+<pre><code class="language-bash"># Single profile
+nextflow run pipeline.nf -profile cluster
+
+# Multiple profiles (comma-separated)
+nextflow run pipeline.nf -profile standard,docker
+</code></pre>
+<h3 id="use-nf-core-institutional-profiles">Use nf-core institutional profiles</h3>
+<p>The nf-core community maintains a set of custom configuration profiles for different institutions and HPC environments. 
+These are usually provided by your IT department and they can be imported in your pipeline to automatically set up the appropriate configuration for your HPC system.</p>
+<p>To be able to use nf-core institutional profiles, you need to include the following code snippet in your <code>nextflow.config</code> file:</p>
+<pre><code class="language-groovy">params {
+    // nf-core profiles config options
+    custom_config_version      = 'master'
+    custom_config_base         = &quot;https://raw.githubusercontent.com/nf-core/configs/${params.custom_config_version}&quot;
+    hostnames                  = [:]
+    config_profile_description = null
+    config_profile_contact     = null
+    config_profile_url         = null
+    config_profile_name        = null
+}
+
+// Load nf-core custom profiles from different Institutions
+includeConfig (
+    params.custom_config_base 
+        ? &quot;${params.custom_config_base}/nfcore_custom.config&quot; 
+        : '/dev/null'
+)
+
+// Note this will not give you a warning if the selected institutional profile does not exist
+// You may wnat to include a more complex logic to report a warning and exit when the file is not found
+// includeConfig ({
+//     def configPath = params.custom_config_base 
+//         ? &quot;${params.custom_config_base}/nfcore_custom.config&quot; 
+//         : '/dev/null'
+
+//     // Check if file exists and warn if not
+//     if (params.custom_config_base) {
+//         def configFile = file(configPath)
+//         if (!configFile.exists() &amp;&amp; configPath != '/dev/null') {
+//             System.err.println(&quot;WARNING: Could not find institutional config file: ${configPath}&quot;)
+//             System.err.println(&quot;Please check that params.custom_config_base is set correctly.&quot;)
+//             System.exit(1)
+//         }
+//     }
+
+//     return configPath
+// }())
+</code></pre>
+<p>Then you can import your institutional profile directly by name using the <code>-profile</code> command line option when launching your pipeline. For exame the <code>humantechnopole</code> profile for Human Technopole</p>
+<pre><code class="language-bash">nextflow run nf-core/my_pipeline -profile humantechnopole ...
+</code></pre>
+<p>You can consult the full list of available nf-core institutional profiles visiting the <a href="https://nf-co.re/configs/">nf-core configuration page</a></p>
+<h3 id="ht-institutional-profile">HT institutional profile</h3>
+<p>This is the <code>humantechnopole</code> profile used at Human Technopole HPC cluster and available from the <a href="https://nf-co.re/configs/humantechnopole/">nf-core/configs repository</a>.</p>
+<pre><code class="language-groovy">params {
+    max_memory = 550.GB
+    max_time   = 30.d
+    max_cpus   = 32
+}
+
+process {
+    resourceLimits = [
+        cpus: 32,
+        memory: 550.GB,
+        time: 30.d
+    ]
+    executor = 'slurm'
+    queue = 'cpuq'
+    beforeScript = 'module load singularity'
+    maxRetries = 5
+
+    withLabel: gpu {
+        resourceLimits = [
+            cpus: 36,
+            memory: 550.GB,
+            time: 30.d
+        ]
+        queue = 'gpuq'
+        containerOptions = '--nv'
+        clusterOptions = { task.accelerator ? &quot;--gres=gpu:${task.accelerator.request}&quot; : '--gres=gpu:1' }
+    }
+}
+
+executor {
+    queueSize = 500
+    pollInterval = '5 sec'
+    submitRateLimit = '20 sec'
+}
+
+singularity {
+    autoMounts = true
+    runOptions = '--cleanenv --bind /localscratch'
+}
+</code></pre>
+<h2 id="configuration-hierarchy">Configuration hierarchy</h2>
+<h3 id="overall-configuration-file-priority-lowest-highest">Overall Configuration File Priority (lowest → highest):</h3>
+<ol>
+<li><code>$HOME/.nextflow/config</code> (or <code>$NXF_HOME/config</code>)</li>
+<li><code>nextflow.config</code> in the project directory</li>
+<li><code>nextflow.config</code> in the launch directory</li>
+<li><code>-c &lt;config-file&gt;</code> command line option</li>
+<li>Command line parameters (e.g., <code>--param value</code>)</li>
+</ol>
+<h3 id="process-specific-settings-priority-lowest-highest">Process-Specific Settings Priority (lowest → highest):</h3>
+<p>When the same process directive is defined in multiple places the following order of precedence is applied:</p>
+<ol>
+<li>Process scope (base settings) - No selector in nextflow.config:</li>
+</ol>
+<pre><code class="language-groovy">process {
+    cpus = 4  // Applied to ALL processes
+}
+</code></pre>
+<ol>
+<li>Process definition directives - Inside the process itself:</li>
+</ol>
+<pre><code class="language-groovy">process FOO {
+    cpus 8  // Overrides base process scope
+}
+</code></pre>
+<ol>
+<li>withLabel selectors - Matching process labels:</li>
+</ol>
+<pre><code class="language-groovy">process {
+    withLabel: big_mem {
+        cpus = 16  // Overrides process directive
+    }
+}
+</code></pre>
+<ol>
+<li>withName selectors - Matching process name:</li>
+</ol>
+<pre><code class="language-groovy">process {
+    withName: FOO {
+        cpus = 32  // Overrides withLabel
+    }
+}
+</code></pre>
+<ol>
+<li>withName with fully qualified name - workflow + name:</li>
+</ol>
+<pre><code class="language-groovy">process {
+    withName: 'WORKFLOW:SUBWORKFLOW:FOO' {
+        cpus = 128  // HIGHEST PRIORITY
+    }
+}
+</code></pre>
+<h3 id="configuration-profiles">Configuration profiles</h3>
+<p>Profiles are just conditional config blocks that get applied when selected via <code>-profile</code>. 
+Settings inside a selected profile follow the same hierarchy above, but override non-profile settings at their respective level.</p>
+<h3 id="environment-variables-cli">Environment Variables &amp; CLI</h3>
+<ul>
+<li><code>-c</code> option: Adds config files to the hierarchy (#4 above)</li>
+<li>Command line params (<code>--param</code>): Highest priority for parameter values, override params in all config files</li>
+</ul>
+<h2 id="manifest-scope">Manifest scope</h2>
+<p>The manifest scope is a configuration block in Nextflow that allows you to define essential metadata about your pipeline project.</p>
+<pre><code class="language-groovy">manifest {
+    name            = 'my-awesome-pipeline'
+    author          = 'Jane Doe'
+    homePage        = 'https://github.com/myorg/my-pipeline'
+    description     = 'Pipeline for RNA-seq analysis'
+    mainScript      = 'main.nf'
+    nextflowVersion = '&gt;=24.04'
+    version         = '1.0.0'
+    license         = 'MIT'
+    doi             = '10.1234/example.doi'
+}
+</code></pre>
+<h3 id="why-is-it-important">Why is it Important?</h3>
+<ol>
+<li>
+<p>Version Compatibility &amp; Safety 🛡️</p>
+</li>
+<li>
+<p><code>manifest.nextflowVersion</code> = '&gt;=24.04'  // Ensures users have compatible version (give a warning if not)</p>
+</li>
+<li><code>manifest.nextflowVersion</code> = '!&gt;=24.04' // Stops execution if version doesn't match</li>
+</ol>
+<p>This prevents users from running your pipeline with incompatible Nextflow versions, avoiding cryptic errors.</p>
+<ol>
+<li>
+<p>Reproducibility 🔬
+By documenting version, contributors, and DOI, you enable proper scientific citation and ensure others can trace the exact pipeline version used in publications.</p>
+</li>
+<li>
+<p>Publishing &amp; Sharing 📦
+When you share your pipeline via nf-core, GitHub, or the Nextflow Hub, manifest metadata is automatically displayed, making your pipeline discoverable and easier to understand.</p>
+</li>
+<li>
+<p>User Experience 👥
+Clear metadata helps users quickly understand what your pipeline does, who maintains it, and where to find help.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Advanced config intro">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Advanced config intro
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../exercises/" class="md-footer__link md-footer__link--next" aria-label="Next: Practical exercises">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Practical exercises
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The materials here are licensed under the MIT license
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

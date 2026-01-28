@@ -1,0 +1,3008 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Edoardo Giacopuzzi">
+      
+      
+      
+        <link rel="prev" href="../1-configuring-launching-pipelines/">
+      
+      
+        <link rel="next" href="../3-contributing-to-nf-core/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>2. develop nf-core pipeline - nextflow-zero2hero</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-developing-an-nf-core-pipeline-from-scratch" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="nextflow-zero2hero" class="md-header__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nextflow-zero2hero
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. develop nf-core pipeline
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Practicals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../slides/" class="md-tabs__link">
+        
+  
+    
+  
+  Slides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="nextflow-zero2hero" class="md-nav__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../images/course_logo.png" alt="logo">
+
+    </a>
+    nextflow-zero2hero
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Practicals
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practicals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day1/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/1-nextflow-run-intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Running a Nextflow pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/2-basic-workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Workflow and channels basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day1/3-operators-playground/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Channels operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day2/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/1-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/2-module-and-subworkflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Modules and subworkflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/3-containers-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Container basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/4-containers-nextflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Using containers in Nextflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day2/5-basic-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Basic configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day3/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day3/1-advanced-config/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    1. Advanced configuration
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            1. Advanced configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/1-advanced-config/reference_documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reference documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/1-advanced-config/exercises/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Practical exercises
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/2-advanced-publish/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Advanced publish
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/3-best-practises-pipeline-structure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Best practices for pipeline structure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/4-advanced-controls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Advanced scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../day3/5-report-and-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Report and monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-configuring-launching-pipelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. configure and launch nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2. develop nf-core pipeline
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2. develop nf-core pipeline
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-creating-a-pipeline-with-nf-core-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: Creating a Pipeline with nf-core Template
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1: Creating a Pipeline with nf-core Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-launch-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Launch GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-install-vscode-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: Install VSCode Extensions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-create-a-new-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3: Create a New Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-explore-the-template-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4: Explore the Template Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-setting-up-the-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Setting Up the Development Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2: Setting Up the Development Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-examine-key-files-using-the-nextflow-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: Examine Key Files Using the Nextflow Extension
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-git-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: Git Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-set-up-pre-commit-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3: Set Up Pre-commit Hooks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-understanding-modules-and-subworkflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Understanding Modules and Subworkflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3: Understanding Modules and Subworkflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-explore-module-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1: Explore Module Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-installing-required-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2: Installing Required Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-including-the-module-in-the-nextflow-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3: Including the Module in the Nextflow Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-module-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4: Module Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-customizing-pipeline-input-parameters-and-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: Customizing Pipeline Input — Parameters and Schema
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4: Customizing Pipeline Input — Parameters and Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41-adding-reference-files-as-input-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1: Adding Reference Files as Input Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-update-the-json-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2: Update the JSON Schema
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-customizing-pipeline-input-samplesheet-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5: Customizing Pipeline Input — Samplesheet Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5: Customizing Pipeline Input — Samplesheet Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51-design-samplesheet-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1: Design Samplesheet Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-check-the-nextflow-code-for-samplesheet-validation-and-channel-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2: Check the Nextflow Code for Samplesheet Validation and Channel Initialization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-create-example-samplesheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3: Create Example Samplesheet
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-create-a-custom-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6: Create a Custom Module
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6: Create a Custom Module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#61-create-a-new-module-to-untar-salmon-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1: Create a New Module to Untar Salmon Index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-configure-and-integrate-the-module-in-the-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2: Configure and Integrate the Module in the Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-7-define-a-test-run-for-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 7: Define a Test Run for the Pipeline
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 7: Define a Test Run for the Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#71-define-and-launch-a-test-run-of-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1: Define and Launch a Test Run of the Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-8-code-linting-and-testing-with-nf-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 8: Code Linting and Testing with nf-test
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 8: Code Linting and Testing with nf-test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#81-run-nf-core-lint" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1: Run nf-core Lint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-create-test-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2: Create Test Profile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-run-nf-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3: Run nf-test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-9-version-control-and-pushing-to-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 9: Version Control and Pushing to GitHub
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 9: Version Control and Pushing to GitHub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#91-commit-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1: Commit Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-set-up-github-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2: Set Up GitHub Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-close-github-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3: Close GitHub codespace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-contributing-to-nf-core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. contribute to nf-core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slides/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-creating-a-pipeline-with-nf-core-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: Creating a Pipeline with nf-core Template
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1: Creating a Pipeline with nf-core Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-launch-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Launch GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-install-vscode-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: Install VSCode Extensions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-create-a-new-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3: Create a New Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-explore-the-template-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4: Explore the Template Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-setting-up-the-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Setting Up the Development Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2: Setting Up the Development Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-examine-key-files-using-the-nextflow-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: Examine Key Files Using the Nextflow Extension
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-git-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: Git Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-set-up-pre-commit-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3: Set Up Pre-commit Hooks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-understanding-modules-and-subworkflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Understanding Modules and Subworkflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3: Understanding Modules and Subworkflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-explore-module-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1: Explore Module Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-installing-required-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2: Installing Required Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-including-the-module-in-the-nextflow-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3: Including the Module in the Nextflow Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-module-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4: Module Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-customizing-pipeline-input-parameters-and-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: Customizing Pipeline Input — Parameters and Schema
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4: Customizing Pipeline Input — Parameters and Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#41-adding-reference-files-as-input-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1: Adding Reference Files as Input Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-update-the-json-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2: Update the JSON Schema
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-customizing-pipeline-input-samplesheet-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5: Customizing Pipeline Input — Samplesheet Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5: Customizing Pipeline Input — Samplesheet Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51-design-samplesheet-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1: Design Samplesheet Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-check-the-nextflow-code-for-samplesheet-validation-and-channel-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2: Check the Nextflow Code for Samplesheet Validation and Channel Initialization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-create-example-samplesheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3: Create Example Samplesheet
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-create-a-custom-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6: Create a Custom Module
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6: Create a Custom Module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#61-create-a-new-module-to-untar-salmon-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1: Create a New Module to Untar Salmon Index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-configure-and-integrate-the-module-in-the-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2: Configure and Integrate the Module in the Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-7-define-a-test-run-for-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 7: Define a Test Run for the Pipeline
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 7: Define a Test Run for the Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#71-define-and-launch-a-test-run-of-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1: Define and Launch a Test Run of the Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-8-code-linting-and-testing-with-nf-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 8: Code Linting and Testing with nf-test
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 8: Code Linting and Testing with nf-test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#81-run-nf-core-lint" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1: Run nf-core Lint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-create-test-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2: Create Test Profile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-run-nf-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3: Run nf-test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-9-version-control-and-pushing-to-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 9: Version Control and Pushing to GitHub
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 9: Version Control and Pushing to GitHub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Objective
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#91-commit-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1: Commit Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-set-up-github-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2: Set Up GitHub Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-close-github-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3: Close GitHub codespace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="2-developing-an-nf-core-pipeline-from-scratch">2. Developing an nf-core Pipeline from Scratch</h1>
+<p>This section covers the practical steps to develop a new nf-core pipeline using the standardized nf-core template and tools.</p>
+<hr />
+<h2 id="exercise-1-creating-a-pipeline-with-nf-core-template">Exercise 1: Creating a Pipeline with nf-core Template</h2>
+<h3 id="objective">Objective</h3>
+<p>Learn how to initialize a new nf-core pipeline using the template generator and understand the project structure.</p>
+<hr />
+<h3 id="11-launch-github-codespaces">1.1: Launch GitHub Codespaces</h3>
+<p><a href="https://codespaces.new/htgenomeanalysisunit/nextflow-zero2hero"><img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg" /></a></p>
+<p>GitHub Codespaces provides a cloud-based development environment that eliminates the need for local setup. This is particularly convenient for Nextflow and nf-core development.</p>
+<p><strong>Starting your codespace:</strong></p>
+<p>Navigate to https://codespaces.new/htgenomeanalysisunit/nextflow-zero2hero to launch a new codespace. GitHub will automatically create a cloud-based virtual machine with a pre-configured development environment.</p>
+<p><strong>Accessing your codespace:</strong></p>
+<p>You have two options for accessing the codespace:</p>
+<ol>
+<li>
+<p><strong>Browser-based VSCode</strong> — Codespaces opens directly in your browser with a full VSCode interface. This requires no additional setup and works from any device with a web browser.</p>
+</li>
+<li>
+<p><strong>Local VSCode with Codespaces extension</strong> — Install the "GitHub Codespaces" extension in your local VSCode. This allows you to connect to the remote codespace while working in your familiar local environment, with better performance on slower connections.</p>
+</li>
+</ol>
+<p><strong>Setting up your working directory:</strong></p>
+<p>Once the codespace is running, open the terminal and navigate to the course practicals folder where we will complete the exercises:</p>
+<pre><code class="language-bash">cd /workspaces/nextflow-zero2hero/practicals/day4/1-nf-core-introduction/
+</code></pre>
+<p>The repository includes all necessary tools and dependencies pre-installed, including Nextflow, Docker, and <em>nf-core tools</em>.
+<em>nf-core tools</em> is a Python package developed by the nf-core community that provides utilities for Nextflow pipeline development and execution.</p>
+<hr />
+<h3 id="12-install-vscode-extensions">1.2: Install VSCode Extensions</h3>
+<p>Install recommended extensions for VSCode. Go to the extensions marketplace and look for <code>nf-core-extensionpack</code>. This includes:</p>
+<ul>
+<li><strong>Apptainer/Singularity</strong> — Provides syntax highlighting for Apptainer/Singularity definition files</li>
+<li><strong>Docker</strong> — Makes it easy to create, manage, and debug containerized applications</li>
+<li><strong>EditorConfig</strong> — Support for EditorConfig project files for code standardization</li>
+<li><strong>gitignore</strong> — Language support for .gitignore files</li>
+<li><strong>Markdown Extended</strong> — Provides nice markdown previews, including admonitions</li>
+<li><strong>Nextflow</strong> — Nextflow language support</li>
+<li><strong>Prettier</strong> — Code formatter using Prettier</li>
+<li><strong>Rainbow CSV</strong> — Highlight columns in CSV files in different colors</li>
+<li><strong>Ruff</strong> — An extremely fast Python linter and code formatter, written in Rust</li>
+<li><strong>Todo Tree</strong> — Show TODO, FIXME, etc. comment tags in a tree view</li>
+<li><strong>YAML</strong> — YAML Language Support by Red Hat, with built-in Kubernetes syntax support</li>
+</ul>
+<hr />
+<h3 id="13-create-a-new-pipeline">1.3: Create a New Pipeline</h3>
+<p>Use the nf-core template generator:</p>
+<pre><code class="language-bash">nf-core pipelines create
+</code></pre>
+<p>This will open an interactive prompt that you can use to customize the new pipeline:</p>
+<p><strong>Interactive prompts:</strong></p>
+<ul>
+<li><strong>Pipeline type</strong>: "Custom"</li>
+<li><strong>GitHub organization</strong>: your GitHub ID</li>
+<li><strong>Workflow name</strong>: "pseudoalign"</li>
+<li><strong>Short Description</strong>: a sentence on the pipeline purpose</li>
+<li><strong>Author</strong>: Your name</li>
+<li><strong>Template features</strong>: Toggle all features</li>
+<li><strong>First version of the pipeline</strong>: choose a version tag (use semantic versioning)</li>
+<li><strong>Path</strong>: "."</li>
+<li><strong>Create GitHub repository</strong>: "Finish without creating a repo"</li>
+</ul>
+<p>Navigate to the created pipeline:</p>
+<pre><code class="language-bash">cd *-pseudoalign
+</code></pre>
+<hr />
+<h3 id="14-explore-the-template-structure">1.4: Explore the Template Structure</h3>
+<p>List the main directories:</p>
+<pre><code class="language-bash">tree -L 1 .
+</code></pre>
+<p><strong>Key directories and files:</strong></p>
+<pre><code class="language-bash">├── CHANGELOG.md
+├── CITATIONS.md
+├── LICENSE
+├── README.md
+├── assets
+├── conf
+├── docs
+├── main.nf
+├── modules
+├── modules.json
+├── nextflow.config
+├── nextflow_schema.json
+├── nf-test.config
+├── ro-crate-metadata.json
+├── subworkflows
+├── tests
+├── tower.yml
+└── workflows
+</code></pre>
+<p>The template includes many tools, files, and directories, which can feel overwhelming at first, especially for those who are new to Nextflow. I recommend approaching it step by step: take time to become familiar with the overall structure and study existing nf-core pipelines that match your interests (preferably simple and actively maintained ones).</p>
+<hr />
+<h2 id="exercise-2-setting-up-the-development-environment">Exercise 2: Setting Up the Development Environment</h2>
+<h3 id="objective_1">Objective</h3>
+<p>Configure VSCode with recommended extensions and set up pre-commit hooks for code quality.</p>
+<h3 id="21-examine-key-files-using-the-nextflow-extension">2.1: Examine Key Files Using the Nextflow Extension</h3>
+<p>The Nextflow extension provides capabilities that help navigate a structured project like the nf-core template. One of the main features is the ability to follow links and import statements within the code and view popups that show the definitions of interfaces for processes and subworkflows.</p>
+<p><strong>Main workflow entry point:</strong></p>
+<p>Open file <code>main.nf</code> and follow the code from <code>main.nf</code> to <code>workflows/pseudoalign.nf</code> and from <code>workflows/pseudoalign.nf</code> to modules and subworkflows.</p>
+<p><strong>Configuration entry point:</strong></p>
+<p>Open file <code>nextflow.config</code> and follow the main configuration through the various files included in the <code>conf/</code> folder.</p>
+<hr />
+<h3 id="22-git-configuration">2.2: Git Configuration</h3>
+<p>The nf-core template comes initialized with git revision tracking:</p>
+<pre><code class="language-bash">git status
+</code></pre>
+<p>You can see from the log that the initial commit is the template:</p>
+<pre><code class="language-bash">git log
+</code></pre>
+<p>There are already three different branches:</p>
+<pre><code class="language-bash">git branch
+</code></pre>
+<p>We will get into their meaning and usage later.</p>
+<hr />
+<h3 id="23-set-up-pre-commit-hooks">2.3: Set Up Pre-commit Hooks</h3>
+<p>Pre-commit hooks automatically validate code before commits. The nf-core template includes a pre-commit configuration.</p>
+<p>View the pre-commit configuration:</p>
+<pre><code class="language-bash">cat .pre-commit-config.yaml
+</code></pre>
+<p><strong>Expected hooks:</strong></p>
+<ul>
+<li><code>prettier</code>: "opinionated code formatter"</li>
+<li>Trailing whitespace removal</li>
+<li>End-of-file fixer</li>
+</ul>
+<p>Open a shell to install the pre-commit hooks. First, install the pre-commit Python package:</p>
+<pre><code class="language-bash">pip install pre-commit
+</code></pre>
+<p>Then install the pre-commit hooks:</p>
+<pre><code class="language-bash">pre-commit install
+</code></pre>
+<p>Verify the installation:</p>
+<pre><code class="language-bash">pre-commit run --all-files
+</code></pre>
+<p>This will run all pre-commit checks on the entire repository.</p>
+<hr />
+<h2 id="exercise-3-understanding-modules-and-subworkflows">Exercise 3: Understanding Modules and Subworkflows</h2>
+<h3 id="objective_2">Objective</h3>
+<p>Learn about nf-core modules and subworkflows, and how to integrate them into your pipeline.</p>
+<hr />
+<h3 id="background">Background</h3>
+<p><strong>Modules:</strong></p>
+<ul>
+<li>Self-contained code that define a single Nextflow process</li>
+<li>Reusable across pipelines</li>
+<li>Maintained in the nf-core/modules repository</li>
+<li>Include: process definition, software container, documentation, and testing</li>
+</ul>
+<p><strong>Subworkflows:</strong></p>
+<ul>
+<li>Multi-step workflows combining multiple modules</li>
+<li>Reusable logical components</li>
+<li>Maintained in the nf-core/modules repository</li>
+<li>Include: subworkflow definition, module dependencies, documentation, and testing</li>
+</ul>
+<p>For simplicity, we will focus on modules. However, the concepts and commands involved are quite similar.</p>
+<hr />
+<h3 id="31-explore-module-structure">3.1: Explore Module Structure</h3>
+<p>Modules are stored in the <code>modules/nf-core/</code> folder. Navigate to this folder with VSCode. The template by default contains the FastQC and MultiQC modules.</p>
+<p>Open the folder for FastQC.</p>
+<p><strong>Typical module structure:</strong></p>
+<pre><code class="language-bash">modules/nf-core/fastqc/
+├── main.nf          # Process definition
+├── meta.yml         # Module metadata and documentation
+├── environment.yml  # Conda environment that is built on the fly
+|                    #    when running the pipeline with conda support
+└── tests/           # nf-test configuration to test the module
+</code></pre>
+<p>Open the <code>.nf</code> file. You will see that even for a simple task like FastQC, the process code can be quite complex. We will not go through the process of building modules according to nf-core guidelines, which can be quite complicated. However, keep in mind that although they seem complex, the guidelines are there to ensure the highest level of reusability, such as the ability to completely customize the command line of the tool and capture any possible output. This is of course challenging and requires some overhead compared to writing processes for a specific workflow.</p>
+<hr />
+<h3 id="32-installing-required-modules">3.2: Installing Required Modules</h3>
+<p>For our Salmon-based RNA-seq pipeline, we need:</p>
+<ul>
+<li><strong>FASTQC</strong>: Quality control</li>
+<li><strong>SALMON</strong>: Pseudo-alignment and quantification</li>
+<li><strong>MULTIQC</strong>: Results aggregation</li>
+</ul>
+<p>Double check which modules have been properly installed with the nf-core command-line tool:</p>
+<pre><code class="language-bash">nf-core modules list local
+</code></pre>
+<p>Browse available modules from the nf-core repository and search for Salmon:</p>
+<pre><code class="language-bash">nf-core modules list remote | grep -i salmon
+</code></pre>
+<p>You will see:</p>
+<pre><code class="language-text">│ salmon/index                                          │
+│ salmon/quant                                          │
+</code></pre>
+<p>Install the Salmon quant module:</p>
+<pre><code class="language-bash">nf-core modules install salmon/quant
+</code></pre>
+<hr />
+<h3 id="33-including-the-module-in-the-nextflow-code">3.3: Including the Module in the Nextflow Code</h3>
+<p>Now we will modify the <code>pseudoalign.nf</code> file that contains the main workflow:</p>
+<pre><code class="language-diff">--- a/workflows/pseudoalign.nf
++++ b/workflows/pseudoalign.nf
+@@ -9,6 +9,7 @@ include { paramsSummaryMap       } from 'plugin/nf-schema'
+ include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+ include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pseudoalign_pipeline'
++include { SALMON_QUANT           } from '../modules/nf-core/salmon/quant/main'
+
+ /*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -20,6 +21,10 @@ workflow pseudoalign {
+
+     take:
+     ch_samplesheet // channel: samplesheet read in from --input
++    ch_salmon_index
++    ch_fasta
++    ch_gtf
+     main:
+
+     ch_versions = channel.empty()
+@@ -33,6 +38,20 @@ workflow pseudoalign {
+     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
+     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
++    //
++    // MODULE: Run Salmon Quant
++    //
++    SALMON_QUANT (
++        ch_samplesheet,
++        ch_salmon_index,
++        ch_gtf,
++        ch_fasta,
++        &quot;&quot;,
++        &quot;&quot;
++    )
++    ch_multiqc_files = ch_multiqc_files.mix(SALMON_QUANT.out.results.collect{it[1]})
++
+     //
+     // Collate and save software versions
+     //
+(END)
+</code></pre>
+<hr />
+<h3 id="34-module-configuration">3.4: Module Configuration</h3>
+<p>When including an additional process in the pipeline, it is often necessary to customize its behavior by specifying additional arguments, defining which files to save to the final output and where to save them (via the <code>publishDir</code> directive), and potentially other process-specific configurations. In an nf-core pipeline, it is customary to save this type of configuration in the <code>conf/modules.config</code> file.</p>
+<p>For the <code>SALMON_QUANT</code> process, add this block to the <code>conf/modules.config</code> file:</p>
+<pre><code class="language-groovy">process {
+  withName: 'SALMON_QUANT' {
+    ext.args = '--validateMappings'
+    publishDir = [
+       path: { &quot;${params.outdir}/salmon&quot; },
+       mode: params.publish_dir_mode,
+       saveAs: { filename -&gt; filename.equals('versions.yml') ? null : filename }
+    ]
+  }
+}
+</code></pre>
+<hr />
+<h2 id="exercise-4-customizing-pipeline-input-parameters-and-schema">Exercise 4: Customizing Pipeline Input — Parameters and Schema</h2>
+<h3 id="objective_3">Objective</h3>
+<p>Learn how to define pipeline parameters and update the JSON schema for parameter validation.</p>
+<hr />
+<h3 id="41-adding-reference-files-as-input-parameters">4.1: Adding Reference Files as Input Parameters</h3>
+<p>For running Salmon, we need to provide a FASTA file of the transcriptome, the corresponding GTF file, and the Salmon index for this transcriptome. These files are not directly provided by iGenomes, so we will add these files as required input parameters for the pipeline.</p>
+<p>New parameters need to be initialized in the <code>nextflow.config</code> configuration file:</p>
+<pre><code class="language-diff">diff --git a/nextflow.config b/nextflow.config
+index be8624f..a1f38dd 100644
+--- a/nextflow.config
++++ b/nextflow.config
+@@ -17,6 +17,9 @@ params {
+     genome                     = null
+     igenomes_base              = 's3://ngi-igenomes/igenomes/'
+     igenomes_ignore            = false
++    transcript_fasta           = null
++    gtf                        = null
++    salmon_index               = null
+
+     // MultiQC options
+     multiqc_config             = null
+</code></pre>
+<p>Now the parameters can be used through the <code>params</code> object. For readability, we want to explicitly show the use of these files in the interface of the main "pseudoalign" workflow. We will create value channels in the main and then pass them explicitly to pseudoalign (in accordance with the interface we have already defined):</p>
+<pre><code class="language-diff">diff --git a/main.nf b/main.nf
+index 4c29fc8..6787b78 100644
+--- a/main.nf
++++ b/main.nf
+@@ -45,11 +45,18 @@ workflow NFDATAOMICS_PSEUDOALIGN {
+
+     main:
+
++    ch_transcript_fasta = channel.value(file(params.transcript_fasta, checkIfExists: true))
++    ch_gtf              = channel.value(file(params.gtf, checkIfExists: true))
++    ch_salmon_index     = channel.value(file(params.salmon_index, checkIfExists: true))
++
+     //
+     // WORKFLOW: Run pipeline
+     //
+     pseudoalign (
+-        samplesheet
++        samplesheet,
++        ch_salmon_index,
++        ch_transcript_fasta,
++        ch_gtf
+     )
+     emit:
+     multiqc_report = pseudoalign.out.multiqc_report // channel: /path/to/multiqc_report.html
+
+</code></pre>
+<hr />
+<h3 id="42-update-the-json-schema">4.2: Update the JSON Schema</h3>
+<p>In an nf-core pipeline, all input parameters are initialized and validated at the beginning of execution using a JSON schema contained in the <code>nextflow_schema.json</code> file. A JSON Schema is a language that allows you to validate data stored in a dictionary format. It defines the structure, data types, and constraints, enabling validation of whether an object conforms to a specific format or structure.</p>
+<p>Direct manipulation of a JSON schema is not easy. Therefore, nf-core provides an interactive web-based platform for updating and modifying the schema:</p>
+<pre><code class="language-bash">nf-core pipelines schema build
+</code></pre>
+<p>The tool outputs a URL that points to a web-based interface where the schema can be edited. Note that this tool can be somewhat buggy and relies on communication with an external service. The nf-core core development team is currently working on a new tool.</p>
+<p>An existing schema can be validated with:</p>
+<pre><code class="language-bash">nf-core pipelines schema validate . nextflow_schema.json
+</code></pre>
+<hr />
+<h2 id="exercise-5-customizing-pipeline-input-samplesheet-structure">Exercise 5: Customizing Pipeline Input — Samplesheet Structure</h2>
+<h3 id="objective_4">Objective</h3>
+<p>Learn how to design and validate sample input CSV files for the pipeline.</p>
+<hr />
+<h3 id="51-design-samplesheet-format">5.1: Design Samplesheet Format</h3>
+<p>In addition to input parameters, the format of the samplesheet is also validated using a JSON schema. In the template, the schema is already present at <code>assets/schema_input.json</code> and defines the columns: <code>sample</code>, <code>fastq_1</code>, and <code>fastq_2</code>.</p>
+<pre><code class="language-json">{
+    &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
+    &quot;$id&quot;: &quot;https://raw.githubusercontent.com/matbonfanti/pseudoalign/master/assets/schema_input.json&quot;,
+    &quot;title&quot;: &quot;matbonfanti/pseudoalign pipeline - params.input schema&quot;,
+    &quot;description&quot;: &quot;Schema for the file provided with params.input&quot;,
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+            &quot;sample&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;pattern&quot;: &quot;^\\S+$&quot;,
+                &quot;errorMessage&quot;: &quot;Sample name must be provided and cannot contain spaces&quot;,
+                &quot;meta&quot;: [&quot;id&quot;]
+            },
+            &quot;fastq_1&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;format&quot;: &quot;file-path&quot;,
+                &quot;exists&quot;: true,
+                &quot;pattern&quot;: &quot;^([\\S\\s]*\\/)?[^\\s\\/]+\\.f(ast)?q\\.gz$&quot;,
+                &quot;errorMessage&quot;: &quot;FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'&quot;
+            },
+            &quot;fastq_2&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;format&quot;: &quot;file-path&quot;,
+                &quot;exists&quot;: true,
+                &quot;pattern&quot;: &quot;^([\\S\\s]*\\/)?[^\\s\\/]+\\.f(ast)?q\\.gz$&quot;,
+                &quot;errorMessage&quot;: &quot;FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'&quot;
+            }
+        },
+        &quot;required&quot;: [&quot;sample&quot;, &quot;fastq_1&quot;]
+    }
+}
+</code></pre>
+<p>For our pipeline, we want to modify the schema to add a <code>strandedness</code> column that specifies the strandedness of the RNA library for the corresponding FASTQ file:</p>
+<pre><code class="language-json">{
+    &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
+    &quot;$id&quot;: &quot;https://raw.githubusercontent.com/matbonfanti/pseudoalign/master/assets/schema_input.json&quot;,
+    &quot;title&quot;: &quot;matbonfanti/pseudoalign pipeline - params.input schema&quot;,
+    &quot;description&quot;: &quot;Schema for the file provided with params.input&quot;,
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+            &quot;sample&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;pattern&quot;: &quot;^\\S+$&quot;,
+                &quot;errorMessage&quot;: &quot;Sample name must be provided and cannot contain spaces&quot;,
+                &quot;meta&quot;: [&quot;id&quot;]
+            },
+            &quot;fastq_1&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;format&quot;: &quot;file-path&quot;,
+                &quot;exists&quot;: true,
+                &quot;pattern&quot;: &quot;^([\\S\\s]*\\/)?[^\\s\\/]+\\.f(ast)?q\\.gz$&quot;,
+                &quot;errorMessage&quot;: &quot;FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'&quot;
+            },
+            &quot;fastq_2&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;format&quot;: &quot;file-path&quot;,
+                &quot;exists&quot;: true,
+                &quot;pattern&quot;: &quot;^([\\S\\s]*\\/)?[^\\s\\/]+\\.f(ast)?q\\.gz$&quot;,
+                &quot;errorMessage&quot;: &quot;FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'&quot;
+            },
+            &quot;strandedness&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;enum&quot;: [&quot;unstranded&quot;, &quot;forward&quot;, &quot;reverse&quot;],
+                &quot;errorMessage&quot;: &quot;Library strandedness must be provided and cannot contain spaces&quot;,
+                &quot;meta&quot;: [&quot;strandedness&quot;]
+            }
+        },
+        &quot;required&quot;: [&quot;sample&quot;, &quot;fastq_1&quot;, &quot;strandedness&quot;]
+    }
+}
+</code></pre>
+<p>Note the <code>"meta"</code> attribute, which allows storing a variable directly in the meta object.</p>
+<hr />
+<h3 id="52-check-the-nextflow-code-for-samplesheet-validation-and-channel-initialization">5.2: Check the Nextflow Code for Samplesheet Validation and Channel Initialization</h3>
+<p>The samplesheet validation code is in the file <code>subworkflows/local/utils_nfcore_pseudoalign_pipeline/main.nf</code>. This file, which is part of the template, contains subworkflows and Groovy functions used for pipeline initialization and completion, as well as functions for printing pipeline documentation. It is meant to be customized (as opposed to utility functions in the <code>subworkflows/nf-core</code> folder that should remain unchanged).</p>
+<p>The channel initialization for the samplesheet is at lines 87–105:</p>
+<pre><code class="language-groovy">    //
+    // Create channel from input file provided through params.input
+    //
+
+    channel
+        .fromList(samplesheetToList(params.input, &quot;${projectDir}/assets/schema_input.json&quot;))
+        .map {
+            meta, fastq_1, fastq_2 -&gt;
+                if (!fastq_2) {
+                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
+                } else {
+                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
+                }
+        }
+        .groupTuple()
+        .map { samplesheet -&gt;
+            validateInputSamplesheet(samplesheet)
+        }
+        .map {
+            meta, fastqs -&gt;
+                return [ meta, fastqs.flatten() ]
+        }
+        .set { ch_samplesheet }
+</code></pre>
+<p>Since <code>strandedness</code> is processed by the samplesheet parser and stored at this level as an attribute of the meta object, there is no need to change anything in the channel operations.</p>
+<hr />
+<h3 id="53-create-example-samplesheet">5.3: Create Example Samplesheet</h3>
+<p>Create a template samplesheet in the <code>assets/</code> folder for documenting the samplesheet format:</p>
+<pre><code class="language-csv">sample,fastq_1,fastq_2,strandedness
+sample1,reads_1_R1.fastq.gz,reads_1_R2.fastq.gz,reverse
+sample2,reads_2_R1.fastq.gz,reads_2_R2.fastq.gz,reverse
+sample3,reads_3_R1.fastq.gz,,forward
+</code></pre>
+<hr />
+<h2 id="exercise-6-create-a-custom-module">Exercise 6: Create a Custom Module</h2>
+<h3 id="objective_5">Objective</h3>
+<p>Add a module to the pipeline without using an nf-core module installation.</p>
+<hr />
+<h3 id="61-create-a-new-module-to-untar-salmon-index">6.1: Create a New Module to Untar Salmon Index</h3>
+<p>Currently, the channel initialized with <code>params.salmon_index</code> is passed directly to Salmon, which expects a folder with the index. It would be convenient to allow the possibility of passing a tar.gz archive to the pipeline. For example, when running your pipeline and staging non-local files from their URL, the URL must point to a single file; you cannot stage an entire folder.</p>
+<p>Instead of using the nf-core module (<code>nf-core/untar</code>), we will create a local module from scratch. For local modules, it is not necessary to structure files in the complex way required for nf-core official modules.</p>
+<p>Create a folder <code>modules/local/untar_salmon_index</code> with a <code>main.nf</code> file containing the process code:</p>
+<pre><code class="language-groovy">process UNTAR_SALMON_INDEX {
+    tag &quot;${archive}&quot;
+    label 'process_single'
+
+    conda &quot;conda-forge::sed=4.7 bioconda::grep=3.4 conda-forge::tar=1.34&quot;
+    container &quot;${ workflow.containerEngine == 'singularity' &amp;&amp; !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/ubuntu:20.04' :
+        'nf-core/ubuntu:20.04' }&quot;
+
+    input:
+    path archive
+
+    output:
+    path &quot;${prefix}&quot;, emit: untar
+    path &quot;versions.yml&quot;, emit: versions
+
+    when:
+    task.ext.when == null || task.ext.when
+
+    script:
+    def args = task.ext.args ?: ''
+    prefix = archive.baseName.toString().replaceFirst(/\.tar$/, &quot;&quot;)
+    &quot;&quot;&quot;
+    mkdir ${prefix}
+    tar \\
+        -C ${prefix} --strip-components 1 \\
+        -xavf ${args} \\
+        ${archive}
+
+    cat &lt;&lt;-END_VERSIONS &gt; versions.yml
+    &quot;${task.process}&quot;:
+        untar: \$(echo \$(tar --version 2&gt;&amp;1) | sed 's/^.*(GNU tar) //; s/ Copyright.*\$//')
+    END_VERSIONS
+    &quot;&quot;&quot;
+
+    stub:
+    prefix = archive.baseName.toString().replaceFirst(/\.tar$/, &quot;&quot;)
+    &quot;&quot;&quot;
+    mkdir ${prefix}
+
+    cat &lt;&lt;-END_VERSIONS &gt; versions.yml
+    &quot;${task.process}&quot;:
+        untar: \$(echo \$(tar --version 2&gt;&amp;1) | sed 's/^.*(GNU tar) //; s/ Copyright.*\$//')
+    END_VERSIONS
+    &quot;&quot;&quot;
+}
+</code></pre>
+<hr />
+<h3 id="62-configure-and-integrate-the-module-in-the-workflow">6.2: Configure and Integrate the Module in the Workflow</h3>
+<p>In nf-core pipelines, it is customary to never include <code>publishDir</code> directives in module code. This is because such directives are typically pipeline-specific, and the nf-core template is designed to maximize module reusability.</p>
+<p>First, add the pipeline-specific configuration in <code>modules.config</code>. Add this snippet in the <code>process</code> block to prevent the output of the untar operation from being written to the output folder:</p>
+<pre><code class="language-groovy">    withName: 'UNTAR_SALMON_INDEX' {
+        publishDir = [
+            enabled: false
+        ]
+    }
+</code></pre>
+<p>Now integrate the new process into the pipeline workflow with the following modifications:</p>
+<pre><code class="language-diff">@@ -8,11 +8,10 @@
+ include { paramsSummaryMap       } from 'plugin/nf-schema'
+ include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+ include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pseudoalign_pipeline'
+ include { SALMON_QUANT           } from '../modules/nf-core/salmon/quant/main'
++include { UNTAR_SALMON_INDEX     } from '../modules/local/untar_salmon_index/main'
+
+ /*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     RUN MAIN WORKFLOW
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -38,26 +37,15 @@
+     )
+     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
+     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
++    //
++    // MODULE: Untar Salmon Index when needed
++    //
++    if ( params.salmon_index.endsWith('.tar.gz') ) {
++        UNTAR_SALMON_INDEX ( ch_salmon_index )
++        ch_salmon_index_folder = UNTAR_SALMON_INDEX.out.untar
++        ch_versions = ch_versions.mix(UNTAR_SALMON_INDEX.out.versions)
++    } else {
++        ch_salmon_index_folder = ch_salmon_index
++    }
++
+     //
+     // MODULE: Run Salmon Quant
+     //
+     SALMON_QUANT (
+         ch_samplesheet,
+-        ch_salmon_index,
++        ch_salmon_index_folder,
+         ch_gtf,
+         ch_fasta,
+         &quot;&quot;,
+         &quot;&quot;
+     )
+</code></pre>
+<hr />
+<h2 id="exercise-7-define-a-test-run-for-the-pipeline">Exercise 7: Define a Test Run for the Pipeline</h2>
+<h3 id="objective_6">Objective</h3>
+<p>Set up and execute a test run of the pipeline to verify functionality.</p>
+<hr />
+<h3 id="71-define-and-launch-a-test-run-of-the-pipeline">7.1: Define and Launch a Test Run of the Pipeline</h3>
+<p>For running a test, we can reuse the input from the previous section of the training ("Configuring and Launching nf-core Pipelines").</p>
+<p>Create a folder named <code>/workspaces/nextflow-zero2hero/practicals/day4/1-nf-core-introduction/rnaseq_test_02</code>:</p>
+<pre><code class="language-bash">mkdir -p ../rnaseq_test_02
+cd ../rnaseq_test_02
+</code></pre>
+<p>Then create <code>samplesheet.csv</code>, <code>params.yaml</code>, and <code>custom.config</code>:</p>
+<pre><code class="language-csv">sample,fastq_1,fastq_2,strandedness
+SRR6357070_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_1.fastq.gz,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_2.fastq.gz,reverse
+SRR6357071_2,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357071_1.fastq.gz,https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357071_2.fastq.gz,reverse
+</code></pre>
+<pre><code class="language-yaml"># Input/Output
+input: './samplesheet.csv'
+outdir: './results'
+
+# Genome references
+gtf: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/genes.gtf.gz'
+transcript_fasta: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/transcriptome.fasta'
+salmon_index: 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/salmon.tar.gz'
+</code></pre>
+<pre><code class="language-groovy">// Custom nf-core/rnaseq configuration
+
+process {
+    resourceLimits = [
+        cpus: 1,
+        memory: '4.GB',
+        time: '1.h'
+    ]
+}
+</code></pre>
+<p>Run the pipeline with the command:</p>
+<pre><code class="language-bash">nextflow run ../*-pseudoalign -profile docker -params-file params.yaml -c custom.config -w ./work_test
+</code></pre>
+<hr />
+<h2 id="exercise-8-code-linting-and-testing-with-nf-test">Exercise 8: Code Linting and Testing with nf-test</h2>
+<h3 id="objective_7">Objective</h3>
+<p>Learn how to validate pipeline code quality and write automated tests.</p>
+<hr />
+<h3 id="81-run-nf-core-lint">8.1: Run nf-core Lint</h3>
+<p>Go back to the pipeline folder:</p>
+<pre><code class="language-bash">cd ../*-pseudoalign
+</code></pre>
+<p>Check pipeline compliance with nf-core standards:</p>
+<pre><code class="language-bash">nf-core pipelines lint
+</code></pre>
+<p>The tool runs a number of named tests that span most of the nf-core guidelines, including:</p>
+<ul>
+<li>Inconsistencies with the pipeline template</li>
+<li>Incorrect module code and format</li>
+<li>Schema validation issues</li>
+<li>Incorrect MultiQC configuration</li>
+<li>And more</li>
+</ul>
+<hr />
+<h3 id="82-create-test-profile">8.2: Create Test Profile</h3>
+<p>The nf-core template includes a profile where the pipeline developer can design a short test run to verify pipeline functionality and ensure that changes do not break the pipeline.</p>
+<p>We will now use the quick test that we just ran and include it in the test profile.</p>
+<p>First, copy the test samplesheet into the assets folder:</p>
+<pre><code class="language-bash">cp ../rnaseq_test_02/samplesheet.csv assets/test_samplesheet.csv
+</code></pre>
+<p>Next, customize the <code>conf/test.config</code> file, which contains the profile definition with the parameters and configuration needed to run the test:</p>
+<pre><code class="language-groovy">/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Nextflow config file for running minimal tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Defines input files and everything required to run a fast and simple pipeline test.
+
+    Use as follows:..
+        nextflow run .../pseudoalign -profile test,&lt;docker/singularity&gt; --outdir &lt;OUTDIR&gt;
+
+----------------------------------------------------------------------------------------
+*/
+
+process {
+    resourceLimits = [
+        cpus: 1,
+        memory: '4.GB',
+        time: '1.h'
+    ]
+}
+
+params {
+    config_profile_name        = 'Test profile'
+    config_profile_description = 'Minimal test dataset to check pipeline function'
+
+    // Input data
+    input = &quot;${projectDir}/assets/test_samplesheet.csv&quot;
+    gtf = 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/genes.gtf.gz'
+    transcript_fasta = 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/transcriptome.fasta'
+    salmon_index = 'https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/salmon.tar.gz'
+}
+</code></pre>
+<p>You can now run the test using the additional profile:</p>
+<pre><code class="language-bash">cd ../rnaseq_test_02
+nextflow run ../*-pseudoalign -profile docker,test --outdir output -w ./work_test -resume
+</code></pre>
+<hr />
+<h3 id="83-run-nf-test">8.3: Run nf-test</h3>
+<p>Nextflow has a testing suite called nf-test that allows advanced checks on pipeline runs, ensuring that the pipeline test runs remain consistent at many levels (run execution success, number and paths of output files, checksums of output files). Setting up nf-test can be complicated, but the pipeline template is already configured with a default nf-test corresponding to the test profile.</p>
+<p>However, there is a challenge: Salmon does not produce deterministic results, so a test that requires consistent checksums for its output is destined to fail.</p>
+<p>To address this, configure nf-test to ignore the checksums of files dependent on Salmon quantification. Add these lines to <code>tests/.nftignore</code>:</p>
+<pre><code class="language-text">multiqc/multiqc_data/multiqc_salmon.txt
+multiqc/multiqc_data/salmon_plot.txt
+salmon/*/aux_info/fld.gz
+salmon/*/aux_info/meta_info.json
+salmon/*/libParams/flenDist.txt
+salmon/*/logs/salmon_quant.log
+salmon/*/quant.genes.sf
+salmon/*/quant.sf
+salmon/salmon.*
+salmon/*meta_info.json
+</code></pre>
+<p>Run the test with this command to create a snapshot of the output:</p>
+<pre><code class="language-bash">cd ../*-pseudoalign
+nf-test test tests/default.nf.test --profile +docker --verbose --update-snapshot
+</code></pre>
+<p>The arguments are:</p>
+<ul>
+<li><code>--profile +docker</code> — Use the Docker profile in addition to the default profile</li>
+<li><code>--verbose</code> — Print detailed output</li>
+<li><code>--update-snapshot</code> — Create or update snapshot files for comparison in future test runs</li>
+</ul>
+<hr />
+<h2 id="exercise-9-version-control-and-pushing-to-github">Exercise 9: Version Control and Pushing to GitHub</h2>
+<h3 id="objective_8">Objective</h3>
+<p>Prepare the pipeline for publication and continuous integration.</p>
+<hr />
+<h3 id="91-commit-changes">9.1: Commit Changes</h3>
+<p>The pipeline template comes initialized as a git repository. You can now commit all the changes made so far in an initial commit.</p>
+<p>Check which files should be added (and which files should not):</p>
+<pre><code class="language-bash">git status
+</code></pre>
+<p>Create a new commit:</p>
+<pre><code class="language-bash">git commit
+</code></pre>
+<p>If the pre-commit hooks detect any formatting issues, the files will be automatically fixed. Add the changes and redo the commit.</p>
+<hr />
+<h3 id="92-set-up-github-repository">9.2: Set Up GitHub Repository</h3>
+<p>Create a new repository on GitHub:</p>
+<ol>
+<li>Go to <a href="https://github.com/new">https://github.com/new</a></li>
+<li>Name it: <code>pseudoalign</code></li>
+<li>Add a description</li>
+<li>Choose public or private visibility</li>
+<li>Create the repository</li>
+</ol>
+<p>Connect the local repository to GitHub:</p>
+<pre><code class="language-bash">git remote add origin https://github.com/&lt;YOUR-GITHUB-ID&gt;/pseudoalign.git
+git branch -M master
+git push -u origin master
+git push -u origin dev
+git push -u origin TEMPLATE
+</code></pre>
+<h3 id="93-close-github-codespace">9.3: Close GitHub codespace</h3>
+<p>When you've completed your work, close the codespace to conserve your free account budget. GitHub provides a limited number of free codespace hours monthly.</p>
+<p><strong>Stop the codespace:</strong></p>
+<ol>
+<li>Go to <a href="https://github.com/codespaces">https://github.com/codespaces</a></li>
+<li>Find your codespace in the list</li>
+<li>Click the three dots (<strong>...</strong>) menu next to it</li>
+<li>Select <strong>Stop codespace</strong></li>
+</ol>
+<p><strong>Delete the codespace (optional):</strong></p>
+<p>If you won't need it again, delete it to free up storage:</p>
+<ol>
+<li>On <a href="https://github.com/codespaces">https://github.com/codespaces</a>, click the three dots menu</li>
+<li>Select <strong>Delete</strong></li>
+</ol>
+<p><strong>Restart later:</strong></p>
+<p>You can resume a stopped codespace at any time from the same page. Your work will be preserved.</p>
+<hr />
+<h2 id="summary-checklist">Summary Checklist</h2>
+<p>By completing these exercises, you should be able to:</p>
+<ul>
+<li>[ ] Create a new nf-core pipeline using the template generator</li>
+<li>[ ] Understand the template directory structure</li>
+<li>[ ] Configure VSCode with recommended extensions</li>
+<li>[ ] Set up and use pre-commit hooks</li>
+<li>[ ] Install and manage nf-core modules</li>
+<li>[ ] Add pipeline parameters and validate them with JSON schema</li>
+<li>[ ] Create and validate input samplesheet</li>
+<li>[ ] Run nf-core lint and nf-test</li>
+<li>[ ] Set up version control and push to GitHub</li>
+</ul>
+<hr />
+<h2 id="resources">Resources</h2>
+<ul>
+<li><strong>nf-core website</strong>: https://nf-co.re/</li>
+<li><strong>nf-core tools documentation</strong>: https://nf-co.re/tools</li>
+<li><strong>Nextflow documentation</strong>: https://www.nextflow.io/docs/latest/</li>
+<li><strong>nf-test documentation</strong>: https://www.nf-test.com/</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../1-configuring-launching-pipelines/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. configure and launch nf-core pipeline">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1. configure and launch nf-core pipeline
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../3-contributing-to-nf-core/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. contribute to nf-core">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                3. contribute to nf-core
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The materials here are licensed under the MIT license
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

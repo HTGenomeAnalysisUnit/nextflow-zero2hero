@@ -1,0 +1,2548 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Edoardo Giacopuzzi">
+      
+      
+      
+        <link rel="prev" href="../reference_documentation/">
+      
+      
+        <link rel="next" href="../../2-advanced-publish/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Practical exercises - nextflow-zero2hero</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-configuration-exercises" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="nextflow-zero2hero" class="md-header__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../../images/course_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nextflow-zero2hero
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Practical exercises
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+    
+  
+  Practicals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../slides/" class="md-tabs__link">
+        
+  
+    
+  
+  Slides
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="nextflow-zero2hero" class="md-nav__button md-logo" aria-label="nextflow-zero2hero" data-md-component="logo">
+      
+  <img src="../../../../images/course_logo.png" alt="logo">
+
+    </a>
+    nextflow-zero2hero
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HTGenomeAnalysisUnit/nextflow-zero2hero.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    HTGenomeAnalysisUnit/nextflow-zero2hero
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Practicals
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practicals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../day1/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 1
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Day 1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day1/1-nextflow-run-intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Running a Nextflow pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day1/2-basic-workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Workflow and channels basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day1/3-operators-playground/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Channels operators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../day2/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 2
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Day 2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/1-workflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/2-module-and-subworkflows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Modules and subworkflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/3-containers-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Container basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/4-containers-nextflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Using containers in Nextflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day2/5-basic-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Basic configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 3
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Day 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    1. Advanced configuration
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            1. Advanced configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference_documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reference documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Practical exercises
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Practical exercises
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before you start
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before you start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-we-will-customise-the-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      How we will customise the configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspect-the-example-workflow-and-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspect the example workflow and configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-configuration-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting configuration changes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-activate-singularity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1 - Activate singularity
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1 - Activate singularity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-configure-an-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2 - Configure an executor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2 - Configure an executor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-basic-process-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3 - Basic process configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3 - Basic process configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-more-on-process-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4 - More on process configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 - More on process configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-dynamic-resource-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5 - Dynamic resource allocation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5 - Dynamic resource allocation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-fine-grained-process-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6 - Fine grained process settings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6 - Fine grained process settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-7-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 7 - Profiles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 7 - Profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-8-institutional-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 8 - Institutional profiles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 8 - Institutional profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2-advanced-publish/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Advanced publish
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-best-practises-pipeline-structure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Best practices for pipeline structure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-advanced-controls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Advanced scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5-report-and-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Report and monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../day4/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Day 4
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Day 4
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day4/1-configuring-launching-pipelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. configure and launch nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day4/2-developing-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. develop nf-core pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../day4/3-contributing-to-nf-core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. contribute to nf-core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../slides/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before you start
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before you start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-we-will-customise-the-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      How we will customise the configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspect-the-example-workflow-and-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspect the example workflow and configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-configuration-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting configuration changes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-activate-singularity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1 - Activate singularity
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 1 - Activate singularity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-configure-an-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2 - Configure an executor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 2 - Configure an executor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-basic-process-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3 - Basic process configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 3 - Basic process configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-more-on-process-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4 - More on process configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 4 - More on process configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-5-dynamic-resource-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 5 - Dynamic resource allocation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 5 - Dynamic resource allocation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-6-fine-grained-process-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 6 - Fine grained process settings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 6 - Fine grained process settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-7-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 7 - Profiles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 7 - Profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-8-institutional-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 8 - Institutional profiles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exercise 8 - Institutional profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="advanced-configuration-exercises">Advanced configuration exercises</h1>
+<h2 id="before-you-start">Before you start</h2>
+<ul>
+<li>An input example file is provided in <code>inputs/input_data.tsv</code>. This file contains paths to FASTQ files for two samples, each split into multiple parts.</li>
+<li>A simple Nextflow pipeline is provided in <code>workflow</code> directory. This pipeline reads the input TSV file, processes each FASTQ file part, and generates output files.</li>
+<li>An alternative version of this Nextflow pipeline is provided in <code>workflow_gpu</code> directory. This will be used in some exercises to demonstrate how to configure GPU resources.</li>
+</ul>
+<p>Before start with the exercises, require an interactive session on the HPC with 4 threads and 12G of RAM and load the Nextflow and Singularity modules:</p>
+<pre><code class="language-bash">srun --pty -c 4 -p cpu-interactive --mem 12G -J nextflow_training /bin/bash
+module load nextflow/25.04.3 singularityce/3.10.3
+</code></pre>
+<p>It can also be convenient to store the full path of the example pipeline in an environment variable, so that you don't have to type it every time. You can do this with the following command:</p>
+<pre><code class="language-bash">export PIPELINE_PATH=/my/work/folder/practicals/day3/1-advanced_config/workflow
+export PIPELINE_GPU_PATH=/my/work/folder/practicals/day3/1-advanced_config/workflow_gpu
+</code></pre>
+<h3 id="how-we-will-customise-the-configuration">How we will customise the configuration</h3>
+<p>For each exercise,</p>
+<ol>
+<li>create a new folder in your working space.</li>
+<li>in this folder you can customise the configuration by<ul>
+<li>creating a new <code>nextflow.config</code> file. Remember that if a file named <code>nextflow.config</code> is present in the same directory where you run Nextflow, it will be merged with any other configuration file present in the pipeline directory.</li>
+<li>creating a new config file with a dedicate name (e.g. <code>my_config.config</code>) and passing it to Nextflow using the <code>-c</code> option.</li>
+</ul>
+</li>
+</ol>
+<h3 id="inspect-the-example-workflow-and-configuration">Inspect the example workflow and configuration</h3>
+<p>First, familiarise yourself with the example pipeline in the <code>workflow</code> directory. Notice how this is made by 3 modules: <code>bwa</code>, <code>samtools-merge</code> and <code>samtools-sort</code>, which are defined in separate files: <code>bwa.nf</code>, <code>samtools-merge.nf</code> and <code>samtools-sort.nf</code>. In each files you can notice we also defined some configuration settings to define the resource requirements for each process.</p>
+<p>Before making any changes, run the following command to inspect the current configuration of the Nextflow pipeline. At the moment, the only configuration comes from the <code>nextflow.config</code> file located in the <code>workflow</code> directory.</p>
+<pre><code class="language-bash">nextflow config $PIPELINE_PATH
+</code></pre>
+<p>You should see output similar to the following:</p>
+<pre><code class="language-bash">params {
+   input_file = ''
+   reference_genome = ''
+   outdir = 'results'
+   publish_mode = 'copy'
+}
+</code></pre>
+<h3 id="inspecting-configuration-changes">Inspecting configuration changes</h3>
+<p>During the exercises you are encourage to use the <code>nextflow config</code> command to inspect the resulting configuration before actually try to run the pipeline.</p>
+<p>If you decided to modify the configuration using a custom config file name (e.g. <code>my_config.config</code> instead of <code>nextflow.config</code>), remember to pass it to Nextflow using the <code>-c</code> option before the <code>config</code> command.</p>
+<p>So, assuming you are in the folder you created for the exercise, where you created/modified your configuration file, you can run:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow config $PIPELINE_PATH
+# In case you created a custom config file named my_custom_file.config
+nextflow -c my_custom_file.config config $PIPELINE_PATH
+</code></pre>
+<h2 id="exercise-1-activate-singularity">Exercise 1 - Activate singularity</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/1-singularity</code></p>
+<p>The files <code>nextflow.config</code> and <code>singularity.config</code> in this folder provide a possible solution to this exercise. The content is the same in both files, as they represent two different ways to achieve the same goal (using <code>nextflow.config</code> or a custom config file named <code>singularity.config</code>).</p>
+<h3 id="setup">Setup</h3>
+<p>Make a new directory for this exercise and navigate into it:</p>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/1-singularity
+cd my_work_dir/day3/1-advanced_config/1-singularity
+</code></pre>
+<h3 id="goal">Goal</h3>
+<p>Prepare a config file to enable Singularity support for containerised execution. </p>
+<ul>
+<li>In our configuration we have pre-fetched container images available in a central location, we want to read images from here, but not store our new images in this location. For this, set the singularity library directory to <code>/project/nextflow_zero2hero/containers</code></li>
+<li>To be sure we are not clogging our working directory with output files, change the cache directory to a subfolder in your scratch space, let's say <code>/scratch/$USER/nextflow_cache</code>.</li>
+<li>Additionally, add a Singularity run option to bind the <code>/localscratch</code> directory inside the container (required by our HPC setup).</li>
+</ul>
+<h3 id="execution">Execution</h3>
+<p>For this you will need to set relevant properties in the <a href="../reference_documentation/#container--environment-management-scopes"><code>singularity</code> scope</a>.</p>
+<p>Basically, you have to create a new config file (e.g. <code>nextflow.config</code>) with the singularity block and configure it properly</p>
+<pre><code class="language-groovy">singularity {
+    ...
+}
+</code></pre>
+<p>Once you have created your config file, run the <code>nextflow config</code> command to inspect the final configuration and verify that the Singularity settings are correctly applied. If you created a custom config file, remember to use the <code>-c</code> option:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow config practicals/day3/1-advanced_config/workflow
+
+# In case you created a custom config file named my_custom_file.config
+nextflow -c my_custom_file.config config practicals/day3/1-advanced_config/workflow
+</code></pre>
+<p>Verify that the pipeline is now able to run and containers are downloaded to the specified cache directory. You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow run practicals/day3/1-advanced_config/workflow 
+
+# In case you created a custom config file named my_custom_file.config
+nextflow run practicals/day3/1-advanced_config/workflow -c my_custom_file.config 
+</code></pre>
+<h2 id="exercise-2-configure-an-executor">Exercise 2 - Configure an executor</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/2-executor</code></p>
+<h3 id="setup_1">Setup</h3>
+<p>Make a new directory for this exercise and navigate into it:</p>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/2-executor
+cd my_work_dir/day3/1-advanced_config/2-executor
+</code></pre>
+<p><strong>NB. From now on, we will build on top of the previous exercise, so make sure you have completed Exercise 1 and copied your config file from there into this new directory.</strong></p>
+<p>For example, if you created a config file named <code>nextflow.config</code> in the previous exercise, copy it into this new directory:</p>
+<pre><code class="language-bash">cp my_work_dir/day3/1-advanced_config/1-singularity/nextflow.config .
+</code></pre>
+<h3 id="goal_1">Goal</h3>
+<p>Modify your config file to set your processes to run using the SLURM executor and the cpuq queue, with a maximum of 3 concurrent jobs.</p>
+<h3 id="execution_1">Execution</h3>
+<p>For this you will need to set relevant properties in the <a href="../reference_documentation/#executor_scope"><code>executor</code> scope</a> and <a href="../reference_documentation/#process_configuration_scope"><code>process</code> scope</a>.</p>
+<p>Basically, you have to add new configuration blocks to your configuration file from the previous exercise (e.g. <code>nextflow.config</code>) and add the relevant settings:</p>
+<ul>
+<li>in which scope will you set the executor and the queue?</li>
+<li>in which scope will you set the maximum number of concurrent jobs to be submitted?</li>
+</ul>
+<p>When you run the pipeline with the modified configuration, you will notice from the log that nextflow is now using SLURM to submit jobs to the specified queue. The logg will report <code>executor &gt;  slurm (x)</code>.</p>
+<p>If you check your HPC queue using <code>squeue -u $USER</code>, you will see that nextflow is submitting jobs for yout and that only 3 jobs are queued at any one time, as per the configuration.</p>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow run $PIPELINE_PATH 
+
+# In case you created a custom config file named my_custom_file.config
+nextflow run $PIPELINE_PATH -c my_custom_file.config 
+</code></pre>
+<h2 id="exercise-3-basic-process-configuration">Exercise 3 - Basic process configuration</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/3-process_config1</code></p>
+<h3 id="setup_2">Setup</h3>
+<ol>
+<li>Before starting this exercise, please unload the singularity module using</li>
+</ol>
+<pre><code class="language-bash">module unload singularityce/3.10.3
+</code></pre>
+<p>Make sure that <code>which singularity</code> returns no output.</p>
+<ol>
+<li>Make a new directory for this exercise and navigate into it:</li>
+</ol>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/3-process_config1
+cd my_work_dir/day3/1-advanced_config/3-process_config1
+</code></pre>
+<p>For example, if you created a config file named <code>nextflow.config</code> in the previous exercise, copy it into this new directory:</p>
+<pre><code class="language-bash">cp my_work_dir/day3/1-advanced_config/2-executor/nextflow.config .
+</code></pre>
+<h3 id="goal_2">Goal</h3>
+<p>Modify your config file to set resource usage for all processes in the main configuration.
+We also want to ensure the singularityce/3.10.3 module is loaded before running any process.</p>
+<h3 id="execution_2">Execution</h3>
+<p>For this you will need to set relevant properties in the <a href="../reference_documentation/#process_configuration_scope"><code>process</code> scope</a>. Specifically, you will need to set <a href="../reference_documentation/#main-directives-to-control-resource-usage">process resources parameters</a> and <a href="../reference_documentation/#configure-the-execution-space">configure the execution space</a></p>
+<p>Basically, you have to add new configuration settings in the <code>process</code> scope you already defined in your configuration file from the previous exercise (e.g. <code>nextflow.config</code>):</p>
+<p>First, inspect the module files <code>bwa.nf</code>, <code>samtools-merge.nf</code> and <code>samtools-sort.nf</code> in the <code>workflow</code> directory to see the resource requirements for each process. If we want to define a single resource configuration that will work for all of them we have to take the maximum request and configure this in the <code>process</code> scope of our config file. </p>
+<ul>
+<li>cpus = 4</li>
+<li>memory = 8 GB</li>
+<li>time = 2 h</li>
+</ul>
+<p>Now you have to remove the resource requirements (<code>cpus</code>, <code>memory</code> and <code>time</code>) from each process definition in the module files, since they are now defined globally in the configuration file. <strong>Make sure you are making changes to your local copy of the pipeline files, not the original ones in the <code>/project/nextflow_zero2hero/practicals</code> directory.</strong></p>
+<p>If you run the pipeline with the modified configuration now, you will get an error! What's going on?</p>
+<p>You can notice from the log that the execution failed because the <code>singularity</code> command is not available. This happens because singularity is not installed by default on the HPC nodes, and we need to load the singularity module before running any process.</p>
+<p>How can you configure this in the configuration file?</p>
+<p>Hint: <code>beforeScript</code> can likely help you here.</p>
+<p>Once you added this additional setting to your configuration file, you can run the pipeline again. This time it should work fine. You can inspect one of the <code>.command.run</code> files in the work directory to verify that the singularity module is loaded before executing the actual command.</p>
+<p>If you load the tail of the file:</p>
+<pre><code class="language-bash">tail -n 29 work/&lt;some_hash&gt;/.command.run
+</code></pre>
+<p>You will notice the module load command has been added:</p>
+<pre><code class="language-bash"># beforeScript directive
+module load singularityce/3.10.3
+</code></pre>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow run $PIPELINE_PATH 
+
+# In case you created a custom config file named my_custom_file.config
+nextflow run $PIPELINE_PATH -c my_custom_file.config 
+</code></pre>
+<h2 id="exercise-4-more-on-process-configuration">Exercise 4 - More on process configuration</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/4-process_config2</code></p>
+<h3 id="setup_3">Setup</h3>
+<p>Make a new directory for this exercise and navigate into it:</p>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/4-process_config2
+cd my_work_dir/day3/1-advanced_config/4-process_config2
+</code></pre>
+<p>For example, if you created a config file named <code>nextflow.config</code> in the previous exercise, copy it into this new directory:</p>
+<pre><code class="language-bash">cp my_work_dir/day3/1-advanced_config/3-process_config1/nextflow.config .
+</code></pre>
+<h3 id="goal_3">Goal</h3>
+<p>Modify the configuration in the <code>parabrick-haplotypecaller.nf</code> module to be able to run on GPU nodes in our HPC and use dedicated resources with 8 cpus and 32 GB of RAM.</p>
+<p><strong>Priority concept:</strong> The configuration defined within the process definition overrides the global configuration defined in the config file.</p>
+<h3 id="execution_3">Execution</h3>
+<p>For this you will need to set relevant properties directly in the process definition. Specifically, you will need to set relevant <a href="../reference_documentation/#main-directives-to-control-resource-usage">process resources parameters</a> and <a href="../reference_documentation/##container--environment-directives">container parameters</a></p>
+<p>To be able to use GPUs in our HPC, we need to modify the file <code>parabrick-haplotypecaller.nf</code> in <code>workflow_gpu</code> to:</p>
+<ul>
+<li>set the queue to <code>gpuq</code></li>
+<li>request one GPU to the scheduler by passing <code>--gres=gpu:1</code> to the <code>sbatch</code> command</li>
+<li>enable GPU support in singularity by adding the <code>--nv</code> option to the <code>singularity exec</code> command</li>
+</ul>
+<p>To solve this, remember you can fine tune configuration of your computational environment at the process level by using directives like <code>clusterOptions</code> and <code>containerOptions</code>.</p>
+<p>Additionally, we need to configure the process to use more resources:</p>
+<ul>
+<li>8 cpus</li>
+<li>32 GB of RAM.</li>
+</ul>
+<p><strong>Make sure you are making changes to your local copy of the pipeline files, not the original ones in the <code>/project/nextflow_zero2hero/practicals</code> directory.</strong></p>
+<p>Once you modified and saved the module code, you can run the GPU pipeline. You can inspect one of the <code>.command.run</code> files in the work directory to verify that the <code>--gres=gpu:1</code> option has been added to the <code>sbatch</code> command and that we are now using the <code>gpuq</code> queue.</p>
+<p>Note how the configuration defined in the process definition overrides the global configuration defined in the config file.</p>
+<p>For example, if you load the head of the file:</p>
+<pre><code class="language-bash">head work/&lt;some_hash&gt;/.command.run
+</code></pre>
+<p>You will notice the <code>sbatch</code> command has been modified:</p>
+<pre><code class="language-bash">#SBATCH --gres=gpu:1
+#SBATCH -p gpuq
+</code></pre>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow run $PIPELINE_PATH_GPU
+
+# In case you created a custom config file named my_custom_file.config
+nextflow run $PIPELINE_PATH_GPU -c my_custom_file.config 
+</code></pre>
+<h2 id="exercise-5-dynamic-resource-allocation">Exercise 5 - Dynamic resource allocation</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/5-dynamic_resources</code></p>
+<h3 id="setup_4">Setup</h3>
+<p>Make a new directory for this exercise and navigate into it:</p>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/5-dynamic_resources
+cd my_work_dir/day3/1-advanced_config/5-dynamic_resources
+</code></pre>
+<p>For example, if you created a config file named <code>nextflow.config</code> in the previous exercise, copy it into this new directory.</p>
+<pre><code class="language-bash">cp my_work_dir/day3/1-advanced_config/4-process_config2/nextflow.config .
+</code></pre>
+<h3 id="goal_4">Goal</h3>
+<p>Instead of setting the process resources statically, modify your configuration file to request <code>cpus</code>, <code>memory</code> and <code>time</code> dynamically based on the number of retry attempts. Use starting values</p>
+<ul>
+<li>cpus = 2</li>
+<li>memory = 4 GB</li>
+<li>time = 1 minute</li>
+</ul>
+<p><strong>NB.</strong> These values are intentionally low to trigger a failure and demonstrate the retry mechanism.</p>
+<p>We want that when a process fails due to errors related to insufficient memory or time, or it is killed by the scheduler, it will be retried with increased resources for a maximum of 3 attempts.</p>
+<h3 id="execution_4">Execution</h3>
+<p>For this you will need to modify the <code>process</code> scope in your config file and replace the static definition of <code>cpus</code>, <code>memory</code> and <code>time</code> with a closure that return a dynamic value based on the number of retry attempts. Specifically, you will need to configure a <a href="../reference_documentation/#dynamic_resource_allocation">dynamic resource allocation</a> based on the task attemp and ensure that your <a href="../reference_documentation/##error_strategy_directive">error strategy</a> allows a process to be retried.</p>
+<p>Suggestions:</p>
+<ul>
+<li>a value can be set dynamically using a closure like <code>{ ... }</code> that returns the desired value. </li>
+<li>the <code>task.attempt</code> property can be used to get the current attempt number for a process (starting from 1)</li>
+<li>the <code>errorStrategy</code> directive can also be set dynamically using a closure that returns a valid mode (like <code>'retry'</code> or <code>'terminate'</code>) </li>
+<li>the <code>task.exitStatus</code> property contains the exit code of the last executed command for a process.</li>
+<li>a list of error codes can be defined as <code>[ code1, code2, ... ]</code> to check if the last exit status is included in the list</li>
+<li>the <code>maxRetries</code> process directive control the maximum number of retry attempts for a process.</li>
+</ul>
+<p>Once you modified and saved the module code, you can run the standard pipeline including this new configuration.</p>
+<p>Note how the process BWA_MEM fails, but it is automatically retried with increased resources. The log notify you about this</p>
+<pre><code class="language-text">[c3/cf932f] NOTE: Process `BWA_MEM (sample_1)` terminated with an error exit status (140) -- Execution is retried (1)
+</code></pre>
+<p>And at the end you can see that some tasks were retried:</p>
+<pre><code class="language-text">[11/050994] BWA_MEM (sample_2)        [100%] 4 of 4, retries: 4 ✔
+</code></pre>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow run $PIPELINE_PATH
+
+# In case you created a custom config file named my_custom_file.config
+nextflow run $PIPELINE_PATH -c my_custom_file.config 
+</code></pre>
+<h2 id="exercise-6-fine-grained-process-settings">Exercise 6 - Fine grained process settings</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/6-fine_grained_process_config</code></p>
+<p>Specifically, updated versions of the modules are in: <code>practicals/day3/1-advanced_config/6-fine_grained_process_config/modified_modules</code></p>
+<h3 id="setup_5">Setup</h3>
+<p>Make a new directory for this exercise and navigate into it:</p>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/6-fine_grained_process_config
+cd my_work_dir/day3/1-advanced_config/6-fine_grained_process_config
+</code></pre>
+<p>For example, if you created a config file named <code>nextflow.config</code> in the previous exercise, copy it into this new directory.</p>
+<pre><code class="language-bash">cp my_work_dir/day3/1-advanced_config/5-dynamic_resources/nextflow.config .
+</code></pre>
+<h3 id="goal_5">Goal</h3>
+<p>Instead of having the same resource settings for all processes, assign specific resources to each process by combining labels and name-based process configuration and use them to assign resources to each process as needed.</p>
+<p>We want to define three labels:</p>
+<ul>
+<li><code>process_low</code> for processes that require low resources (2 cpus, 4 GB memory, 1 hour time)</li>
+<li><code>process_high</code> for processes that require high resources (8 cpus, 16 GB memory, 4 hours time)</li>
+<li><code>process_high_memory</code> for processes that have special memory requirements with high memory (32 GB memory)</li>
+</ul>
+<p>We want to keep this new configuration logic separate from the main configuration file.</p>
+<p><strong>Priority concept:</strong> The configuration defined using process labels and names overrides the global configuration defined in the config file and also the configuration defined directly in the process definition. Moreover, the name-based configuration has higher priority than the label-based configuration.</p>
+<p><strong>Priority concept:</strong> When multiple labels are assigned to a process, the corresponding settings are collapsed in the order the labels appear. Hence, the last label takes precedence in case of conflicting settings.</p>
+<h3 id="execution_5">Execution</h3>
+<p>For this you will need to create a new config file with a custom name (e.g. <code>process_labels.config</code>) and create a <code>process</code> scope in it where you will define the <a href="../reference_documentation/#fine-grained-process-configuration-using-labels-and-names">label-based and name-based configuration settings</a>. </p>
+<h4 id="part1">Part1</h4>
+<p><strong>NB.</strong> For this part we will use the standard workflow in <code>practicals/day3/1-advanced_config/workflow</code>.</p>
+<p>Create a new configuration file (let's say <code>process_labels.config</code>) that contains a <code>process</code> scope where you will define the three labels with the relevant resource settings.</p>
+<ul>
+<li><code>process_low</code> for processes that require low resources (2 cpus, 4 GB memory, 5 minutes time)</li>
+<li><code>process_high</code> for processes that require high resources (4 cpus, 8 GB memory, 30 minutes time)</li>
+<li><code>process_high_memory</code> for processes that have special memory requirements with high memory (32 GB memory)</li>
+</ul>
+<p>Suggestion: a label-based configuration can be defined using the <code>withLabel</code> selector inside the <code>process</code> scope.</p>
+<p>Now modify your main configuration file (e.g. <code>nextflow.config</code>) to include the content of this new file by using the <code>includeConfig</code> directive in the root scope:</p>
+<pre><code class="language-groovy">includeConfig 'process_labels.config'
+</code></pre>
+<p>Finally, modify the modules and assign the appropriate labels to each process in the module files (<code>bwa.nf</code>, <code>samtools-merge.nf</code> and <code>samtools-sort.nf</code>) based on their resource requirements. In the end we want to have:</p>
+<ul>
+<li><code>BWA_MEM</code> process should require 4 cpus, 32 GB memory and 30 minutes time</li>
+<li><code>SAMTOOLS_MERGE</code> and <code>SAMTOOLS_SORT</code> processes should require 2 cpus, 4 GB memory and 5 minutes time</li>
+</ul>
+<p>Suggestion: multiple labels can be assigned to a process repeating the <code>label</code> directive in the process definition and the resulting settings will be collapsed in the order the labels appear.</p>
+<p>Once you modified and saved the module code, you can run the standard pipeline including this new configuration. You can inspect the <code>.command.run</code> files in the work directory to verify that the resource settings are correctly applied for each process based on the assigned labels.</p>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow run $PIPELINE_PATH
+
+# In case you created a custom config file named my_custom_file.config
+nextflow run $PIPELINE_PATH -c my_custom_file.config 
+</code></pre>
+<h4 id="part2">Part2</h4>
+<p><strong>NB.</strong> For this part we will use the GPU workflow in <code>practicals/day3/1-advanced_config/workflow_gpu</code>.</p>
+<p>Now we have a new process named <code>HAPLOTYPECALLER_GPU</code> in the <code>parabrick-haplotypecaller.nf</code> module that requires special resource settings to enable GPU support. As we saw previously we need</p>
+<ul>
+<li>set the queue to <code>gpuq</code></li>
+<li>request one GPU to the scheduler by passing <code>--gres=gpu:1</code> to the <code>sbatch</code> command</li>
+<li>enable GPU support in singularity by adding the <code>--nv</code> option to the <code>singularity exec</code> command</li>
+</ul>
+<p>In addition, we want this process to use 8 cpus and 32 GB of RAM, with 30 minutes time.</p>
+<p>First, consider which labels we should combine to configure resources in a way similar to the desired one, and specifically 32 GB of RAM and 30 minutes time. You likely want to combine the <code>process_high</code> and <code>process_high_memory</code> labels.</p>
+<p>Modify and save the module file <code>parabrick-haplotypecaller.nf</code> in <code>workflow_gpu</code> to assign the appropriate labels to the <code>HAPLOTYPECALLER_GPU</code> process</p>
+<p>Now how can we edit our additional configuration file (<code>process_labels.config</code>) to further customise settings specifically for the <code>HAPLOTYPECALLER_GPU</code> process to include GPU specific configuration and set 8 cpus? </p>
+<p>Basically we want a way to assign the following properties specifically to this process directly from our configuration file:</p>
+<pre><code class="language-nextflow">cpus = 8
+queue = 'gpuq'
+clusterOptions = '--gres=gpu:1'
+containerOptions = '--nv'
+</code></pre>
+<p><strong>Suggestion</strong>: you can define name-based configuration using the <code>withName</code> selector inside the <code>process</code> scope. Keep in mind that name-based configuration has higher priority than label-based configuration when there are conflicting settings.</p>
+<p>Once you modified and saved the module code and your configuration file, you can run the gpu pipeline including this new configuration. You can inspect the <code>.command.run</code> files in the work directory to verify that the resource settings are correctly applied for each process based on the assigned labels.</p>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+nextflow run $PIPELINE_PATH_GPU
+
+# In case you created a custom config file named my_custom_file.config
+nextflow run $PIPELINE_PATH_GPU -c my_custom_file.config 
+</code></pre>
+<h2 id="exercise-7-profiles">Exercise 7 - Profiles</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/7-profiles</code></p>
+<h3 id="setup_6">Setup</h3>
+<p>For this exercise please require an interactive session with 8 cpus and 32 GB of memeory</p>
+<pre><code class="language-bash">srun --pty -c 8 -p cpu-interactive --mem 32G -J nextflow_training /bin/bash
+module load nextflow/25.04.3
+</code></pre>
+<p>Make a new directory for this exercise and navigate into it:</p>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/7-profiles
+cd my_work_dir/day3/1-advanced_config/7-profiles
+</code></pre>
+<p>Copy all configuration files made in the previous exercise. We will likely have a <code>nextflow.config</code> file and a <code>process_labels.config</code> file. Copy them into this new directory.</p>
+<pre><code class="language-bash">cp my_work_dir/day3/1-advanced_config/6-fine_grained_process_config/nextflow.config .
+cp my_work_dir/day3/1-advanced_config/6-fine_grained_process_config/process_labels.config .
+</code></pre>
+<p><strong>NB.</strong> For this part we will use the gpu workflow in <code>practicals/day3/1-advanced_config/workflow_gpu</code>, with all the modifications you made so far.</p>
+<h3 id="goal_6">Goal</h3>
+<p>Create two profiles named <code>local</code> and <code>slurm</code> to quickly switch between local execution and HPC execution. Each profile will contain all the settings for <code>executor</code> and <code>process</code> scope needed for each environment. </p>
+<p>We also want to create a <code>singularity</code> profile to quickly enable singularity support when needed. This profiles will contain all the settings for the <code>singularity</code> scope needed to enable singularity support.</p>
+<p><strong>Priority concept:</strong> The configuration defined using profiles overrides the global configuration defined in the config file for the same scope when there are conflicting settings.</p>
+<h3 id="execution_6">Execution</h3>
+<p>For this you will need to restructure your main configuration file to create a <a href="../reference_documentation/#profiles-and-institutional-profiles">profile scope</a> where we define multiple profiles to separate the configuration settings we added so far in multiple named profiles that will allows to quickly switch between computational environments (local or HPC) and activate Singularity support. </p>
+<p>Modify your main configuration file (e.g. <code>nextflow.config</code>) to create a <code>profiles</code> scope where you will define the following profile blocks:</p>
+<ul>
+<li><code>local</code> profile for local execution that contains all the relevant settings for <code>executor</code> and <code>process</code> scope needed for local execution</li>
+<li><code>slurm</code> profile for HPC execution that contains all the relevant settings for <code>executor</code> and <code>process</code> scope needed for HPC execution</li>
+<li><code>singularity</code> profile to enable singularity support that contains all the relevant settings for the <code>singularity</code> scope needed to enable singularity support</li>
+</ul>
+<pre><code class="language-groovy">profiles {
+   local {
+      ...
+   }
+   slurm {
+      ...
+   }
+   singularity {  
+      ...
+   }
+}
+</code></pre>
+<p><strong>Suggestions</strong>:</p>
+<ul>
+<li><code>local</code> profile should:<ul>
+<li>set a maximum limit to the executor of 4 cpus and 16 GB of RAM</li>
+<li>set the process executor to <code>local</code></li>
+<li>set the process errorStrategy to <code>finish</code></li>
+<li>set static resource allocation for all processes to 2 cpus, 8 GB memory and 5 minutes time for all processes</li>
+<li>ensure the <code>singularityce/3.10.3</code> module is loaded before running code in all processes</li>
+<li>include special configuration for the <code>HAPLOTYPECALLER_GPU</code> process to enable GPU support as done in the previous exercise</li>
+</ul>
+</li>
+<li><code>singularity</code> profile should:<ul>
+<li>enable singularity support</li>
+<li>set the singularity library directory to <code>/project/nextflow_zero2hero/containers</code></li>
+<li>set the singularity cache directory to <code>/scratch/${env('USER')}/singularity_cache</code></li>
+</ul>
+</li>
+<li><code>slurm</code> profile should allow us to submit job to the SLURM scheduler:<ul>
+<li>set a maximum limit to the executor queue size of 3</li>
+<li>set the process executor to <code>slurm</code> and the queue to <code>cpuq</code></li>
+<li>set the resource limits of the system to 32 cpus, 550 GB memory and 30 days time</li>
+<li>ensure the <code>singularityce/3.10.3</code> module is loaded before running code in all processes</li>
+<li>set dynamic resource allocation for all processes based on the number of retry attempts as done in the previous exercise</li>
+<li>set the process <code>errorStrategy</code> to retry tasks that fail due to OOM or preemption for a maximum of 3 retries</li>
+<li>include special configuration for the <code>HAPLOTYPECALLER_GPU</code> process to enable GPU support as done in the previous exercise</li>
+<li>add a Singularity run option to bind the <code>/localscratch</code> directory inside the container</li>
+<li>add a Singularity run option to activate the <code>--cleanenv</code> flag</li>
+</ul>
+</li>
+</ul>
+<p><strong>Suggestions</strong>: Remember that inside each profile block, you can define all the setting and scopes you usually use in the configuration, using the same syntax.</p>
+<p>Once you modified and saved the configuration file, you can run the standard pipeline including this new configuration. You can now use the profile switches to decide if the processes will be executed on your local system or submitted to the HPC scheduler.</p>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+# For local execution
+nextflow run $PIPELINE_PATH -profile local
+
+# For HPC execution with SLURM
+nextflow run $PIPELINE_PATH -profile slurm,singularity
+</code></pre>
+<p>Inspect the pipeline log and the <code>.command.run</code> files in the work directory to verify that the resource settings are correctly applied for each process based on the selected profile and the processes are executed either locally or on the HPC scheduler.</p>
+<h2 id="exercise-8-institutional-profiles">Exercise 8 - Institutional profiles</h2>
+<p>Code to solve the exercise in: <code>practicals/day3/1-advanced_config/8-institutional_profiles</code></p>
+<h3 id="setup_7">Setup</h3>
+<p>For this exercise please require an interactive session with 8 cpus and 32 GB of memeory</p>
+<pre><code class="language-bash">srun --pty -c 8 -p cpu-interactive --mem 32G -J nextflow_training /bin/bash
+module load nextflow/25.04.3
+</code></pre>
+<p>Make a new directory for this exercise and navigate into it:</p>
+<pre><code class="language-bash">mkdir my_work_dir/day3/1-advanced_config/8-institutional_profiles
+cd my_work_dir/day3/1-advanced_config/8-institutional_profiles
+</code></pre>
+<p>Copy all configuration files made in the previous exercise. We will likely have a <code>nextflow.config</code> file and a <code>process_labels.config</code> file. Copy them into this new directory.</p>
+<pre><code class="language-bash">cp my_work_dir/day3/1-advanced_config/7-profiles/nextflow.config .
+cp my_work_dir/day3/1-advanced_config/7-profiles/process_labels.config .
+</code></pre>
+<p><strong>NB.</strong> For this part we will use the gpu workflow in <code>practicals/day3/1-advanced_config/workflow</code>, with all the modifications you made so far.</p>
+<h3 id="goal_7">Goal</h3>
+<p>Incorporate the code necessary to access institutional profiles from nf-core and use this for the Human Technopole HPC.</p>
+<h3 id="execution_7">Execution</h3>
+<p>For this you will need to add some specific blocks to your configuration file to enable access to the <a href="../reference_documentation/#use-nf-core-institutional-profiles">nf-core institutional profiles</a> which provide pre-defined configuration for various HPC systems around the world, including the Human Technopole HPC.</p>
+<p>Modify your main configuration file (e.g. <code>nextflow.config</code>) to include the necessary settings to access nf-core institutional profiles.</p>
+<pre><code class="language-groovy">params {
+    // nf-core profiles config options
+    custom_config_version      = 'master'
+    custom_config_base         = &quot;https://raw.githubusercontent.com/nf-core/configs/${params.custom_config_version}&quot;
+    hostnames                  = [:]
+    config_profile_description = null
+    config_profile_contact     = null
+    config_profile_url         = null
+    config_profile_name        = null
+}
+
+// Load nf-core custom profiles from different Institutions
+includeConfig (
+    params.custom_config_base 
+        ? &quot;${params.custom_config_base}/nfcore_custom.config&quot; 
+        : '/dev/null'
+)
+</code></pre>
+<p>Once you modified and saved the configuration file, you can run the standard pipeline including this new configuration. You can now use the profile switch to activate the Human Technopole HPC institutional profile named <code>humantechnopole</code> which will automatically set all the relevant configuration for this HPC system scheduler.</p>
+<p>You can run the pipeline with the following command:</p>
+<pre><code class="language-bash"># In case you created nextflow.config in the current directory
+# For HPC execution with SLURM using the institutional profile
+nextflow run $PIPELINE_PATH -profile humantechnopole,singularity
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../reference_documentation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Reference documentation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Reference documentation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../2-advanced-publish/" class="md-footer__link md-footer__link--next" aria-label="Next: 2. Advanced publish">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                2. Advanced publish
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The materials here are licensed under the MIT license
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>
